@@ -2,16 +2,43 @@ package ApplicationLogic.Interpreter;
 
 public class ControlUnit {
 
-	private Byte InstructionRegister;
+	Byte InstructionRegister;
+	private ControlUnitState State;
+	void changeState(ControlUnitState NextState) {
+		State = NextState;
+	};
+	
+	
+	private static ControlUnit Instance;
+	
+	protected ControlUnit() {
+		InstructionRegister = 0x0;
+		State = ControlUnitIdle.getInstance();
+	};
+	
+	public static ControlUnit getInstance(){
+		if(Instance == null) {
+			Instance = new ControlUnit();
+			return Instance;
+		}
+		else
+			return Instance;
+	}
+	
 
 	public void execCycle() {
-		// TODO - implement ControlUnit.execCycle
-		throw new UnsupportedOperationException();
+		while(InstructionRegister != 0xF)
+		{
+			State.execCycle();
+		}
 	}
 
-	private void changeState() {
-		// TODO - implement ControlUnit.changeState
-		throw new UnsupportedOperationException();
+	
+	public static void main(String[] args) {
+		ControlUnit UC = ControlUnit.getInstance();
+		UC.execCycle();
+		System.out.println(UC.State);
+		System.out.println(UC.InstructionRegister);
 	}
 
 }
