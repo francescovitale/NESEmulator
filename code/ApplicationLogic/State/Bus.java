@@ -3,11 +3,26 @@ package ApplicationLogic.State;
 public class Bus {
 
 	Memory Ram;
+	private volatile static Bus BUS = null;			//Singleton
 
-	/**
-	 * 
-	 * @param Address
-	 */
+	//Costruttore privato
+	
+	private Bus() {}
+
+	//Punto di ingresso globale all'istanza
+	
+	public static Bus getIstance() {
+		if(BUS==null) {
+			synchronized(Bus.class) {
+				if(BUS==null) {
+					BUS = new Bus();
+				}
+			}
+		}
+		return BUS;
+	}
+
+	
 	public Byte readRam(Byte Address) {
 		// TODO - implement Bus.readRam
 		
@@ -18,11 +33,6 @@ public class Bus {
 		return data;
 	}
 
-	/**
-	 * 
-	 * @param Address
-	 * @param Data
-	 */
 	public void writeRam(Byte Address, Byte Data) {
 		// TODO - implement Bus.writeRam
 		

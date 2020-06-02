@@ -8,13 +8,19 @@ public class ControlUnit {
 		State = NextState;
 	};
 	
-	
 	private static ControlUnit Instance;
 	
 	protected ControlUnit() {
 		InstructionRegister = 0x0;
 		State = ControlUnitIdle.getInstance();
 	};
+	
+	public void execCycle() {
+		while(InstructionRegister != 0xF)
+		{
+			State.execCycle();
+		}
+	}
 	
 	public static ControlUnit getInstance(){
 		if(Instance == null) {
@@ -23,14 +29,6 @@ public class ControlUnit {
 		}
 		else
 			return Instance;
-	}
-	
-
-	public void execCycle() {
-		while(InstructionRegister != 0xF)
-		{
-			State.execCycle();
-		}
 	}
 
 	

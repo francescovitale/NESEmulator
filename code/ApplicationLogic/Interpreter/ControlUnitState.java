@@ -2,9 +2,11 @@ package ApplicationLogic.Interpreter;
 
 public class ControlUnitState {
 
-	protected void changeState(ControlUnit CU, ControlUnitState NewState) {};
+	ControlUnit state;
 
 	public void execCycle() {
+		// TODO - implement ControlUnitState.execCycle
+		throw new UnsupportedOperationException();
 	}
 
 }

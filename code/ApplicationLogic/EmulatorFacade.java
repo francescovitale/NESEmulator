@@ -7,20 +7,20 @@ public class EmulatorFacade {
 
 	ControlUnit ControlUnit;
 	Mapper Mapper;
-
-	/**
-	 * 
-	 * @param ROMName
-	 * @param ID
-	 */
+	
+	
+	public EmulatorFacade() {}
+	
 	public Boolean initProgram(String ROMName, Integer ID) {
-		// TODO - implement EmulatorFacade.initProgram
-		throw new UnsupportedOperationException();
+
+		Mapper.getIstance().loadData(ROMName, ID);
+		
+		return true;
 	}
 
 	public Boolean startCycle() {
-		// TODO - implement EmulatorFacade.startCycle
-		throw new UnsupportedOperationException();
+
+		return true;
 	}
 
 }

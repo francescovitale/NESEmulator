@@ -1,15 +1,25 @@
 package Control;
+import ApplicationLogic.EmulatorFacade;
+import ApplicationLogic.State.*;
 
 public class Controller {
-
-	/**
-	 * 
-	 * @param Nome
-	 * @param ID
-	 */
+	
 	public void executeProgram(String Nome, Integer ID) {
-		// TODO - implement Controller.executeProgram
-		throw new UnsupportedOperationException();
+		
+		EmulatorFacade Emu = new EmulatorFacade();
+		Emu.initProgram(Nome, ID);
+		Emu.startCycle();
+
+	}
+	
+	//FUNZIONI AUSILIARIE DI STAMPA E DEBUG
+	
+	public void DumpMemory() {
+		Memory.getIstance().dumpMemory();
+	}
+	public void DumpCartridge() {
+		
+		Cartridge.getIstance().dumpCartridge();
 	}
 
 }

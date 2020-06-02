@@ -7,59 +7,62 @@ public class Memory {
 	Bus Bus;
 	Mapper Mapper;
 	private ArrayList<Byte> Word;
+	private volatile static Memory Mem = null;			//Singleton
+	
+	//Costruttore privato
+	private Memory() {
+		Word = new ArrayList<Byte>();
+		for(int i = 0; i < (int)0xFFFF; i++)
+			Word.add((byte)0x0);
+	}
+
+	//Punto di ingresso globale all'istanza
+	public static Memory getIstance() {
+		if(Mem==null) {
+			synchronized(Memory.class) {
+				if(Mem==null) {
+					Mem = new Memory();
+				}
+			}
+		}
+		return Mem;
+	}
 	
 
-	/**
-	 * 
-	 * @param Address
-	 */
 	public Byte read(Byte Address) {
-		// TODO - implement Memory.read
 		
 		Byte data = null;
-		
-		Word.add ( (byte) 100);
-		Word.add ( (byte) 101);
-		Word.add ( (byte) 102);
-		Word.add ( (byte) 103);
-		Word.add ( (byte) 104);
-		Word.add ( (byte) 105);
-		Word.add ( (byte) 106);
-		Word.add ( (byte) 107);
-		
-		
-		
+
 		if( (Address >= 0x0000) &&  (Address <= 0xFFFF)) {
 		
-			data=   Word.get(Address);
+			data = Word.get(Address);
 		
 		}
 		
 		return data;
-		 
 	}
 
-	/**
-	 * 
-	 * @param Bank
-	 */
+
 	public void loadBank(ArrayList<Byte> Bank) {
-		// TODO - implement Memory.loadBank
-		throw new UnsupportedOperationException();
+		
+		//I BANCHI SONO TEORICAMENTE CARICATI IN LOCAZIONI SPECIFICHE DI MEMORIA, TUTTAVIA PER IL MOMENTO LI CARICHEREMO NELLE PRIME LOCAZIONI.
+		for(int i = 0; i < Bank.size(); i++) write((byte) i, Bank.get(i));
+		
 	}
 
-	/**
-	 * 
-	 * @param Address
-	 * @param Data
-	 */
+
 	public void write(Byte Address, Byte Data) {
-		// TODO - implement Memory.write
 		
 		if( (Address >= 0x0000) &&  (Address <= 0xFFFF)) {
 			
-			Word.add(Address, Data);
+			Word.set(Address, Data);
 		}
+		
+	}
+	
+	//FUNZIONI DI UTILITA'
+	
+	public void dumpMemory() {
 		
 	}
 
