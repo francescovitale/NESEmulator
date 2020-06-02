@@ -6,7 +6,8 @@ public class Memory {
 
 	Bus Bus;
 	Mapper Mapper;
-	private Collection<ArrayList<Byte>> Word;
+	private ArrayList<Byte> Word;
+	
 
 	/**
 	 * 
@@ -14,7 +15,28 @@ public class Memory {
 	 */
 	public Byte read(Byte Address) {
 		// TODO - implement Memory.read
-		throw new UnsupportedOperationException();
+		
+		Byte data = null;
+		
+		Word.add ( (byte) 100);
+		Word.add ( (byte) 101);
+		Word.add ( (byte) 102);
+		Word.add ( (byte) 103);
+		Word.add ( (byte) 104);
+		Word.add ( (byte) 105);
+		Word.add ( (byte) 106);
+		Word.add ( (byte) 107);
+		
+		
+		
+		if( (Address >= 0x0000) &&  (Address <= 0xFFFF)) {
+		
+			data=   Word.get(Address);
+		
+		}
+		
+		return data;
+		 
 	}
 
 	/**
@@ -33,7 +55,12 @@ public class Memory {
 	 */
 	public void write(Byte Address, Byte Data) {
 		// TODO - implement Memory.write
-		throw new UnsupportedOperationException();
+		
+		if( (Address >= 0x0000) &&  (Address <= 0xFFFF)) {
+			
+			Word.add(Address, Data);
+		}
+		
 	}
 
 }

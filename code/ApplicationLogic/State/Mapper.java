@@ -1,5 +1,7 @@
 package ApplicationLogic.State;
 
+import java.util.ArrayList;
+
 public class Mapper {
 
 	Memory Ram;
@@ -12,7 +14,7 @@ public class Mapper {
 	 * @param ROMName
 	 * @param ID
 	 */
-	public void loadData(String ROMName, Int ID) {
+	public void loadData(String ROMName, Integer ID) {
 		// TODO - implement Mapper.loadData
 		throw new UnsupportedOperationException();
 	}

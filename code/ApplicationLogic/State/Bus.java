@@ -10,7 +10,12 @@ public class Bus {
 	 */
 	public Byte readRam(Byte Address) {
 		// TODO - implement Bus.readRam
-		throw new UnsupportedOperationException();
+		
+		Byte data= null;
+		
+		data= Ram.read(Address);
+		
+		return data;
 	}
 
 	/**
@@ -20,7 +25,9 @@ public class Bus {
 	 */
 	public void writeRam(Byte Address, Byte Data) {
 		// TODO - implement Bus.writeRam
-		throw new UnsupportedOperationException();
+		
+		Ram.write(Address, Data);
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 package ApplicationLogic.State;
 
+import java.util.ArrayList;
+
 public class Cartridge {
 
 	private ArrayList<Byte> Bank;
