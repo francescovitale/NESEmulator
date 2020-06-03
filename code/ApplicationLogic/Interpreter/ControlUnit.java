@@ -1,5 +1,7 @@
 package ApplicationLogic.Interpreter;
 
+import ApplicationLogic.State.OperativeUnit;
+
 public class ControlUnit {
 
 	Byte InstructionRegister;
@@ -9,23 +11,25 @@ public class ControlUnit {
 	};
 	
 	
-	private static ControlUnit Instance;
+	private volatile static ControlUnit ControlUnit = null;			//Singleton
 	
 	protected ControlUnit() {
 		InstructionRegister = 0x0;
 		State = ControlUnitFetch.getInstance();
 	};
 	
+	//Punto di ingresso globale all'istanza
 	public static ControlUnit getInstance(){
-		if(Instance == null) {
-			Instance = new ControlUnit();
-			return Instance;
+		if(ControlUnit==null) {
+			synchronized(ControlUnit.class) {
+				if(ControlUnit==null) {
+					ControlUnit= new ControlUnit();
+				}
+			}
 		}
-		else
-			return Instance;
+		return ControlUnit;
 	}
 	
-
 	public void execCycle() {
 		while(InstructionRegister != 0xF)
 		{

@@ -6,7 +6,7 @@ public class ControlUnitExecute extends ControlUnitState {
 
 	OperativeUnit OU;
 
-	private static ControlUnitExecute Instance;
+	private volatile static ControlUnitExecute ControlUnitExecute = null;
 	
 	protected void changeState(ControlUnit CU, ControlUnitState NewState) {
 		CU.changeState(NewState);
@@ -15,13 +15,16 @@ public class ControlUnitExecute extends ControlUnitState {
 	protected ControlUnitExecute() {
 	}
 	
-	public static ControlUnitExecute getInstance() {
-		if(Instance == null) {
-			Instance = new ControlUnitExecute();
-			return Instance;
+	//Punto di ingresso globale all'istanza
+	public static ControlUnitExecute getInstance(){
+		if(ControlUnitExecute==null) {
+			synchronized(ControlUnitExecute.class) {
+				if(ControlUnitExecute==null) {
+					ControlUnitExecute= new ControlUnitExecute();
+				}
+			}
 		}
-		else
-			return Instance;
+		return ControlUnitExecute;
 	}
 	/**
 	 * 

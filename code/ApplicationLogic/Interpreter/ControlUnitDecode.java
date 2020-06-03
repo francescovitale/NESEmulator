@@ -6,7 +6,7 @@ public class ControlUnitDecode extends ControlUnitState {
 
 	OperativeUnit OU;
 
-	private static ControlUnitDecode Instance;
+	private volatile static ControlUnitDecode ControlUnitDecode = null;			//Singleton
 	
 	protected void changeState(ControlUnit CU, ControlUnitState NewState) {
 		CU.changeState(NewState);
@@ -15,13 +15,16 @@ public class ControlUnitDecode extends ControlUnitState {
 	protected ControlUnitDecode() {
 	}
 	
-	public static ControlUnitDecode getInstance() {
-		if(Instance == null) {
-			Instance = new ControlUnitDecode();
-			return Instance;
+	//Punto di ingresso globale all'istanza
+	public static ControlUnitDecode getInstance(){
+		if(ControlUnitDecode==null) {
+			synchronized(ControlUnitDecode.class) {
+				if(ControlUnitDecode==null) {
+					ControlUnitDecode= new ControlUnitDecode();
+				}
+			}
 		}
-		else
-			return Instance;
+		return ControlUnitDecode;
 	}
 	
 	/**

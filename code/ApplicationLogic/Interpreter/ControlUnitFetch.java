@@ -6,7 +6,7 @@ public class ControlUnitFetch extends ControlUnitState {
 
 	OperativeUnit OU;
 	
-	private static ControlUnitFetch Instance;
+	private volatile static ControlUnitFetch ControlUnitFetch = null;
 	
 	protected void changeState(ControlUnit CU, ControlUnitState NewState) {
 		CU.changeState(NewState);
@@ -15,13 +15,16 @@ public class ControlUnitFetch extends ControlUnitState {
 	protected ControlUnitFetch() {
 	}
 	
-	public static ControlUnitFetch getInstance() {
-		if(Instance == null) {
-			Instance = new ControlUnitFetch();
-			return Instance;
+	//Punto di ingresso globale all'istanza
+	public static ControlUnitFetch getInstance(){
+		if(ControlUnitFetch==null) {
+			synchronized(ControlUnitFetch.class) {
+				if(ControlUnitFetch==null) {
+					ControlUnitFetch= new ControlUnitFetch();
+				}
+			}
 		}
-		else
-			return Instance;
+		return ControlUnitFetch;
 	}
 	
 
