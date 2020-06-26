@@ -4,7 +4,7 @@ import ApplicationLogic.State.OperativeUnit;
 
 public class ControlUnit {
 
-	Byte InstructionRegister;
+	private Byte InstructionRegister;
 	private ControlUnitState State;
 	void changeState(ControlUnitState NextState) {
 		State = NextState;
@@ -38,11 +38,19 @@ public class ControlUnit {
 	}
 
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		ControlUnit UC = ControlUnit.getInstance();
 		UC.execCycle();
 		System.out.println(UC.State);
 		System.out.println(UC.InstructionRegister);
+	}*/
+	
+	public Byte getInstructionRegister() {
+		return InstructionRegister;
+	}
+
+	public void setInstructionRegister(byte b) {
+		InstructionRegister = b;		
 	}
 
 }

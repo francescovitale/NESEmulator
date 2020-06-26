@@ -1,6 +1,7 @@
 package ApplicationLogic.Interpreter;
 
 import ApplicationLogic.State.*;
+import Control.Controller;
 
 public class ControlUnitExecute extends ControlUnitState {
 
@@ -26,13 +27,27 @@ public class ControlUnitExecute extends ControlUnitState {
 		}
 		return ControlUnitExecute;
 	}
-	/**
-	 * 
-	 * @param OpMacro
-	 */
+
 	public void execCycle() {
-		if(ControlUnit.getInstance().InstructionRegister == 0xD)
-			ControlUnit.getInstance().InstructionRegister = (byte)0xF;
+		
+		Byte Opcode = ControlUnit.getInstance().getInstructionRegister();
+		String MACRO_Opcode = getOpcode(Opcode); //Estrae il codice operativo
+
+		OU.getIstance().setCurrentInstruction(OU.getIstance().getMicrorom(Opcode));  //Imposta l'istruzione appena prelevata nella UO
+		OU.getIstance().Execute(MACRO_Opcode);
+		
+		if(ControlUnit.getInstance().getInstructionRegister() == 0xD)
+			ControlUnit.getInstance().setInstructionRegister((byte)0xF);
 	}
+
+	private String getOpcode(Byte Opcode) {
+		String Operation = "";	
+		Operation = OU.getIstance().getMicrorom(Opcode).opcode;
+
+		return Operation;
+	}
+	
+
+
 
 }

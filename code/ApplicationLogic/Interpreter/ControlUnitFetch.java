@@ -29,7 +29,7 @@ public class ControlUnitFetch extends ControlUnitState {
 	
 
 	public void execCycle() {
-		ControlUnit.getInstance().InstructionRegister = (byte)0xD;
+		ControlUnit.getInstance().setInstructionRegister((byte)0xD);
 		changeState(ControlUnit.getInstance(), ControlUnitDecode.getInstance());
 	}
 

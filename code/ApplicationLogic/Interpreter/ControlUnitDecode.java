@@ -32,7 +32,7 @@ public class ControlUnitDecode extends ControlUnitState {
 	 * @param OpCode
 	 */
 	public void execCycle() {
-		Byte opcode = ControlUnit.getInstance().InstructionRegister;
+		Byte opcode = ControlUnit.getInstance().getInstructionRegister();
 		if(opcode == 0xD)
 			changeState(ControlUnit.getInstance(), ControlUnitExecute.getInstance());
 	}

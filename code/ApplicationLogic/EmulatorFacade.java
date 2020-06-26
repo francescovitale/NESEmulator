@@ -20,6 +20,7 @@ public class EmulatorFacade {
 
 	public Boolean startCycle() {
 
+		ControlUnit.getInstance().execCycle();
 		return true;
 	}
 

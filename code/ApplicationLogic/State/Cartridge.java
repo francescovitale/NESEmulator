@@ -48,9 +48,7 @@ public class Cartridge {
 		return ROM;
 		
 	}
-	
-	
-	
+
 	//FUNZIONI DI UTILITA'
 	
 	public void dumpCartridge() {

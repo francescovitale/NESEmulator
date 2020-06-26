@@ -23,7 +23,7 @@ public class Bus {
 	}
 
 	
-	public Byte readRam(Byte Address) {
+	public Byte readRam(char Address) {
 		// TODO - implement Bus.readRam
 		
 		Byte data= null;
@@ -33,7 +33,7 @@ public class Bus {
 		return data;
 	}
 
-	public void writeRam(Byte Address, Byte Data) {
+	public void writeRam(char Address, Byte Data) {
 		// TODO - implement Bus.writeRam
 		
 		Ram.write(Address, Data);

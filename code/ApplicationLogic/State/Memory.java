@@ -29,7 +29,7 @@ public class Memory {
 	}
 	
 
-	public Byte read(Byte Address) {
+	public Byte read(char Address) {
 		
 		Byte data = null;
 
@@ -46,12 +46,12 @@ public class Memory {
 	public void loadBank(ArrayList<Byte> Bank) {
 		
 		//I BANCHI SONO TEORICAMENTE CARICATI IN LOCAZIONI SPECIFICHE DI MEMORIA, TUTTAVIA PER IL MOMENTO LI CARICHEREMO NELLE PRIME LOCAZIONI.
-		for(int i = 0; i < Bank.size(); i++) write((byte) i, Bank.get(i));
+		for(int i = 0; i < Bank.size(); i++) write((char) i, Bank.get(i));
 		
 	}
 
 
-	public void write(Byte Address, Byte Data) {
+	public void write(char Address, Byte Data) {
 		
 		if( (Address >= 0x0000) &&  (Address <= 0xFFFF)) {
 			
