@@ -29,7 +29,12 @@ public class ControlUnitFetch extends ControlUnitState {
 	
 
 	public void execCycle() {
-		ControlUnit.getInstance().setInstructionRegister((byte)0xD);
+		ControlUnit.getInstance().setInstructionRegister(OU.getIstance().fetch().byteValue());				//Fetcho l'istruzione e la salvo nell'IR
+		
+		/*DEBUG*/
+		//System.out.println(Byte.toUnsignedInt(OU.getIstance().fetch()));									//Stampa DEBUG del codice operativo
+		//ControlUnit.getInstance().setInstructionRegister((byte)0xD);
+		
 		changeState(ControlUnit.getInstance(), ControlUnitDecode.getInstance());
 	}
 

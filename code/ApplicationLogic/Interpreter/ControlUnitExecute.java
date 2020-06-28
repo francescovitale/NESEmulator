@@ -30,24 +30,29 @@ public class ControlUnitExecute extends ControlUnitState {
 
 	public void execCycle() {
 		
-		Byte Opcode = ControlUnit.getInstance().getInstructionRegister();
-		String MACRO_Opcode = getOpcode(Opcode); //Estrae il codice operativo
-
-		OU.getIstance().setCurrentInstruction(OU.getIstance().getMicrorom(Opcode));  //Imposta l'istruzione appena prelevata nella UO
-		OU.getIstance().Execute(MACRO_Opcode);
+		ControlUnit.setBool_opcode(OU.getIstance().Execute(ControlUnit.getCurrentInstruction().opcode));			//Eseguo l'operazione dell'istruzione corrente
 		
-		if(ControlUnit.getInstance().getInstructionRegister() == 0xD)
+		/*DEBUG*/
+		System.out.println(ControlUnit.getCurrentInstruction().opcode);
+		
+		if(ControlUnit.getInstance().getBool_addr() & ControlUnit.getInstance().getBool_opcode())					//Se entrambi i bool sono veri
+			ControlUnit.getInstance().increaseCycles();																//Va aggiunto un ciclo per l'istruzione corrente
+		
+		boolean stop=false;
+		while (stop == false)
+			stop = clock();																							//Decremento i cicli finché non arrivo a 0
+		
+		if(ControlUnit.getInstance().getInstructionRegister().byteValue() == (byte)0xD0)							//Condizione di terminazione
 			ControlUnit.getInstance().setInstructionRegister((byte)0xF);
 	}
 
-	private String getOpcode(Byte Opcode) {
-		String Operation = "";	
-		Operation = OU.getIstance().getMicrorom(Opcode).opcode;
-
-		return Operation;
-	}
 	
-
-
-
+	private Boolean clock() {
+		if (ControlUnit.getInstance().getCycles()==0)				//Se ho finito i cicli
+			return true;										
+		else {
+			ControlUnit.getInstance().decreaseCycles();				//Altrimenti decrementa il numero di cicli
+			return true;
+		}
+	}
 }

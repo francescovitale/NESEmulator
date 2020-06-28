@@ -28,7 +28,7 @@ public class Bus {
 		
 		Byte data= null;
 		
-		data= Ram.read(Address);
+		data= Ram.getIstance().read(Address);
 		
 		return data;
 	}

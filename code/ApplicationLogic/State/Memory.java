@@ -35,8 +35,8 @@ public class Memory {
 
 		if( (Address >= 0x0000) &&  (Address <= 0xFFFF)) {
 		
-			data = Word.get(Address);
-		
+			//data = Word.get(Address);
+			data = (byte)0xD0;
 		}
 		
 		return data;

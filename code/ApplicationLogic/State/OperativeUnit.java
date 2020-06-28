@@ -1,9 +1,18 @@
 package ApplicationLogic.State;
 
+import ApplicationLogic.Interpreter.ControlUnit;
+import ApplicationLogic.Interpreter.ControlUnitState;
+import Control.Controller;
+
 public class OperativeUnit {
+		public static void main(String args[]) {
+			OperativeUnit.getIstance().addressingMode("prova");
+			
+		}
 
 	private volatile static OperativeUnit UO = null;//Singleton
 	private static final Instruction[] MicroRom = new Instruction[256];
+	private Bus BusOU;
 	
 	//REGISTRI INTERNI AL PROCESSORE
 	private static Byte A_register;
@@ -14,11 +23,15 @@ public class OperativeUnit {
 	private static Byte Status_register;
 	
 	//ATTRIBUTI INTERNI DI COMODO
-	private static Instruction CurrentInstruction = new Instruction(); //Operazione in esecuzione in un dato ciclo del processore
-	private static Byte fetched ;
+	private static Byte fetched ;									   //Dati che memorizzo
+	private static char addr_abs;   								   //Locazione assoluta di memoria
+	private static char addr_rel;									   // Indirizzo relativo
 	
 	//Costruttore privato
 	private OperativeUnit() {
+		
+		//Collegamento con il Bus
+		BusOU = Bus.getIstance();
 		
 		//INIZIALIZZAZIONE REGISTRI
 		
@@ -27,6 +40,9 @@ public class OperativeUnit {
 		Y_register = 0x00;
 		PC_register = 0x0000;
 		Status_register = 0x00;	
+		fetched = 0x00;
+		addr_abs = 0x0000;
+		addr_rel = 0x00;
 		
 		//INIZIALIZZAZIONE MICROROM
 		MicroRom[0] = new Instruction( "BRK", "IMM", 7 );
@@ -300,16 +316,59 @@ public class OperativeUnit {
 		return UO;
 	}
 	
+	//Fetch dell'opcode 
 	public Byte fetch() {
-		// TODO - implement OperativeUnit.fetch
-		throw new UnsupportedOperationException();
+		return BusOU.getIstance().readRam(PC_register);					//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
 	}
 
-	public Boolean addressingMode() {
-		// TODO - implement OperativeUnit.addressingMode
-		throw new UnsupportedOperationException();
+	//Scelta modo di indirizzamento
+	public Boolean addressingMode(String AddrMode) {
+		switch(AddrMode) {
+		case "IMP":
+			return this.IMP();
+		
+		case "IMM":
+			return this.ZPX();
+			
+		case "ZP0":
+			return this.ZP0();
+			
+		case "ZPX":
+			return this.ZPX();
+			
+		case "ZPY":
+			return this.ZPY();
+		
+		case "REL":
+			return this.REL();
+		
+		case "ABS":
+			return this.ABS();
+			
+		case "ABX":
+			return this.ABX();
+			
+		case "ABY":
+			return this.ABY();
+			
+		case "IND":
+			return this.IND();
+			
+		case "IZX":
+			return this.IZX();
+			
+		case "IZY":
+			return this.IZY();
+			
+		default: 
+			System.out.println("Code ??? not recognised");
+			break;
+		}
+		
+		return true;
 	}
 
+	//Scelta codice operativo
 	public Boolean Execute(String Opcode) {
 		
 		switch(Opcode) {
@@ -323,6 +382,159 @@ public class OperativeUnit {
 		
 		return true;
 	}
+	
+	//ADDRESSING MODE
+	
+	//Implied
+	private Boolean IMP() {
+		//Lavoro direttamente sull'accumulatore
+		fetched = A_register;
+		return false;
+	}
+	
+	//Immediate
+	private Boolean IMM() {
+		//Andrò a leggere il prossimo byte		
+		addr_abs = PC_register++;	
+		return false;
+	}	
+	
+	//Zero Page
+	private Boolean ZP0() {
+		//Leggo l'offset del program counter nella pagina 0
+		addr_abs = (char)BusOU.readRam(PC_register).byteValue();	//Vado a leggere il contenuto in memoria nella locazione indicata dal PC
+		PC_register++;												//Incremento il PC
+		addr_abs &= 0x00FF;											//L'Indirizzo a cui dovrò leggere è nella pagina 0
+		return false;
+	}	
+	
+	//Zero Page with X Offset
+	private Boolean ZPX() {
+		//Leggo l'offset del program counter + x nella pagina 0
+		addr_abs = (char)BusOU.readRam((char)(PC_register + Byte.toUnsignedInt(X_register))).byteValue();   //Vado a leggere il contenuto in memoria nella locazione PC+X
+		PC_register++;															    						//Incremento il PC
+		addr_abs &= 0x00FF;																					//L'Indirizzo a cui dovrò leggere è nella pagina 0
+				
+		return false;
+	}	
+	
+	//Zero Page with Y Offset
+	private Boolean ZPY() {
+		//Leggo l'offset del program counter +y nella pagina 0
+		addr_abs = (char)BusOU.readRam((char)(PC_register + Byte.toUnsignedInt(Y_register))).byteValue(); //Vado a leggere il contenuto in memoria nella locazione PC+Y
+		PC_register++;															 					      //Incremento il PC
+		addr_abs &= 0x00FF;															  					  //L'Indirizzo a cui dovrò leggere è nella pagina 0
+				
+		return false;
+	}	
+
+	//Relative
+	private Boolean REL() {
+		addr_rel = (char)BusOU.readRam(PC_register).byteValue();						//Leggo il primo byte in memoria	
+		PC_register++;
+		if ((byte)addr_rel < 0)															//Se il valore del byte supera 0x80 
+			addr_rel |= 0xFF00;															//Diventa negativo così da far rimanere il valore tra -128 e 127
+		return false;
+	}
+	
+	//Absolute 
+	private Boolean ABS() {
+		byte lo = BusOU.readRam(PC_register).byteValue();						//Leggo il primo byte in memoria	
+		PC_register++;															//Incremento il PC
+		byte hi = BusOU.readRam(PC_register).byteValue();						//Leggo il secondo byte in memoria
+		PC_register++;															//Incremento il PC
+		
+		addr_abs = (char)((hi << 8) | lo);										//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
+
+		return false;
+	}	
+	
+	//Absolute with X Offset
+	private Boolean ABX() {
+		byte lo = BusOU.readRam(PC_register).byteValue();						//Leggo il primo byte in memoria	
+		PC_register++;															//Incremento il PC
+		byte hi = BusOU.readRam(PC_register).byteValue();						//Leggo il secondo byte in memoria
+		PC_register++;															//Incremento il PC
+	
+		addr_abs = (char)((hi << 8) | lo);										//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
+		addr_abs += Byte.toUnsignedInt(X_register);								//Sommo il contenuto del registro x all'indirizzo
+
+		if ((addr_abs & 0xFF00) != (hi << 8))									//Se ho cambiato pagina allora ci metterò più tempo ad eseguire l'istruzione
+			return true;
+		else
+			return false;
+	}	
+	
+	//Absolute with Y Offset
+	private Boolean ABY() {
+		byte lo = BusOU.readRam(PC_register).byteValue();						//Leggo il primo byte in memoria	
+		PC_register++;															//Incremento il PC
+		byte hi = BusOU.readRam(PC_register).byteValue();						//Leggo il secondo byte in memoria
+		PC_register++;															//Incremento il PC
+	
+		addr_abs = (char)((hi << 8) | lo);										//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
+		addr_abs += Byte.toUnsignedInt(Y_register);								//Sommo il contenuto del registro y all'indirizzo
+
+		if ((addr_abs & 0xFF00) != (hi << 8))									//Se ho cambiato pagina allora ci metterò più tempo ad eseguire l'istruzione
+			return true;
+		else
+			return false;
+	}	
+	
+	//Indirect
+	private Boolean IND() {
+		byte ptr_lo = BusOU.readRam(PC_register).byteValue();					//Leggo il primo byte in memoria	
+		PC_register++;															//Incremento il PC
+		byte ptr_hi = BusOU.readRam(PC_register).byteValue();					//Leggo il secondo byte in memoria
+		PC_register++;															//Incremento il PC
+
+
+		char ptr = (char)((ptr_hi << 8) | ptr_lo);								//Costruisco un puntatore per andare a prendere il vero e proprio indirizzo
+
+		if (ptr_lo == 0x00FF) 													// Simula un bug hardware (Se il +1 causa un cambiamento di pagina in realtà la pagina non viene cambiata)
+		{
+			ptr = (char)((ptr_hi << 8) | 0x00);		
+			addr_abs = (char) ((BusOU.readRam(ptr).byteValue() << 8) | BusOU.readRam(ptr).byteValue());
+		}
+		else 				 													//Comportamento normale 
+		{
+			char ptr1 = (char)((ptr_hi << 8) | (ptr_lo +1));
+			addr_abs = (char) ((BusOU.readRam(ptr1).byteValue() << 8) | BusOU.readRam(ptr).byteValue());
+		}
+		
+		return false;
+	}	
+	
+	//Indirect X
+	private Boolean IZX() {
+		char t = (char)BusOU.readRam(PC_register).byteValue();											//Leggo il primo byte in memoria	
+		PC_register++;	
+		
+		byte lo = BusOU.readRam((char)((byte)t + Byte.toUnsignedInt(X_register))).byteValue();			//Leggo il primo byte in pagina 0 sommando x al valore t preso in memoria
+		byte hi = BusOU.readRam((char)((byte)t + Byte.toUnsignedInt(X_register) + 0x01)).byteValue();	//Leggo il secondo byte in pagina 0 sommando x e 1 al valore t preso in memoria
+
+		addr_abs = (char)((hi << 8) | lo);
+		
+		return false;
+	}	
+	
+	//Indirect Y
+	private Boolean IZY() {
+		char t = (char)BusOU.readRam(PC_register).byteValue();						//Leggo il primo byte in memoria	
+		PC_register++;	
+	
+		byte lo = BusOU.readRam(t).byteValue();										//Leggo il primo byte in pagina 0 del valore t
+		byte hi = BusOU.readRam((char)(t + 0x01)).byteValue();						//Leggo il secondo byte in pagina 0 sommando t e 1 
+			
+		addr_abs = (char)((hi << 8) | lo);
+		addr_abs += Byte.toUnsignedInt(Y_register);			
+		
+		if ((addr_abs & 0xFF00) != (hi << 8))										//Se cambio pagina potrei metterci più tempo a eseguire l'istruzione
+			return true;
+		else
+			return false;
+	}
+	
 
 	//OPCODES
 	
@@ -347,12 +559,12 @@ public class OperativeUnit {
 		
 		//Byte fetched = fetch();
 		
-		char temp = (char)(fetched << 1); //Shifta a sinistra il valore fetchato
-		setFlag("C", (temp & 0xFF00) > 0); //se tale shift rende un valore maggiore di 256, allora alza il carry flag
-		setFlag("Z", (temp & 0x00FF) == 0x00); //se lo shift porta i primi 8 bit ad essere nulli, alza il flag zero
-		setFlag("N", 0x00 != (temp & 0x80)); //se lo shift porta ad avere il bit alto alla posizione 8, abilita il flag Negative
+		char temp = (char)(fetched << 1); 		//Shifta a sinistra il valore fetchato
+		setFlag("C", (temp & 0xFF00) > 0); 		//se tale shift rende un valore maggiore di 256, allora alza il carry flag
+		setFlag("Z", (temp & 0x00FF) == 0x00);  //se lo shift porta i primi 8 bit ad essere nulli, alza il flag zero
+		setFlag("N", 0x00 != (temp & 0x80)); 	//se lo shift porta ad avere il bit alto alla posizione 8, abilita il flag Negative
 		
-		if (CurrentInstruction.addressing_mode == "IMP") //se l'address mode è implied, scrivi in A, altrimenti in memoria
+		if (ControlUnit.getCurrentInstruction().addressing_mode == "IMP") //se l'address mode è implied, scrivi in A, altrimenti in memoria
 			A_register = (byte)(temp & 0x00FF);
 		/*else
 			Bus.getIstance().writeRam(Address, (byte)(temp & 0x00FF));
@@ -370,7 +582,9 @@ public class OperativeUnit {
 	//Branch if Negative
 	private void BMI() {}
 	//Branch if Not Equal
-	private void BNE() {}
+	private void BNE() {
+		System.out.println("BNE OK!");
+	}
 	//Branch if Positive
 	private void BPL() {}
 	//Break
@@ -555,18 +769,13 @@ public class OperativeUnit {
 			
 			return flagval;
 		}
-		
+	
+	
+	
+	
 	//GETTER & SETTERS
 	public static Instruction getMicrorom(int i) {
 		return MicroRom[i];
-	}
-	
-	public static Instruction getCurrentInstruction() {
-		return CurrentInstruction;
-	}
-
-	public static void setCurrentInstruction(Instruction currentInstruction) {
-		CurrentInstruction = currentInstruction;
 	}
 	
 	
