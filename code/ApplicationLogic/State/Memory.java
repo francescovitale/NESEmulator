@@ -35,7 +35,9 @@ public class Memory {
 
 		if( (Address >= 0x0000) &&  (Address <= 0xFFFF)) {
 		
-			//data = Word.get(Address);
+			//data = Word.get(Address);     //Da decommentare quando la memoria sarà riempita.
+			
+			/*DEBUG*/
 			data = (byte)0xD0;
 		}
 		

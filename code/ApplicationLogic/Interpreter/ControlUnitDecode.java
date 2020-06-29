@@ -5,6 +5,7 @@ import ApplicationLogic.State.*;
 public class ControlUnitDecode extends ControlUnitState {
 
 	OperativeUnit OU;
+	ControlUnit CU;
 
 	private volatile static ControlUnitDecode ControlUnitDecode = null;			//Singleton
 	
@@ -13,6 +14,8 @@ public class ControlUnitDecode extends ControlUnitState {
 	};
 	
 	protected ControlUnitDecode() {
+		//Collegamento con L'unità operativa
+		OU = OperativeUnit.getIstance();
 	}
 	
 	//Punto di ingresso globale all'istanza
@@ -32,22 +35,23 @@ public class ControlUnitDecode extends ControlUnitState {
 	 * @param OpCode
 	 */
 	public void execCycle() {
-		Byte opcode = ControlUnit.getInstance().getInstructionRegister();									//prendo il codice operativo per capire la modalità di indirizzamento 
+		CU = ControlUnit.getInstance();
+		Byte opcode = CU.getInstructionRegister();									//prendo il codice operativo per capire la modalità di indirizzamento 
 		
-		ControlUnit.setCurrentInstruction(OU.getIstance().getMicrorom(Byte.toUnsignedInt(opcode)));  		//Prelevo l'istruzione dalla microRom e la salvo in una variabile della ControlUnit
-		ControlUnit.getInstance().setCycles(ControlUnit.getCurrentInstruction().cycles);					//Assegno il numero di cicli dell'istruzione 
+		CU.setCurrentInstruction(OU.getMicrorom(Byte.toUnsignedInt(opcode)));  		//Prelevo l'istruzione dalla microRom e la salvo in una variabile della ControlUnit
+		CU.setCycles(CU.getCurrentInstruction().cycles);		//Assegno il numero di cicli dell'istruzione 
 		
 		/*DEBUG*/
 		System.out.println("ISTRUZIONE:");
-		System.out.println(ControlUnit.getCurrentInstruction().cycles);
+		System.out.println(CU.getCurrentInstruction().cycles);
 		
-		ControlUnit.setBool_addr(OU.getIstance().addressingMode(ControlUnit.getCurrentInstruction().addressing_mode));		//Prelevo la macro dalla microROM in corrispondenza dell'opcode e comando l'unità operativa di applicare una modalità di indirizzamento
+		CU.setBool_addr(OU.addressingMode(CU.getCurrentInstruction().addressing_mode));		//Prelevo la macro dalla microROM in corrispondenza dell'opcode e comando l'unità operativa di applicare una modalità di indirizzamento
 		
 		/*DEBUG*/
-		System.out.println(ControlUnit.getCurrentInstruction().addressing_mode);
+		System.out.println(CU.getCurrentInstruction().addressing_mode);
 		//if(opcode == 0xD) //Debug
 		
-		changeState(ControlUnit.getInstance(), ControlUnitExecute.getInstance());
+		changeState(CU, ControlUnitExecute.getInstance());
 	}
 
 }

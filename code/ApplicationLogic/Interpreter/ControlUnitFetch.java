@@ -5,6 +5,7 @@ import ApplicationLogic.State.*;
 public class ControlUnitFetch extends ControlUnitState {
 
 	OperativeUnit OU;
+	ControlUnit CU;
 	
 	private volatile static ControlUnitFetch ControlUnitFetch = null;
 	
@@ -13,6 +14,8 @@ public class ControlUnitFetch extends ControlUnitState {
 	};
 	
 	protected ControlUnitFetch() {
+		//Collegamento con L'unità operativa
+		OU = OperativeUnit.getIstance();
 	}
 	
 	//Punto di ingresso globale all'istanza
@@ -29,13 +32,14 @@ public class ControlUnitFetch extends ControlUnitState {
 	
 
 	public void execCycle() {
-		ControlUnit.getInstance().setInstructionRegister(OU.getIstance().fetch().byteValue());				//Fetcho l'istruzione e la salvo nell'IR
+		CU = ControlUnit.getInstance();
+		CU.setInstructionRegister(OU.fetch().byteValue());				//Fetcho l'istruzione e la salvo nell'IR
 		
 		/*DEBUG*/
 		//System.out.println(Byte.toUnsignedInt(OU.getIstance().fetch()));									//Stampa DEBUG del codice operativo
 		//ControlUnit.getInstance().setInstructionRegister((byte)0xD);
 		
-		changeState(ControlUnit.getInstance(), ControlUnitDecode.getInstance());
+		changeState(CU, ControlUnitDecode.getInstance());
 	}
 
 }

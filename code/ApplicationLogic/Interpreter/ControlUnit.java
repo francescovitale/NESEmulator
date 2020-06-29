@@ -7,10 +7,10 @@ public class ControlUnit {
 
 	private Byte InstructionRegister;									//Istruction Register contenente l'attuale istruzione letta in memoria
 	private Integer cycles;												//Numero di cicli dell'attuale ciclo
-	private static Instruction CurrentInstruction = new Instruction();  //Operazione in esecuzione in un dato ciclo del processore
+	private Instruction CurrentInstruction = new Instruction();  //Operazione in esecuzione in un dato ciclo del processore
  	private ControlUnitState State;										//Stato corrente 
- 	private static Boolean bool_opcode;									//verifica sul ciclo aggiuntivo
- 	private static Boolean bool_addr;									//verifica sul ciclo aggiuntivo
+ 	private Boolean bool_opcode;									//verifica sul ciclo aggiuntivo
+ 	private Boolean bool_addr;									//verifica sul ciclo aggiuntivo
 	void changeState(ControlUnitState NextState) {
 		State = NextState;
 	};
@@ -62,27 +62,27 @@ public class ControlUnit {
 		InstructionRegister = b;		
 	}
 
-	public static Instruction getCurrentInstruction() {
+	public Instruction getCurrentInstruction() {
 		return CurrentInstruction;
 	}
 
-	public static void setCurrentInstruction(Instruction currentInstruction) {
+	public void setCurrentInstruction(Instruction currentInstruction) {
 		CurrentInstruction = currentInstruction;
 	}
 	
-	public static Boolean getBool_opcode() {
+	public Boolean getBool_opcode() {
 		return bool_opcode;
 	}
 
-	public static void setBool_opcode(Boolean i) {
+	public void setBool_opcode(Boolean i) {
 		bool_opcode = i;
 	}
 
-	public static Boolean getBool_addr() {
+	public Boolean getBool_addr() {
 		return bool_addr;
 	}
 
-	public static void setBool_addr(Boolean boolean1) {
+	public void setBool_addr(Boolean boolean1) {
 		bool_addr = boolean1;
 	}
 	

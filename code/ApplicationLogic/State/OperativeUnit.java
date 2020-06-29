@@ -318,7 +318,7 @@ public class OperativeUnit {
 	
 	//Fetch dell'opcode 
 	public Byte fetch() {
-		return BusOU.getIstance().readRam(PC_register);					//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
+		return Bus.getIstance().readRam(PC_register);					//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
 	}
 
 	//Scelta modo di indirizzamento
@@ -564,7 +564,7 @@ public class OperativeUnit {
 		setFlag("Z", (temp & 0x00FF) == 0x00);  //se lo shift porta i primi 8 bit ad essere nulli, alza il flag zero
 		setFlag("N", 0x00 != (temp & 0x80)); 	//se lo shift porta ad avere il bit alto alla posizione 8, abilita il flag Negative
 		
-		if (ControlUnit.getCurrentInstruction().addressing_mode == "IMP") //se l'address mode è implied, scrivi in A, altrimenti in memoria
+		//if (ControlUnit.getCurrentInstruction().addressing_mode == "IMP") //se l'address mode è implied, scrivi in A, altrimenti in memoria
 			A_register = (byte)(temp & 0x00FF);
 		/*else
 			Bus.getIstance().writeRam(Address, (byte)(temp & 0x00FF));
@@ -774,7 +774,7 @@ public class OperativeUnit {
 	
 	
 	//GETTER & SETTERS
-	public static Instruction getMicrorom(int i) {
+	public Instruction getMicrorom(int i) {
 		return MicroRom[i];
 	}
 	
