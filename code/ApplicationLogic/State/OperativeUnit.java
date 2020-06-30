@@ -5,10 +5,11 @@ import ApplicationLogic.Interpreter.ControlUnitState;
 import Control.Controller;
 
 public class OperativeUnit {
-		public static void main(String args[]) {
+		/*public static void main(String args[]) {
+		
 			OperativeUnit.getIstance().addressingMode("prova");
 			
-		}
+		}*/
 
 	private volatile static OperativeUnit UO = null;//Singleton
 	private static final Instruction[] MicroRom = new Instruction[256];
@@ -18,6 +19,7 @@ public class OperativeUnit {
 	private static Byte A_register;
 	private static Byte X_register;
 	private static Byte Y_register;
+	private static Byte Stack_pointer;
 	
 	private static char PC_register;
 	private static Byte Status_register;
@@ -35,11 +37,12 @@ public class OperativeUnit {
 		
 		//INIZIALIZZAZIONE REGISTRI
 		
-		A_register = 0x00;
+		A_register = 0x01;
 		X_register = 0x00;
 		Y_register = 0x00;
 		PC_register = 0x0000;
 		Status_register = 0x00;	
+		Stack_pointer= (byte) 0xFD;	
 		fetched = 0x00;
 		addr_abs = 0x0000;
 		addr_rel = 0x00;
@@ -318,7 +321,7 @@ public class OperativeUnit {
 	
 	//Fetch dell'opcode 
 	public Byte fetch() {
-		return Bus.getIstance().readRam(PC_register);					//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
+		return BusOU.readRam(PC_register);					//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
 	}
 
 	//Scelta modo di indirizzamento
@@ -328,7 +331,7 @@ public class OperativeUnit {
 			return this.IMP();
 		
 		case "IMM":
-			return this.ZPX();
+			return this.IMM();
 			
 		case "ZP0":
 			return this.ZP0();
@@ -372,8 +375,177 @@ public class OperativeUnit {
 	public Boolean Execute(String Opcode) {
 		
 		switch(Opcode) {
+		
+		case "ADC":
+			return this.ADC();
+			
+		case "SBC":
+			return this.SBC();
+			
+		case "AND":
+			return this.AND();
+			
+		case "ASL":
+			return this.ASL();
+			
+		case "BCC":
+			return this.BCC();
+			
+		case "BCS":
+			return this.BCS();
+			
+		case "BEQ":
+			return this.BEQ();
+			
+		case "BIT":
+			return this.BIT();
+			
+		case "BMI":
+			return this.BMI();
+			
+		case "BNE":
+			return this.BNE();
+			
+		case "BPL":
+			return this.BPL();
+			
 		case "BRK":
-			break;
+			return this.BRK();
+			
+		case "BVC":
+			return this.BVC();
+
+		case "BVS":
+			return this.BVS();
+			
+		case "CLC":
+			return this.CLC();
+			
+		case "CLD":
+			return this.CLD();
+
+		case "CLI":
+			return this.CLI();
+			
+		case "CLV":
+			return this.CLV();
+			
+		case "CMP":
+			return this.CMP();
+
+		case "CPX":
+			return this.CPX();
+			
+		case "CLY":
+			return this.CLY();
+			
+		case "DEC":
+			return this.DEC();
+
+		case "DEX":
+			return this.DEX();
+			
+		case "DEY":
+			return this.DEY();
+			
+		case "EOR":
+			return this.EOR();
+
+		case "INC":
+			return this.INC();
+			
+		case "INX":
+			return this.INX();
+			
+		case "INY":
+			return this.INY();
+			
+		case "JMP":
+			return this.JMP();
+			
+		case "JSR":
+			return this.JSR();
+
+		case "LDA":
+			return this.LDA();
+			
+		case "LDX":
+			return this.LDX();
+			
+		case "LDY":
+			return this.LDY();
+
+		case "LSR":
+			return this.LSR();
+			
+		case "NOP":
+			return this.NOP();
+			
+		case "ORA":
+			return this.ORA();
+
+		case "PHA":
+			return this.PHA();
+			
+		case "PHP":
+			return this.PHP();
+			
+		case "PLA":
+			return this.PLA();
+
+		case "PLP":
+			return this.PLP();
+			
+		case "ROL":
+			return this.ROL();
+			
+		case "ROR":
+			return this.ROR();
+			
+		case "RTI":
+			return this.RTI();
+			
+		case "RTS":
+			return this.RTS();
+
+		case "SEC":
+			return this.SEC();
+			
+		case "SED":
+			return this.SED();
+			
+		case "SEI":
+			return this.SEI();
+
+		case "STA":
+			return this.STA();
+			
+		case "STX":
+			return this.STX();
+			
+		case "STY":
+			return this.STY();
+
+		case "TAX":
+			return this.TAX();
+			
+		case "TAY":
+			return this.TAY();
+			
+		case "TSX":
+			return this.TSX();
+
+		case "TXA":
+			return this.TXA();
+			
+		case "TXS":
+			return this.TXS();
+			
+		case "TYA":
+			return this.TYA();
+			
+		case "XXX":
+			return this.XXX();
 			
 		default: 
 			System.out.println("Code ??? not recognised");
@@ -539,11 +711,73 @@ public class OperativeUnit {
 	//OPCODES
 	
 	//Add
-	private void ADC() {}
+	private boolean ADC() {
+		// Prelevo i dati da aggiungere all'accumulatore
+		fetch();
+		
+		//Accumulatore + valore prelevato + Carry(se alto)
+		char temp;
+		if(getFlag("C"))
+			temp = (char)(Byte.toUnsignedInt(A_register) + Byte.toUnsignedInt(fetched) + 1);
+		else
+			temp = (char)(Byte.toUnsignedInt(A_register) + Byte.toUnsignedInt(fetched));
+		
+		// Se il valore di temp è maggiore di 255 avrò un carry
+		setFlag("C", temp > 255);
+		
+		// Setto il flag Z a 1 se il risultato è 0
+		setFlag("Z", (int)(temp & 0x00FF) == 0);
+		
+		int A = Byte.toUnsignedInt(A_register);
+		int f = Byte.toUnsignedInt(fetched);
+		
+		//Setto il flag di overflow
+		setFlag("V",(((~(A ^ f) & (A ^ temp))& 0x0080)) != 0x00);			//DA AGGIUSTARE
+		
+		// Il flag negativo è settato al valore del bit più significativo
+		setFlag("N", (temp & 0x80) != 0);
+		
+		// Carico il risultato nell'accumulatore (passa ad 8-bit)
+		A_register = (byte) (temp & 0x00FF);	
+		
+		// l'istruzione potrebbe richiedere un ulteriore ciclo di clock
+		return true;
+	}
+	
+
 	//Sub
-	private void SBC() {}
+	private boolean SBC() {
+		fetch();
+		
+		
+		// Inverto i primi 8 bit con una xor
+		char value = (char)((char)fetched.byteValue() ^ 0x00FF);
+		
+		
+		// Da qui è esattamente come la addizione
+		char temp;
+		if(getFlag("C"))
+			temp = (char)(Byte.toUnsignedInt(A_register) + Byte.toUnsignedInt(fetched) + 1);
+		else
+			temp = (char)(Byte.toUnsignedInt(A_register) + Byte.toUnsignedInt(fetched));
+		
+
+		setFlag("C", (temp & 0xFF00) != 0);
+		setFlag("Z", (temp & 0x00FF) == 0);
+		
+		int A = Byte.toUnsignedInt(A_register);
+		int t = (int)(temp & 0xFFFF);
+		
+		setFlag("V",(((~(t ^ A) & (t ^ value))& 0x0080)) != 0x00);
+		setFlag("N", (temp & 0x80) != 0);
+		
+		A_register = (byte) (temp & 0x00FF);
+
+		return true;
+	}
+	
 	//Logic AND
-	private void AND() {
+	private boolean AND() {
 		
 		//Byte fetched = fetch();
 
@@ -552,138 +786,801 @@ public class OperativeUnit {
 		setFlag("Z",A_register == 0x00); //Se la AND ha dato risultato 0x00, abilita il registro 0
 		setFlag("N",0x00 != (A_register & 0x80));  //Se il bit più significativo del registro A è alto, setta il flag Negative.
 		
-		//return 1?	
+		return true;	
 	}
+	
 	//Arithmetic Shift Left
-	private void ASL() {
+	private boolean ASL() {
 		
-		//Byte fetched = fetch();
+		fetch();
 		
-		char temp = (char)(fetched << 1); 		//Shifta a sinistra il valore fetchato
-		setFlag("C", (temp & 0xFF00) > 0); 		//se tale shift rende un valore maggiore di 256, allora alza il carry flag
-		setFlag("Z", (temp & 0x00FF) == 0x00);  //se lo shift porta i primi 8 bit ad essere nulli, alza il flag zero
-		setFlag("N", 0x00 != (temp & 0x80)); 	//se lo shift porta ad avere il bit alto alla posizione 8, abilita il flag Negative
+		char temp = (char)(fetched << 1); //Shifta a sinistra il valore fetchato
+		setFlag("C", (temp & 0xFF00) > 0); //se tale shift rende un valore maggiore di 256, allora alza il carry flag
+		setFlag("Z", (temp & 0x00FF) == 0x00); //se lo shift porta i primi 8 bit ad essere nulli, alza il flag zero
+		setFlag("N", 0x00 != (temp & 0x80)); //se lo shift porta ad avere il bit alto alla posizione 8, abilita il flag Negative
 		
-		//if (ControlUnit.getCurrentInstruction().addressing_mode == "IMP") //se l'address mode è implied, scrivi in A, altrimenti in memoria
+		if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP") //se l'address mode è implied, scrivi in A, altrimenti in memoria
 			A_register = (byte)(temp & 0x00FF);
-		/*else
-			Bus.getIstance().writeRam(Address, (byte)(temp & 0x00FF));
-		return 0;*/
+		else
+			BusOU.writeRam(addr_abs, (byte)(temp & 0x00FF));
+		return false;
 		
 	}
-	//Branch if Carry Clear
-	private void BCC() {}
-	//Branch if Carry Set
-	private void BCS() {}
-	//Branch if Equal
-	private void BEQ() {}
-	//
-	private void BIT() {}
-	//Branch if Negative
-	private void BMI() {}
-	//Branch if Not Equal
-	private void BNE() {
-		System.out.println("BNE OK!");
-	}
-	//Branch if Positive
-	private void BPL() {}
-	//Break
-	private void BRK() {}
-	//Branch if Overflow Clear
-	private void BVC() {}
-	//Branch if Overflow Set
-	private void BVS() {}
-	//Clear
-	private void CLC() {}
-	//Clear Decimal Flag
-	private void CLD() {}
-	//Disable Interrupts / Clear Interrupt Flag
-	private void CLI() {}
-	//Clear Overflow Flag
-	private void CLV() {}
-	//Compare Accumulator
-	private void CMP() {}
-	//Compare X Register
-	private void CPX() {}
-	//Compare Y Register
-	private void CLY() {}
-	//Decrement Value at Memory Location
-	private void DEC() {}
-	//Decrement X Register
-	private void DEX() {}
-	//Decrement Y Register
-	private void DEY() {}
-	//Bitwise Logic XOR
-	private void EOR() {}
-	//Increment Value at Memory Location
-	private void INC() {}
-	//Increment X Register
-	private void INX() {}
-	//Increment Y Register
-	private void INY() {}
-	//Jump To Location
-	private void JMP() {}
-	//Jump To Sub-Routine
-	private void JSR() {}
-	//Load The Accumulator
-	private void LDA() {}
-	//Load The X Register
-	private void LDX() {}
-	//Load The Y Register
-	private void LDY() {}
-	
-	private void LSR() {}
-	//No Operation
-	private void NOP() {}
-	//Bitwise Logic OR
-	private void ORA() {}
-	//Push Accumulator to Stack
-	private void PHA() {}
-	//Push Status Register to Stack
-	private void PHP() {}
-	//Pop Accumulator off Stack
-	private void PLA() {}
-	//Pop Status Register off Stack
-	private void PLP() {}
-	
-	private void ROL() {}
-	
-	private void ROR() {}
-	//Return from interrupt
-	private void RTI() {}
-	//Return from subroutine
-	private void RTS() {}
-	//Set Carry Flag
-	private void SEC() {}
-	//Set Decimal Flag
-	private void SED() {}
-	//et Interrupt Flag / Enable Interrupts
-	private void SEI() {}
-	//Store Accumulator at Address
-	private void STA() {}
-	//Store X Register at Address
-	private void STX() {}
-	//Store Y Register at Address
-	private void STY() {}
-	//Transfer Accumulator to X Register
-	private void TAX() {}
-	//Transfer Accumulator to Y Register
-	private void TAY() {}
-	//Transfer Stack Pointer to X Register
-	private void TSX() {}
-	//Transfer X Register to Accumulator
-	private void TXA() {}
-	//Transfer X Register to Stack Pointer
-	private void TXS() {}
-	//Transfer Y Register to Accumulator
-	private void TYA() {}
-	//Illegal opcodes
-	private void XXX() {}
 
+	//Branch if Carry Clear
+	private boolean BCC() {
+		
+		if (getFlag("C")== false) {
+			
+			ControlUnit.getInstance().increaseCycles();
+			addr_abs= (char) (PC_register + addr_rel);
+			
+			if ((addr_abs & 0xFF00) != (PC_register & 0xFF00)) 
+				ControlUnit.getInstance().increaseCycles();
+			
+			PC_register= addr_abs;
+			
+		}			
+		
+		return false;	
+		
+	}
+		
+	//Branch if Carry Set
+	private boolean BCS() {		
+		
+		if (getFlag("C")== true) {
+		
+			ControlUnit.getInstance().increaseCycles();
+			addr_abs= (char) (PC_register + addr_rel);
+		
+			if ((addr_abs & 0xFF00) != (PC_register & 0xFF00)) 
+				ControlUnit.getInstance().increaseCycles();
+		
+			PC_register= addr_abs;
+		
+		}
+	
+		return false;	
+	
+	}
+	
+	//Branch if Equal
+	private boolean BEQ() {	
+		
+		if (getFlag("Z")== true) {
+		
+			ControlUnit.getInstance().increaseCycles();
+			addr_abs= (char) (PC_register + addr_rel);
+		
+			if ((addr_abs & 0xFF00) != (PC_register & 0xFF00)) 
+				ControlUnit.getInstance().increaseCycles();
+		
+			PC_register= addr_abs;
+		
+		}
+		return false;
+	
+	}
+	
+	//BIT
+	private boolean BIT() {
+		
+		fetched= fetch();
+		char temp = (char) (A_register & fetched); // AND tra valore fetchato d il registro A
+		setFlag("Z", (temp & 0x00FF) == 0x00); //se la AND porta i primi 8 bit ad essere nulli, alza il flag zero
+		setFlag("N", (fetched & (1<<7))!=0); // se il settimo bit di Fetched è 1 alza il flag N
+		setFlag("V", (fetched & (1<<6))!=0);// se il sesto bit di Fetched è 1 alza il flag V
+		
+		return false;
+		
+	}
+	
+	//Branch if Negative
+	private boolean BMI() {	
+		
+		if (getFlag("N")== true) {
+		
+			ControlUnit.getInstance().increaseCycles();
+			addr_abs= (char) (PC_register + addr_rel);
+		
+			if ((addr_abs & 0xFF00) != (PC_register & 0xFF00)) 
+				ControlUnit.getInstance().increaseCycles();
+		
+			PC_register= addr_abs;
+		
+		}
+		
+		return false;
+	}
+	
+	//Branch if Not Equal
+	private boolean BNE() {	
+		
+		if (getFlag("Z")== false) {
+		
+			ControlUnit.getInstance().increaseCycles();
+			addr_abs= (char) (PC_register + addr_rel);
+		
+			if ((addr_abs & 0xFF00) != (PC_register & 0xFF00)) 
+				ControlUnit.getInstance().increaseCycles();
+		
+			PC_register= addr_abs;
+		
+		}
+		return false;
+	}
+	
+	//Branch if Positive
+	private boolean BPL() {	
+		
+		if (getFlag("N")== false) {
+		
+			ControlUnit.getInstance().increaseCycles();
+			addr_abs= (char) (PC_register + addr_rel);
+		
+			if ((addr_abs & 0xFF00) != (PC_register & 0xFF00)) 
+				ControlUnit.getInstance().increaseCycles();
+		
+			PC_register= addr_abs;
+		
+		}
+		return false;
+	}
+	
+	//Break
+	private boolean BRK() {
+		
+		PC_register= (char)(PC_register+1);
+		
+		setFlag("I", true);
+		BusOU.writeRam((char) (0x0100 + Stack_pointer), (byte) ((PC_register>>8) & 0x00FF));
+		
+		Stack_pointer= (byte) (Stack_pointer-1);
+		BusOU.writeRam((char) (0x0100 + Stack_pointer), (byte) (PC_register & 0x00FF));
+		Stack_pointer= (byte) (Stack_pointer-1);
+		
+		setFlag("B",true);
+		BusOU.writeRam((char) (0x0100 + Stack_pointer), (byte) Status_register);
+		Stack_pointer= (byte) (Stack_pointer-1);
+		
+		setFlag("B",false);
+		
+		
+		PC_register= (char) (( BusOU.readRam((char) 0xFFFE).byteValue()) | (( BusOU.readRam((char) 0xFFFF).byteValue()<< 8)));
+			
+			
+		return false;
+	}
+	
+	//Branch if Overflow Clear
+	private boolean BVC() {	
+		
+		if (getFlag("V")== false) {
+		
+			ControlUnit.getInstance().increaseCycles();
+			addr_abs= (char) (PC_register + addr_rel);
+		
+			if ((addr_abs & 0xFF00) != (PC_register & 0xFF00)) 
+				ControlUnit.getInstance().increaseCycles();;
+		
+			PC_register= addr_abs;
+		
+		}
+		return false;
+	}
+	
+	//Branch if Overflow Set
+	private boolean BVS() {	
+		
+		if (getFlag("V")== true) {
+		
+			ControlUnit.getInstance().increaseCycles();
+			addr_abs= (char) (PC_register + addr_rel);
+		
+			if ((addr_abs & 0xFF00) != (PC_register & 0xFF00)) 
+				ControlUnit.getInstance().increaseCycles();
+		
+			PC_register= addr_abs;
+		
+		}
+		return false;
+	}
+	
+	//Clear
+	private boolean CLC() {
+		
+		setFlag("C", false);
+		return false;
+	}
+	
+	//Clear Decimal Flag
+	private boolean CLD() {
+		
+		setFlag("D", false);
+		return false;
+	}
+	
+	//Disable Interrupts / Clear Interrupt Flag
+	private boolean CLI() {
+		
+		setFlag("I", false);
+		return false;
+	}
+		
+	//Clear Overflow Flag
+	// Function:    V = 0
+	private boolean CLV() {
+		
+		setFlag("V", false);
+		return false;
+	}
+
+	//Compare Accumulator
+	// Function:    C <- A >= M      Z <- (A - M) == 0
+	// Flags Out:   N, C, Z
+	private boolean CMP() {
+		
+		fetch();
+		
+		int temp= (int)(A_register & 0xff)- (int) (fetched & 0xff);
+		temp= temp* 0xff;
+		setFlag("C", A_register>= fetched);
+		setFlag("Z", (temp & 0x00FF) == 0x00);
+		setFlag("N", 0x00 != (temp & 0x80));
+		
+		return true;
+		
+		
+	}
+	
+	//Compare X Register
+	// Function:    C <- X >= M      Z <- (X - M) == 0
+	// Flags Out:   N, C, Z
+	private boolean CPX() {
+		
+		fetch();
+		
+		int temp= (int)(X_register & 0xff)- (int) (fetched & 0xff);
+		temp= temp* 0xff;
+		setFlag("C", X_register>= fetched);
+		setFlag("Z", (temp & 0x00FF) == 0x00);
+		setFlag("N", 0x00 != (temp & 0x80));
+		
+		return false;
+		
+		
+	}
+	
+	//Compare Y Register
+	// Function:    C <- Y >= M      Z <- (Y - M) == 0
+	// Flags Out:   N, C, Z
+	private boolean CLY() {
+		
+		fetch();
+		
+		int temp= (int)(Y_register & 0xff)- (int) (fetched & 0xff);
+		temp= temp* 0xff;
+		setFlag("C", Y_register>= fetched);
+		setFlag("Z", (temp & 0x00FF) == 0x00);
+		setFlag("N", 0x00 != (temp & 0x80));
+		
+		return false;
+		
+	}
+	
+	//Decrement Value at Memory Location
+	// Function:    M = M - 1
+	// Flags Out:   N, Z
+	private boolean DEC() {
+		
+		fetch();
+		
+		byte temp= (byte) (fetched-1);
+		
+		BusOU.writeRam(addr_abs, (byte) (temp & 0x80));
+		setFlag("Z", (temp & 0x00FF) == 0x00);
+		setFlag("N", 0x00 != (temp & 0x80));
+		
+		return false;
+		
+	}
+	
+	//Decrement X Register
+	// Function:    X = X - 1
+	// Flags Out:   N, Z
+	private boolean DEX() {
+		
+		X_register= (byte) (X_register-1);
+	    setFlag("Z", X_register == 0x00);
+		setFlag("N", 0x00 != (X_register & 0x80));
+		return false;
+
+	}
+	
+	//Decrement Y Register
+	// Function:    Y = Y - 1
+	// Flags Out:   N, Z
+	private boolean DEY() {
+		
+		Y_register= (byte) (Y_register-1);
+	    setFlag("Z", Y_register == 0x00);
+		setFlag("N", 0x00 != (Y_register & 0x80));
+		
+		return false;
+		
+	}
+	
+	//Bitwise Logic XOR
+	// Function:    A = A xor M
+	// Flags Out:   N, Z
+	private boolean EOR() {
+		
+		fetch();
+		A_register= (byte) (A_register^(fetched));
+		setFlag("Z", A_register == 0x00);
+		setFlag("N", 0x00 != (A_register & 0x80));
+		
+		return true;
+		
+		
+	}
+	
+	//Increment Value at Memory Location
+	// Function:    M = M + 1
+	// Flags Out:   N, Z
+	private boolean INC() {	
+		
+		fetch();
+	
+		byte temp= (byte) (fetched+1);
+	
+		BusOU.writeRam(addr_abs, (byte) (temp & 0xFF));
+		setFlag("Z", (temp & 0x00FF) == 0x00);
+		setFlag("N", 0x00 != (temp & 0x80));
+	
+		return false;
+	
+	}
+	
+	//Increment X Register
+	// Function:    X = X + 1
+	// Flags Out:   N, Z
+	private boolean INX() {
+		
+		X_register= (byte) (X_register+1);
+	    setFlag("Z", X_register == 0x00);
+		setFlag("N", 0x00 != (X_register & 0x80));
+		return false;
+		
+	}
+	
+	//Increment Y Register
+	// Function:    Y = Y + 1
+	// Flags Out:   N, Z
+	private boolean INY() {
+		
+
+		Y_register= (byte) (Y_register+1);
+	    setFlag("Z", Y_register == 0x00);
+		setFlag("N", 0x00 != (Y_register & 0x80));
+		return false;
+		
+	}
+	
+	//Jump To Location
+	// Function:    pc = address
+	private boolean JMP() {
+		
+		PC_register= addr_abs;
+		
+		return false;
+		
+		
+	}
+	
+	//Jump To Sub-Routine
+	// Function:    Push current pc to stack, pc = address
+	private boolean JSR() {
+		
+		PC_register= (char) (PC_register-1);
+		
+		BusOU.writeRam((char)(0x0100 + Stack_pointer), (byte)((PC_register >> 8) & 0x00FF));
+		Stack_pointer= (byte) (Stack_pointer-1);
+		
+		PC_register= addr_abs;
+		
+		return false;
+		
+	}
+	
+	//Load The Accumulator
+	// Function:    A = M
+	// Flags Out:   N, Z
+	private boolean LDA() {
+		
+		fetch();
+		A_register= fetched;
+	    setFlag("Z", A_register == 0x00);
+		setFlag("N", 0x00 != (A_register & 0x80));
+		return true;
+		
+	}
+	
+	
+	//Load The X Register
+	// Function:    X = M
+	// Flags Out:   N, Z
+	private boolean LDX() {
+		
+		fetch();
+		X_register= fetched;
+	    setFlag("Z", X_register == 0x00);
+		setFlag("N", 0x00 != (X_register & 0x80));
+		
+		return true;
+		
+		
+	}
+	
+	
+	//Load The Y Register
+	// Function:    Y = M
+	// Flags Out:   N, Z
+	private boolean LDY() {
+		
+		
+		fetch();
+		Y_register= fetched;
+	    setFlag("Z", Y_register == 0x00);
+		setFlag("N", 0x00 != (Y_register & 0x80));
+		
+		return true;
+		
+		
+	}
+	
+	private boolean LSR() {
+		
+		fetch();
+		byte temp;
+		setFlag("C", 0x00 !=(fetched & 0x0001) );
+		temp= (byte) (fetched>>1);
+		setFlag("Z", temp == 0x00);
+		setFlag("N", 0x00 != (temp & 0x80));
+		
+		if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP")
+			A_register= (byte) (temp & 0x00FF);
+		
+		else 
+			BusOU.writeRam((char)addr_abs, (byte) (temp & 0x00FF));
+		
+		return false;
+	}
+		
+	//No Operation
+	private boolean NOP() {
+		
+		/*switch (ControlUnit.getInstance().getCurrentInstruction().opcode) {
+		case 0x1C:
+		case 0x3C:
+		case 0x5C:
+		case 0x7C:
+		case 0xDC:
+		case 0xFC:
+			return true;
+			break;
+		}*/
+		
+		return false;
+	}
+	
+	//Bitwise Logic OR
+	// Function:    A = A | M
+	// Flags Out:   N, Z
+	private boolean ORA() {
+		
+		fetch();
+		A_register= (byte) (A_register | fetched);
+		setFlag("Z", A_register == 0x00);
+		setFlag("N", 0x00 != (A_register & 0x80));
+		
+		return true;
+	}
+	
+	//Push Accumulator to Stack
+	// Function:    A -> stack
+	private boolean PHA() {
+		
+		BusOU.writeRam( (char)(0x0100+ Stack_pointer), A_register);
+		Stack_pointer= (byte) (Stack_pointer-1);
+		return false;
+		
+	}
+	
+	//Push Status Register to Stack
+	// Function:    status -> stack
+	// Note:        Break flag is set to 1 before push
+	private boolean PHP() {
+		
+		Byte B,U;
+		
+		if (getFlag("B"))  
+			B= 1;
+		
+		else 
+			B=0;
+		
+		if (getFlag("U"))  
+			U= 1;
+		
+		else 
+			U=0;
+		
+		
+		BusOU.writeRam( (char)(0x0100+ Stack_pointer), (byte)(Status_register | B | U) );
+		setFlag("B", false);
+		setFlag("U", false);
+		Stack_pointer= (byte) (Stack_pointer-1);
+		
+		return false;
+		
+	}
+	
+	//Pop Accumulator off Stack
+	// Function:    A <- stack
+	// Flags Out:   N, Z
+	private boolean PLA() {
+		
+		Stack_pointer= (byte) (Stack_pointer+1);
+		A_register= BusOU.readRam((char) (0x0100 + Stack_pointer));
+		setFlag("Z", A_register == 0x00);
+		setFlag("N", 0x00 != (A_register & 0x80));
+		
+		return false;
+		
+	}
+	
+	//Pop Status Register off Stack
+	// Function:    Status <- stack
+	private boolean PLP() {
+		
+		Stack_pointer= (byte) (Stack_pointer+1);
+		Status_register= BusOU.readRam((char) (0x0100 + Stack_pointer));
+		setFlag("U", true);
+		
+		
+		return false;
+	}
+	
+	
+    private boolean ROL() {
+        
+        fetch();
+        byte C;
+       
+        if(getFlag("C"))
+            C=1;
+       
+        else
+            C=0;
+       
+        int temp= (int)((fetched<<1) & 0xFF) | C; // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
+        temp= temp & 0xFF;
+        setFlag("Z",  0x00 == (temp & 0x00FF));
+        setFlag("N", 0x00 != (temp & 0x80));
+        setFlag("C", 0x00 != (temp & 0xFF00));
+       
+        if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP")
+            A_register= (byte) (temp & 0x00FF);
+       
+        else
+            BusOU.writeRam((char)addr_abs, (byte) (temp & 0x00FF));
+       
+        return false;
+       
+       
+       
+    }
+   
+    private boolean ROR() {
+       
+        fetch();
+        byte C;
+       
+        if(getFlag("C"))
+            C=1;
+       
+        else
+            C=0;
+       
+        int temp= (int)((fetched<<1) & 0xFF)| (C<<7); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
+        temp= temp & 0xFF;
+        setFlag("Z",  0x00 == (temp & 0x00FF));
+        setFlag("N", 0x00 != (temp & 0x80));
+        setFlag("C", 0x00 != (fetched & 0x01));
+       
+        if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP")
+            A_register= (byte) (temp & 0x00FF);
+       
+        else
+            BusOU.writeRam((char)addr_abs, (byte) (temp & 0x00FF));
+       
+        return false;
+       
+    }
+	
+	//Return from interrupt
+	private boolean RTI() {
+		
+	
+		
+		Status_register = BusOU.readRam((char) (0x0100+ Stack_pointer));
+		
+	
+		Status_register = (0<<4);
+		Status_register = (0<<0);
+		Stack_pointer= (byte) (Stack_pointer+1);
+		PC_register = (char)BusOU.readRam((char) (0x0100+ Stack_pointer)).byteValue();
+		Stack_pointer= (byte) (Stack_pointer+1);
+		PC_register = (char) (((char)BusOU.readRam((char) (0x0100+ Stack_pointer)).byteValue())<<8);
+		
+		return false;
+		
+	
+	}
+	
+	//Return from subroutine
+	private boolean RTS() {
+		
+		Stack_pointer= (byte) (Stack_pointer+1);
+		PC_register = (char)BusOU.readRam((char) (0x0100+ Stack_pointer)).byteValue();
+		Stack_pointer= (byte) (Stack_pointer+1);
+		PC_register = (char) (((char)BusOU.readRam((char) (0x0100+ Stack_pointer)).byteValue())<<8);
+		
+		PC_register = (char) (PC_register+1);
+		
+		return false;
+	}
+	
+	//Set Carry Flag
+	// Function:    C = 1
+	private boolean SEC() {
+		
+		setFlag("C", true);
+		return false;
+		
+	}
+	
+	
+	//Set Decimal Flag
+	// Function:    D = 1
+	private boolean SED() {
+		
+		setFlag("D", true);
+		return false;
+	}
+	
+	//et Interrupt Flag / Enable Interrupts
+	// Function:    I = 1
+	private boolean SEI() {
+		
+		setFlag("I", true);
+		return false;
+	}
+	
+	//Store Accumulator at Address
+	// Function:    M = A
+	private boolean STA() {
+		
+		
+		BusOU.writeRam(addr_abs, A_register);
+		return false;
+	}
+	
+	
+	//Store X Register at Address
+	// Function:    M = X
+	private boolean STX() {
+		
+		BusOU.writeRam(addr_abs, X_register);
+		return false;
+		
+	}
+	
+	
+	//Store Y Register at Address
+	// Function:    M = Y
+	private boolean STY() {
+		
+		BusOU.writeRam(addr_abs, Y_register);
+		return false;
+	}
+	
+	//Transfer Accumulator to X Register
+	// Function:    X = A
+	// Flags Out:   N, Z
+	private boolean TAX() {
+		
+		X_register= A_register;
+		setFlag("Z",  0x00 == (X_register & 0x00FF));
+		setFlag("N", 0x00 != (X_register & 0x80));
+		return false;
+	}
+	
+	//Transfer Accumulator to Y Register
+	// Function:    Y = A
+	// Flags Out:   N, Z
+	private boolean TAY() {
+		
+		Y_register= A_register;
+		setFlag("Z",  0x00 == (Y_register & 0x00FF));
+		setFlag("N", 0x00 != (Y_register & 0x80));
+		return false;
+	
+		
+	}
+	
+	//Transfer Stack Pointer to X Register
+	// Function:    X = stack pointer
+	// Flags Out:   N, Z
+	private boolean TSX() {
+		
+		X_register= Stack_pointer;
+		setFlag("Z",  0x00 == (X_register & 0x00FF));
+		setFlag("N", 0x00 != (X_register & 0x80));
+		return false;
+	
+		
+	}
+	
+	
+	//Transfer X Register to Accumulator
+	// Function:    A = X
+	// Flags Out:   N, Z
+	private boolean TXA() {
+		
+		A_register= X_register;
+		setFlag("Z",  0x00 == (A_register & 0x00FF));
+		setFlag("N", 0x00 != (A_register & 0x80));
+		return false;
+	
+		
+		
+	}
+	
+	//Transfer X Register to Stack Pointer
+	// Function:    stack pointer = X
+	private boolean TXS() {
+		
+		Stack_pointer=X_register;
+		
+		return false;
+		
+		
+	}
+	
+	//Transfer Y Register to Accumulator
+	// Function:    A = Y
+	// Flags Out:   N, Z
+	private boolean TYA() {
+		
+		A_register= Y_register;
+		setFlag("Z",  0x00 == (A_register & 0x00FF));
+		setFlag("N", 0x00 != (A_register & 0x80));
+		return false;
+		
+	}
+
+	//Illegal opcodes
+	private boolean XXX() {
+		return false;
+	}
+	
 	//SET & GET
 	//SETFLAG E GETFLAG DELLO STATUS REGISTER
 	
-	public static void setFlag(String bit, boolean value) {
+	public void setFlag(String bit, boolean value) {
 			switch(bit) {
 			
 			case "C": //FLAG CARRY
@@ -728,7 +1625,7 @@ public class OperativeUnit {
 			}
 		}
 		
-	public static boolean getFlag(String bit) {
+	public boolean getFlag(String bit) {
 			
 			boolean flagval = false;
 			
@@ -739,31 +1636,31 @@ public class OperativeUnit {
 				break;
 				
 			case "Z": //FLAG ZERO
-				flagval = !(0x0 == (Status_register & (0<<1)));
+				flagval = !(0x0 == (Status_register & (1<<1)));
 				break;
 				
 			case "I": //FLAG DISABLE INTERRUPT
-				flagval = !(0x0 == (Status_register & (0<<2)));		
+				flagval = !(0x0 == (Status_register & (1<<2)));		
 				break;
 				
 			case "D": //FLAG DECIMAL MODE
-				flagval = !(0x0 == (Status_register & (0<<3)));		
+				flagval = !(0x0 == (Status_register & (1<<3)));		
 				break;
 				
 			case "B": //FLAG BREAK
-				flagval = !(0x0 == (Status_register & (0<<4)));			
+				flagval = !(0x0 == (Status_register & (1<<4)));			
 				break;
 				
 			case "U": //FLAG UNUSED
-				flagval = !(0x0 == (Status_register & (0<<5)));		
+				flagval = !(0x0 == (Status_register & (1<<5)));		
 				break;
 					
 			case "V": //FLAG OVERFLOW
-				flagval = !(0x0 == (Status_register & (0<<6)));
+				flagval = !(0x0 == (Status_register & (1<<6)));
 				break;
 				
 			case "N": //FLAG NEGATIVE
-				flagval = !(0x0 == (Status_register & (0<<7)));
+				flagval = !(0x0 == (Status_register & (1<<7)));
 				break;
 			}
 			

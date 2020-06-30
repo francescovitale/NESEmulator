@@ -45,7 +45,7 @@ public class ControlUnitExecute extends ControlUnitState {
 		while (stop == false)
 			stop = clock();																		//Decremento i cicli finché non arrivo a 0
 		
-		if(CU.getInstructionRegister().byteValue() == (byte)0xD0)								//Condizione di terminazione
+		//if(CU.getInstructionRegister().byteValue() == (byte)0xD0)								//Condizione di terminazione
 			CU.setInstructionRegister((byte)0xF);
 	}
 

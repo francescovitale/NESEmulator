@@ -14,6 +14,7 @@ public class Memory {
 		Word = new ArrayList<Byte>();
 		for(int i = 0; i < (int)0xFFFF; i++)
 			Word.add((byte)0x0);
+
 	}
 
 	//Punto di ingresso globale all'istanza
@@ -38,7 +39,7 @@ public class Memory {
 			//data = Word.get(Address);     //Da decommentare quando la memoria sarà riempita.
 			
 			/*DEBUG*/
-			data = (byte)0xD0;
+			data = (byte)0x69;
 		}
 		
 		return data;

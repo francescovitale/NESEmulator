@@ -7,7 +7,10 @@ public class Bus {
 
 	//Costruttore privato
 	
-	private Bus() {}
+	private Bus() {
+		//Collegamento con RAM
+		Ram = Memory.getIstance();
+	}
 
 	//Punto di ingresso globale all'istanza
 	
@@ -28,7 +31,7 @@ public class Bus {
 		
 		Byte data= null;
 		
-		data= Ram.getIstance().read(Address);
+		data= Ram.read(Address);
 		
 		return data;
 	}
