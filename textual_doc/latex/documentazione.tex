@@ -2,6 +2,7 @@
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{amssymb}
+\usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{listings}
 \lstset{
@@ -15,6 +16,7 @@
 \author{Carmine Marra, Stefano Mercogliano, Daniele Ottaviano, Francesco Vitale}
 \date{}
 \maketitle
+\tableofcontents
 \clearpage
 \section{Descrizione del processo}
 
@@ -101,8 +103,33 @@ Descrizione in breve dei casi d’uso:
 }
 \end{itemize}
 
+\begin{table}[h]
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome del caso d'uso}      & EseguiProgramma                                                                                                                                                                                                        \\ \hline
+\textbf{Portata}                  & User-level                                                                                                                                                                                                             \\ \hline
+\textbf{Attore primario}          & Utente                                                                                                                                                                                                                 \\ \hline
+\textbf{Stakeholders e interessi} & Selezionare il programma ed eseguirlo                                                                                                                                                                                  \\ \hline
+\textbf{Pre-condizioni}           & Modalità d'esecuzione scelta                                                                                                                                                                                                                       \\ \hline
+\textbf{Post-condizioni}          & Visualizzazione dell'esecuzione del programma                                                                                                                                                                          \\ \hline
+\textbf{Scenario principale}      & \begin{tabular}[c]{@{}l@{}}1. Seleziona programma\\ 2. Avvia programma\end{tabular}                                                                                                                                    \\ \hline
+\textbf{Estensioni}               & \begin{tabular}[c]{@{}l@{}}1a. L'utente seleziona il programma dalla lista\\ 1b. L'utente seleziona il programma dal file system\\ 2a. L'utente sospende il programma\\ 2b. L'utente arresta il programma\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
 
-
+\begin{table}[h]
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome del caso d'uso}      & VisualizzaStatoArchitettura                                                                                                                                                                                                                                                                             \\ \hline
+\textbf{Portata}                  & User-level                                                                                                                                                                                                                                                                                              \\ \hline
+\textbf{Attore primario}          & Utente                                                                                                                                                                                                                                                                                                  \\ \hline
+\textbf{Stakeholders e interessi} & Verificare l'evoluzione dello stato dell'architettura                                                                                                                                                                                                                                                   \\ \hline
+\textbf{Pre-condizioni}           & Il programma non è in esecuzione                                                                                                                                                                                                                                                                        \\ \hline
+\textbf{Post-condizioni}          & Visualizzazione dello stato dell'architettura                                                                                                                                                                                                                                                           \\ \hline
+\textbf{Scenario principale}      & 1. Seleziona componente                                                                                                                                                                                                                                                                                 \\ \hline
+\textbf{Estensioni}               & \begin{tabular}[c]{@{}l@{}}1a. Se selezionata la CPU\\ \quad1. Mostra tutti i registri\\ 1b. Se selezionata la memoria\\ \quad 1. Seleziona range\\ \quad 2. Mostra porzione di memoria\\ 1c. Se selezionata la PPU\\ 1d. Se selezionata la APU\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
 
 
 
