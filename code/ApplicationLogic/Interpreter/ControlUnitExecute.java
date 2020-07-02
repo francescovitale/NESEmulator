@@ -5,18 +5,14 @@ import Control.Controller;
 
 public class ControlUnitExecute extends ControlUnitState {
 
-	OperativeUnit OU;
+	StateFacade SF;
 	ControlUnit CU;
-
-	private volatile static ControlUnitExecute ControlUnitExecute = null;
+	private volatile static ControlUnitExecute ControlUnitExecute = null;	//Singleton
 	
-	protected void changeState(ControlUnit CU, ControlUnitState NewState) {
-		CU.changeState(NewState);
-	};
 	
 	protected ControlUnitExecute() {
-		//Collegamento con L'unità operativa
-		OU = OperativeUnit.getIstance();
+		//Collegamento con il facade dello STATE
+		SF = new StateFacade();
 	}
 	
 	//Punto di ingresso globale all'istanza
@@ -30,10 +26,14 @@ public class ControlUnitExecute extends ControlUnitState {
 		}
 		return ControlUnitExecute;
 	}
+	
+	protected void changeState(ControlUnit CU, ControlUnitState NewState) {
+		CU.changeState(NewState);
+	};
 
 	public void execCycle() {
 		CU = ControlUnit.getInstance();
-		CU.setBool_opcode(OU.Execute(CU.getCurrentInstruction().opcode));						//Eseguo l'operazione dell'istruzione corrente
+		CU.setBool_opcode(SF.Execute(CU.getCurrentInstruction().opcode));						//Eseguo l'operazione dell'istruzione corrente
 		
 		/*DEBUG*/
 		System.out.println(CU.getCurrentInstruction().opcode);
@@ -41,21 +41,10 @@ public class ControlUnitExecute extends ControlUnitState {
 		if(CU.getBool_addr() & CU.getBool_opcode())												//Se entrambi i bool sono veri
 			CU.increaseCycles();																//Va aggiunto un ciclo per l'istruzione corrente
 		
-		boolean stop=false;
-		while (stop == false)
-			stop = clock();																		//Decremento i cicli finché non arrivo a 0
-		
 		//if(CU.getInstructionRegister().byteValue() == (byte)0xD0)								//Condizione di terminazione
 			CU.setInstructionRegister((byte)0xF);
+		//else 
+		//	changeState(CU, ControlUnitFetch.getInstance());
 	}
 
-	
-	private Boolean clock() {
-		if (CU.getCycles()==0)					//Se ho finito i cicli
-			return true;										
-		else {
-			CU.decreaseCycles();				//Altrimenti decrementa il numero di cicli
-			return true;
-		}
-	}
 }

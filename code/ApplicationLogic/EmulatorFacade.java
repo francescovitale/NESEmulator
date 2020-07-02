@@ -5,23 +5,27 @@ import ApplicationLogic.State.*;
 
 public class EmulatorFacade {
 
-	ControlUnit ControlUnit;
-	Mapper Mapper;
+	InterpreterFacade IF;
+	StateFacade SF;
 	
+	public EmulatorFacade() {
+		IF = new InterpreterFacade();
+		SF = new StateFacade();
+	}
 	
-	public EmulatorFacade() {}
-	
+	//Inizializzo il programma in memoria
 	public Boolean initProgram(String ROMName, Integer ID) {
-
-		Mapper.getIstance().loadData(ROMName, ID);
-		
-		return true;
+		return SF.loadData(ROMName, ID);
 	}
 
+	//Aziono il ciclo del processore
 	public Boolean startCycle() {
-
-		ControlUnit.getInstance().execCycle();
-		return true;
+		return IF.startCycle();
 	}
+	
+	//Recupero lo stato attuale dell'architettura
+	/*public State getState() {
+		
+	}*/
 
 }

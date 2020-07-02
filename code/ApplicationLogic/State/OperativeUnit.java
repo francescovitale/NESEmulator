@@ -16,18 +16,18 @@ public class OperativeUnit {
 	private Bus BusOU;
 	
 	//REGISTRI INTERNI AL PROCESSORE
-	private static Byte A_register;
-	private static Byte X_register;
-	private static Byte Y_register;
-	private static Byte Stack_pointer;
+	private Byte A_register;
+	private Byte X_register;
+	private Byte Y_register;
+	private Byte Stack_pointer;
 	
-	private static char PC_register;
-	private static Byte Status_register;
+	private char PC_register;
+	private Byte Status_register;
 	
 	//ATTRIBUTI INTERNI DI COMODO
-	private static Byte fetched ;									   //Dati che memorizzo
-	private static char addr_abs;   								   //Locazione assoluta di memoria
-	private static char addr_rel;									   // Indirizzo relativo
+	private Byte fetched ;									   //Dati che memorizzo	
+	private char addr_abs;   								   //Locazione assoluta di memoria
+	private char addr_rel;									   // Indirizzo relativo
 	
 	//Costruttore privato
 	private OperativeUnit() {
@@ -37,7 +37,7 @@ public class OperativeUnit {
 		
 		//INIZIALIZZAZIONE REGISTRI
 		
-		A_register = 0x01;
+		A_register = 0x00;
 		X_register = 0x00;
 		Y_register = 0x00;
 		PC_register = 0x0000;
@@ -732,7 +732,7 @@ public class OperativeUnit {
 		int f = Byte.toUnsignedInt(fetched);
 		
 		//Setto il flag di overflow
-		setFlag("V",(((~(A ^ f) & (A ^ temp))& 0x0080)) != 0x00);			//DA AGGIUSTARE
+		setFlag("V",(((~(A ^ f) & (A ^ temp))& 0x0080)) != 0x00);			
 		
 		// Il flag negativo è settato al valore del bit più significativo
 		setFlag("N", (temp & 0x80) != 0);
@@ -1667,13 +1667,54 @@ public class OperativeUnit {
 			return flagval;
 		}
 	
-	
+	//Resetto
+	public void reset() {
+		//Prelevo un valore da un indirizzo prestabilito
+		addr_abs = 0xFFFC;
+		byte lo = BusOU.readRam(addr_abs).byteValue();
+		byte hi = BusOU.readRam((char)(addr_abs+1)).byteValue();
+		
+		//Salvo il valore prelevato come Program Counter
+		PC_register = (char)((hi << 8) | lo);
+		
+		// Resetto i registri interni e i registri di utilità
+		A_register = 0x00;
+		X_register = 0x00;
+		Y_register = 0x00;
+		PC_register = 0x0000;
+		Status_register = 0x00;	
+		Stack_pointer= (byte) 0xFD;	
+		fetched = 0x00;
+		addr_abs = 0x0000;
+		addr_rel = 0x00;
+
+		// Resetto i cycle a 8
+		ControlUnit.getInstance().setCycles(8);
+	}
 	
 	
 	//GETTER & SETTERS
 	public Instruction getMicrorom(int i) {
 		return MicroRom[i];
 	}
-	
+	public Byte getA_register() {
+		return A_register;
+	}
+	public Byte getX_register() {
+		return X_register;
+	}
+	public Byte getY_register() {
+		return Y_register;
+	}
+	public Byte getStack_pointer() {
+		return Stack_pointer;
+	}
+	public char getPC_register() {
+		return PC_register;
+	}
+	public Byte getStatus_register() {
+		return Status_register;
+	}
+
 	
 }

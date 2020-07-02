@@ -7,23 +7,19 @@ public class ControlUnit {
 
 	private Byte InstructionRegister;									//Istruction Register contenente l'attuale istruzione letta in memoria
 	private Integer cycles;												//Numero di cicli dell'attuale ciclo
-	private Instruction CurrentInstruction = new Instruction();  //Operazione in esecuzione in un dato ciclo del processore
+	private Instruction CurrentInstruction = new Instruction();  		//Operazione in esecuzione in un dato ciclo del processore
  	private ControlUnitState State;										//Stato corrente 
- 	private Boolean bool_opcode;									//verifica sul ciclo aggiuntivo
- 	private Boolean bool_addr;									//verifica sul ciclo aggiuntivo
-	void changeState(ControlUnitState NextState) {
-		State = NextState;
-	};
-	
-	
-	private volatile static ControlUnit ControlUnit = null;			//Singleton
+ 	private Boolean bool_opcode;										//verifica sul ciclo aggiuntivo
+ 	private Boolean bool_addr;											//verifica sul ciclo aggiuntivo
+ 	private volatile static ControlUnit ControlUnit = null;				//Singleton
+ 		
 	
 	protected ControlUnit() {
 		InstructionRegister = 0x0;
 		cycles = 0;
 		setBool_opcode(false);
 		setBool_addr(false);
-		State = ControlUnitFetch.getInstance();
+		State = ControlUnitReset.getInstance();
 	};
 	
 	//Punto di ingresso globale all'istanza
@@ -37,6 +33,10 @@ public class ControlUnit {
 		}
 		return ControlUnit;
 	}
+	
+ 	void changeState(ControlUnitState NextState) {
+		State = NextState;
+	};
 	
 	public void execCycle() {
 		while(InstructionRegister != 0xF)
