@@ -1715,6 +1715,80 @@ public class OperativeUnit {
 	public Byte getStatus_register() {
 		return Status_register;
 	}
+	
+	//DA CONTROLLARE E VERIFICARE DOVE METTERE
+	// Interrupt requests are a complex operation and only happen if the
+	// "disable interrupt" flag is 0. IRQs can happen at any time, but
+	// you dont want them to be destructive to the operation of the running 
+	// program. Therefore the current instruction is allowed to finish
+	// (which I facilitate by doing the whole thing when cycles == 0) and 
+	// then the current program counter is stored on the stack. Then the
+	// current status register is stored on the stack. When the routine
+	// that services the interrupt has finished, the status register
+	// and program counter can be restored to how they where before it 
+	// occurred. This is impemented by the "RTI" instruction. Once the IRQ
+	// has happened, in a similar way to a reset, a programmable address
+	// is read form hard coded location 0xFFFE, which is subsequently
+	// set to the program counter.
+	private void irq()
+	{
+		// If interrupts are allowed
+		if (getFlag("I") == false)
+		{
+			// Push the program counter to the stack. It's 16-bits dont
+			// forget so that takes two pushes
+			BusOU.writeRam((char)(0x0100 + Stack_pointer), (byte)((PC_register >> 8) & 0x00FF));
+			Stack_pointer--;
+			BusOU.writeRam((char)(0x0100 + Stack_pointer), (byte)(PC_register & 0x00FF));
+			Stack_pointer--;
+
+			// Then Push the status register to the stack
+			setFlag("B", false);
+			setFlag("U", true);
+			setFlag("I", true);
+			BusOU.writeRam((char)(0x0100 + Stack_pointer), Status_register);
+			Stack_pointer--;
+
+			// Read new program counter location from fixed address
+			addr_abs = 0xFFFE;
+			byte lo = BusOU.readRam(addr_abs).byteValue();
+			byte hi = BusOU.readRam((char)(addr_abs+1)).byteValue();
+			PC_register = (char)((hi << 8) | lo);
+			
+			// IRQs take time
+			ControlUnit.getInstance().setCycles(7);
+		}
+	}
+
+
+	// A Non-Maskable Interrupt cannot be ignored. It behaves in exactly the
+	// same way as a regular IRQ, but reads the new program counter address
+	// form location 0xFFFA.
+	private void nmi()
+	{
+		// Push the program counter to the stack. It's 16-bits dont
+		// forget so that takes two pushes
+		BusOU.writeRam((char)(0x0100 + Stack_pointer), (byte)((PC_register >> 8) & 0x00FF));
+		Stack_pointer--;
+		BusOU.writeRam((char)(0x0100 + Stack_pointer), (byte)(PC_register & 0x00FF));
+		Stack_pointer--;
+
+		// Then Push the status register to the stack
+		setFlag("B", false);
+		setFlag("U", true);
+		setFlag("I", true);
+		BusOU.writeRam((char)(0x0100 + Stack_pointer), Status_register);
+		Stack_pointer--;
+
+		// Read new program counter location from fixed address
+		addr_abs = 0xFFFA;
+		byte lo = BusOU.readRam(addr_abs).byteValue();
+		byte hi = BusOU.readRam((char)(addr_abs+1)).byteValue();
+		PC_register = (char)((hi << 8) | lo);
+					
+		// IRQs take time
+		ControlUnit.getInstance().setCycles(8);
+	}
 
 	
 }
