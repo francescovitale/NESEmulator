@@ -8,7 +8,6 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 
 public class FileSystemManager {
 	private volatile static FileSystemManager FileSystemManager = null;			//Singleton
@@ -31,40 +30,19 @@ public class FileSystemManager {
 		FS = FileSystems.getDefault();
 	}
 	
-	protected Byte parseUnsignedByte(String StringByte)
-	{
-		Integer MyInteger = Integer.parseInt(StringByte,16);
-		if(MyInteger > 127)
-			MyInteger = MyInteger - 256;
-		Byte MyByte = (byte)(int)MyInteger;
-		return MyByte;
-	}
-	
-	public ArrayList<Byte> getData() {
-		
-		ArrayList<Byte> ReturnedByteList = new ArrayList<Byte>();
-		Byte temp;
-		
+	public String getData() {
+		String ReturnedString = "";
 		try (InputStream in = Files.newInputStream(ParsedPath);
 			    BufferedReader reader =new BufferedReader(new InputStreamReader(in))) {
 			    String ReadLine = reader.readLine();
 			    while(ReadLine != null) {
-				    String[] parts = ReadLine.split(" ");
-				    
-				    
-				    for(int i = 0; i<parts.length; i++)
-				    {
-				    	temp = parseUnsignedByte(parts[i]);
-				    	ReturnedByteList.add(temp);
-				    }
-				    
+			    	ReturnedString = ReturnedString + ReadLine + " ";
 				    ReadLine = reader.readLine();
 			    }
 			} catch (IOException x) {
 			    System.err.println(x);
 			}
-		return ReturnedByteList;
-		
+		return ReturnedString;
 	}
 	
 	public void setDefaultPath(String path) {
