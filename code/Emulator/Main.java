@@ -9,7 +9,7 @@ public class Main {
 		Controller C = new Controller();
 		String Nome = "GIOCO";
 
-		C.executeProgram("", 0, "C:\\Users\\aceep\\Desktop\\Prova\\GIOCO.ines");
+		C.executeProgram("MarioBros", 0, "");
 		//C.DumpCartridge();
 		//C.DumpMemory();
 
