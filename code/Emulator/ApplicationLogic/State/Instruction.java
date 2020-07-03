@@ -16,19 +16,18 @@ public class Instruction {
 		addressing_mode = ad;
 		cycles = c;
 	}
-	
-	public Instruction(Instruction I2)
-	{
-		opcode = I2.opcode;
-		addressing_mode = I2.addressing_mode;
-		cycles = I2.cycles;
-		
-	}
 
 	@Override
 	public String toString() {
 		return "Instruction [opcode=" + opcode + ", addressing_mode=" + addressing_mode + ", cycles=" + cycles + "]";
 	}
-	
+
+	// copy constructor 
+	public Instruction(Instruction i) { 
+        //System.out.println("Copy constructor called"); 
+        opcode = i.opcode; 
+        addressing_mode = i.addressing_mode;
+        cycles = i.cycles;
+    }
 }
 

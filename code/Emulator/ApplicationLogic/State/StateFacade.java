@@ -1,23 +1,22 @@
 package Emulator.ApplicationLogic.State;
 
-import java.util.ArrayList;
+import Emulator.Program;
 
 public class StateFacade {
 	
 	OperativeUnit OU;		//Collegamento con l'unità operativa
-	Cartridge C;			//Collegamento con il Mapper
+	Cartridge Crtg;			//Collegamento con il Cartridge
 	State S;	 			//Collegamento con lo State
 	
 	public StateFacade() {
 		OU = OperativeUnit.getIstance();	//Recupero l'istanza dell'unità operativa
-		C = Cartridge.getIstance();			//Recupero l'istanza del Mapper
+		Crtg = Cartridge.getIstance();		//Recupero l'istanza della Cartridge
 		S = State.getIstance();				//Recupero l'istenza di State
 	}
 	
 	//Inizializzo il programma in memoria
-	public Boolean loadData(ArrayList<Byte> ROMData) {
-		C.loadData(ROMData);
-		return true;
+	public Boolean loadData(Program Programma) {
+		return Crtg.loadData(Programma);
 	}
 
 	//Recupero l'istruzione i_esima dalla microRom

@@ -5,14 +5,13 @@ import java.util.*;
 public class Memory {
 
 	Bus Bus;
-	Mapper Mapper;
 	private ArrayList<Byte> Word;
 	private volatile static Memory Mem = null;			//Singleton
 	
 	//Costruttore privato
 	private Memory() {
 		Word = new ArrayList<Byte>();
-		for(int i = 0; i < (int)0xFFFF; i++)
+		for(int i = 0; i < (int)0x1FFF; i++)
 			Word.add((byte)0x0);
 
 	}
@@ -34,34 +33,25 @@ public class Memory {
 		
 		Byte data = null;
 
-		if( (Address >= 0x0000) &&  (Address <= 0xFFFF)) {
+		//if( (Address >= 0x0000) &&  (Address <= 0x1FFF)) { il Controllo è fatto nel BUS.
 		
-			//data = Word.get(Address);     //Da decommentare quando la memoria sarà riempita.
+			//data = Word.get(Address & 0x07FF);     //Faccio il mirroring della RAM (& 0x07FF) e leggo nella posizione corretta
 			
 			/*DEBUG*/
 			data = (byte)0x69;
-		}
+		//}
 		
 		return data;
 	}
 
-
-	public void loadBank(ArrayList<Byte> Bank) {
-		
-		//I BANCHI SONO TEORICAMENTE CARICATI IN LOCAZIONI SPECIFICHE DI MEMORIA, TUTTAVIA PER IL MOMENTO LI CARICHEREMO NELLE PRIME LOCAZIONI.
-		for(int i = 0; i < Bank.size(); i++) write((char) i, Bank.get(i));
-		
-	}
-
-
 	public void write(char Address, Byte Data) {
-		
-		if( (Address >= 0x0000) &&  (Address <= 0xFFFF)) {
-			
-			Word.set(Address, Data);
-		}
+
+		//if( (Address >= 0x0000) &&  (Address <= 0x1FFF)) {  il Controllo è fatto nel BUS.
+			Word.set(Address, Data);		
+		//}
 		
 	}
+
 	
 	//GETTER
 		public ArrayList<Byte> getWord() {

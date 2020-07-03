@@ -2,7 +2,8 @@ package Emulator.ApplicationLogic.State;
 
 public class Bus {
 
-	Memory Ram;
+	PPU P;											//Collegamento con la PPU
+	Memory Ram;										//Collegamento con RAM
 	private volatile static Bus BUS = null;			//Singleton
 
 	//Costruttore privato
@@ -26,21 +27,39 @@ public class Bus {
 	}
 
 	
-	public Byte readRam(char Address) {
-		// TODO - implement Bus.readRam
-		
+	
+	
+	public Byte read(char Address) {
 		Byte data= null;
+		P = PPU.getInstance();
 		
-		data= Ram.read(Address);
-		
+		//Se l'address è compreso tra 0x0000 e 0x1FFF voglio leggere dalla RAM
+		if( (Address >= 0x0000) &&  (Address <= 0x1FFF)) {
+			data= Ram.read((char)(Address & 0x07FF));		//Faccio il mirroring della RAM (& 0x07FF)
+		}
+		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio leggere dalla PPU
+		else if((Address >= 0x2000) && (Address <= 0x3FFF)) {
+			data = P.Read((char)(Address & 0x0007), false);	//Faccio il mirroring della PPU (& 0x0007)
+		}
+		else {
+			data= Ram.read((char)(Address & 0x07FF));	//DEBUG
+		}
 		return data;
 	}
 
-	public void writeRam(char Address, Byte Data) {
-		// TODO - implement Bus.writeRam
-		
-		Ram.write(Address, Data);
-		
+	public void write(char Address, Byte Data) {
+		P = PPU.getInstance();
+		//Se l'address è compreso tra 0x0000 e 0x1FFF voglio scrivere in RAM
+		if( (Address >= 0x0000) &&  (Address <= 0x1FFF)) {
+			Ram.write((char)(Address & 0x07FF), Data);  //Faccio il mirroring della RAM (& 0x07FF)
+		}
+		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio scrivere sulla PPU
+		else if((Address >= 0x2000) && (Address <= 0x3FFF)) {
+			P.Write((char)(Address & 0x0007), Data);	//Faccio il mirroring della PPU (& 0x0007)
+		}
+		else {
+			Ram.write((char)(Address & 0x07FF), Data);  //DEBUG
+		}
 	}
 
 
