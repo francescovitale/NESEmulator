@@ -66,7 +66,7 @@ public class ControlUnit {
 	}
 
 	public void setCurrentInstruction(Instruction currentInstruction) {
-		CurrentInstruction = currentInstruction;
+		CurrentInstruction = new Instruction(currentInstruction);
 	}
 	
 	public Boolean getBool_opcode() {
