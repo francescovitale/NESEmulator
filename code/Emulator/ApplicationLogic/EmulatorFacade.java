@@ -1,21 +1,54 @@
 package Emulator.ApplicationLogic;
 
+import java.util.ArrayList;
+
 import Emulator.ApplicationLogic.Interpreter.*;
 import Emulator.ApplicationLogic.State.*;
+import Emulator.TechnicalServices.TechnicalServicesFacade;
 
 public class EmulatorFacade {
 
 	InterpreterFacade IF;
 	StateFacade SF;
+	TechnicalServicesFacade Tsf;
+	ArrayList<Program> Programs;
+	
+	ArrayList<Byte> ROMData;
 	
 	public EmulatorFacade() {
 		IF = new InterpreterFacade();
 		SF = new StateFacade();
 	}
 	
+	public Integer selectProgram(String ROMName, Integer ID)
+	{
+		Boolean trovato = false;
+		Integer i = 0;
+		while(!trovato && i<Programs.size()) {
+			if(Programs.get(i).getName().equals(ROMName) && Programs.get(i).getID().equals(ID))
+			{
+				trovato = true;
+			}
+			else
+				i++;
+		}
+		return i;
+	}
+	
 	//Inizializzo il programma in memoria
 	public Boolean initProgram(String ROMName, Integer ID, String SelectedPath) {
-		return SF.loadData(ROMName, ID,SelectedPath);
+		Programs = new ArrayList<Program>();
+		Tsf = new TechnicalServicesFacade();
+		Programs = Tsf.loadCartridgeData(SelectedPath);
+		
+		int index;
+		
+		if(SelectedPath.isEmpty()) {
+			index = selectProgram(ROMName, ID);
+			return SF.loadData(Programs.get(index).getParsedROMData());
+		}
+		else
+			return SF.loadData(Programs.get(0).getParsedROMData());
 	}
 
 	//Aziono il ciclo del processore
