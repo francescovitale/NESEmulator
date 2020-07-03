@@ -16,6 +16,14 @@ public class Instruction {
 		addressing_mode = ad;
 		cycles = c;
 	}
+	
+	public Instruction(Instruction I2)
+	{
+		opcode = I2.opcode;
+		addressing_mode = I2.addressing_mode;
+		cycles = I2.cycles;
+		
+	}
 
 	@Override
 	public String toString() {

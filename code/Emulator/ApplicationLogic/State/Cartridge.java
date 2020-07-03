@@ -37,8 +37,10 @@ public class Cartridge {
 
 	public void loadData(ArrayList<Byte> ROMData) {
 		
-		Bank = new ArrayList<Byte>();
-		Bank = ROMData;
+		Bank = new ArrayList<Byte>(ROMData);
+		for(int i=0; i<Bank.size(); i++) {
+			System.out.println(Bank.get(i));
+		}
 		
 	}
 
