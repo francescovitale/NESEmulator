@@ -11,8 +11,16 @@ public class TechnicalServicesFacade {
 	public TechnicalServicesFacade(){};
 	
 	public ArrayList<Program> loadCartridgeData(String SelectedPath){
-		LP = new AccessProgramProxy();
-		return LP.loadProgram(SelectedPath);
+		ArrayList<Program> Program;
+		
+		if(SelectedPath.isEmpty()) {
+			LP = new AccessProgramDB();
+			Program = new ArrayList<Program>(LP.loadProgram(SelectedPath));}
+		else {
+			LP = new AccessProgramFS();
+			Program = new ArrayList<Program>(LP.loadProgram(SelectedPath));
+		}
+		return Program;
 	}
 	
 }
