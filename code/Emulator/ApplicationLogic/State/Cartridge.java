@@ -2,12 +2,10 @@ package Emulator.ApplicationLogic.State;
 
 import java.util.ArrayList;
 
-import Emulator.TechnicalServices.TechnicalServicesFacade;
 
 public class Cartridge {
 
 	private ArrayList<Byte> Bank;
-	private TechnicalServicesFacade Tsf;
 	private volatile static Cartridge Cart = null;			//Singleton
 
 	//Costruttore privato
@@ -37,14 +35,10 @@ public class Cartridge {
 		return 0;
 	}
 
-	public ArrayList<Byte> loadData(String Nome, Integer ID, String SelectedPath) {
+	public void loadData(ArrayList<Byte> ROMData) {
 		
-		Tsf = new TechnicalServicesFacade();
-		ArrayList<Byte> ROM;
-		
-		ROM = Tsf.loadCartridgeData(Nome, ID, SelectedPath);
-		
-		return ROM;
+		Bank = new ArrayList<Byte>();
+		Bank = ROMData;
 		
 	}
 

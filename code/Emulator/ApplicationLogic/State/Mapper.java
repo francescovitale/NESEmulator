@@ -26,11 +26,11 @@ public class Mapper {
 		return Map;
 	}
 
-	public void loadData(String ROMName, Integer ID, String SelectedPath) {
+	public void loadData(ArrayList<Byte> ROMData) {
 		
 		ArrayList<Byte> Bank = new ArrayList<Byte>();
-		
-		Bank = Cartridge.getIstance().loadData(ROMName, ID, SelectedPath); //Carico il banco dalla cartuccia
+		Bank = ROMData;
+		Cartridge.getIstance().loadData(ROMData); //Carico il banco dalla cartuccia
 		for(int i = 0; i < Bank.size(); i++)
 		{
 		    System.out.println(Bank.get(i));

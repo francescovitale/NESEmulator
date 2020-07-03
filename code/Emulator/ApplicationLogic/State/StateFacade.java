@@ -1,20 +1,22 @@
 package Emulator.ApplicationLogic.State;
 
+import java.util.ArrayList;
+
 public class StateFacade {
 	
 	OperativeUnit OU;		//Collegamento con l'unità operativa
-	Mapper M;			//Collegamento con il Mapper
+	Cartridge C;			//Collegamento con il Mapper
 	State S;	 			//Collegamento con lo State
 	
 	public StateFacade() {
 		OU = OperativeUnit.getIstance();	//Recupero l'istanza dell'unità operativa
-		M = Mapper.getIstance();			//Recupero l'istanza del Mapper
+		C = Cartridge.getIstance();			//Recupero l'istanza del Mapper
 		S = State.getIstance();				//Recupero l'istenza di State
 	}
 	
 	//Inizializzo il programma in memoria
-	public Boolean loadData(String ROMName, Integer ID, String SelectedPath) {
-		M.loadData(ROMName, ID, SelectedPath);
+	public Boolean loadData(ArrayList<Byte> ROMData) {
+		C.loadData(ROMData);
 		return true;
 	}
 
