@@ -65,5 +65,11 @@ public class Program {
 	}
 	public Program() {
 	}
+	public Program(Program P) {
+		ID = P.ID;
+		Name = P.Name;
+		ROMData = P.ROMData;
+		
+	}
 
 }

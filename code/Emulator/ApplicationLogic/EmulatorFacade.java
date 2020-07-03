@@ -37,10 +37,8 @@ public class EmulatorFacade {
 	
 	//Inizializzo il programma in memoria
 	public Boolean initProgram(String ROMName, Integer ID, String SelectedPath) {
-		Programs = new ArrayList<Program>();
 		Tsf = new TechnicalServicesFacade();
-		Programs = Tsf.loadCartridgeData(SelectedPath);
-		
+		Programs = new ArrayList<Program>(Tsf.loadCartridgeData(SelectedPath));
 		int index;
 		
 		if(SelectedPath.isEmpty()) {
