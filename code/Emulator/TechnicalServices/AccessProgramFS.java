@@ -2,6 +2,7 @@ package Emulator.TechnicalServices;
 
 import java.util.ArrayList;
 
+import Emulator.ApplicationLogic.Program;
 import Emulator.TechnicalServices.FileSystemAccess.FileSystemManager;
 
 public class AccessProgramFS extends AccessProgram{
@@ -10,13 +11,12 @@ public class AccessProgramFS extends AccessProgram{
 	
 	public AccessProgramFS() {};
 	
-	public ArrayList<Byte> loadProgram(String Nome, Integer ID, String SelectedPath) {
-		ArrayList<Byte> Program;
+	public ArrayList<Program> loadProgram(String SelectedPath) {
+		ArrayList<Program> Prog = new ArrayList<Program>();
 		Fsm = FileSystemManager.getInstance();
 		Fsm.setDefaultPath(SelectedPath);
-		Program = Fsm.getData();
-		return Program;
-		
+		Prog.add(new Program(-1,"",Fsm.getData()));
+		return Prog;
 	};
 
 }
