@@ -1,6 +1,8 @@
 package Emulator.ApplicationLogic.State;
 
-import Emulator.Program;
+import java.util.ArrayList;
+
+import Emulator.ApplicationLogic.Program;
 
 public class StateFacade {
 	
@@ -15,7 +17,7 @@ public class StateFacade {
 	}
 	
 	//Inizializzo il programma in memoria
-	public Boolean loadData(Program Programma) {
+	public Boolean loadData(ArrayList<Byte> Programma) {
 		return Crtg.loadData(Programma);
 	}
 

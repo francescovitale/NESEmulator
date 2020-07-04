@@ -2,7 +2,7 @@ package Emulator.ApplicationLogic.State;
 
 import java.util.ArrayList;
 
-import Emulator.Program;
+import Emulator.ApplicationLogic.Program;
 import Emulator.TechnicalServices.TechnicalServicesFacade;
 
 public class Cartridge {
@@ -18,7 +18,7 @@ public class Cartridge {
 	private ArrayList<Byte> vCHRMemory;				//Character
 	private ArrayList<Byte> ROM;					//ROM completa
 	
-	Mapper pMapper;
+	Mapper_000 pMapper;
 	
 	public enum MIRROR
 	{
@@ -68,9 +68,9 @@ public class Cartridge {
 	}
 
 	//DA MODIFICARE
-	public boolean loadData(Program Programma) {
+	public boolean loadData(ArrayList<Byte> Programma) {
 		//Prendo la ROM della cartuccia inserita
-		ROM = new ArrayList<Byte>(Programma.getParsedROMData());
+		ROM = new ArrayList<Byte>(Programma);
 		
 		// iNES Format Header
 		char[] name = new char[4];
@@ -88,8 +88,10 @@ public class Cartridge {
 		Integer ind0;
 		
 		//Inizializzo i valori dell'Header
+		ind0 = 0;
 		for(int i= 0; i<8; i=i+2) {
-			name[i] = (char)((ROM.get(i+1) << 8) | ROM.get(i));
+			name[ind0] = (char)((ROM.get(i+1) << 8) | ROM.get(i));
+			ind0++;
 		}
 		prg_rom_chunks = ROM.get(8);
 		chr_rom_chunks = ROM.get(9);
@@ -98,8 +100,10 @@ public class Cartridge {
 		prg_ram_size = ROM.get(12);
 		tv_system1 = ROM.get(13);
 		tv_system2 = ROM.get(14);
+		ind0 = 0;
 		for(int i= 15; i<25; i=i+2) {
-			unused[i] = (char)((ROM.get(i+1) << 8) | ROM.get(i));
+			unused[ind0] = (char)((ROM.get(i+1) << 8) | ROM.get(i));
+			ind0++;
 		}
 		
 		if ((mapper1 & 0x04) != 0x00) {
@@ -127,7 +131,7 @@ public class Cartridge {
 			nPRGBanks = (int)prg_rom_chunks;
 			vPRGMemory.ensureCapacity(nPRGBanks * 16384);
 			ind0 = 0;
-			while (ind0 < nPRGBanks * 16384) {
+			while (ind0 < nPRGBanks * 16384 & (indice<ROM.size())) {
 				vPRGMemory.set(ind0, ROM.get(indice));
 				indice++;
 				ind0++;
@@ -136,7 +140,7 @@ public class Cartridge {
 			nCHRBanks = (int)chr_rom_chunks;
 			vCHRMemory.ensureCapacity(nCHRBanks * 8192);
 			ind0 = 0;
-			while (ind0 < nCHRBanks * 8192) {
+			while (ind0 < nCHRBanks * 8192 & (indice<ROM.size())) {
 				vCHRMemory.set(ind0, ROM.get(indice));
 				indice++;
 				ind0++;
@@ -149,7 +153,10 @@ public class Cartridge {
 		// Load appropriate mapper
 		switch (nMapperID)
 		{
-			case 0: pMapper = Mapper_000.getIstance(nPRGBanks, nCHRBanks); break;
+			case 0: 
+				pMapper = Mapper_000.getIstance(); 
+				pMapper.setAttributes(nPRGBanks, nCHRBanks);
+				break;
 		}
 		
 		
@@ -162,20 +169,21 @@ public class Cartridge {
 	//Per Connettere la Cartridge sul BUS principale
 	public boolean Read(char addr, Byte data)
 	{
-		char mapped_addr = 0x0000;
+		Character mapped_addr = 0x0000;
 		if (pMapper.mapRead(addr, mapped_addr))
 		{
-			data = vPRGMemory.get(mapped_addr);
+			data = vPRGMemory.get((int)mapped_addr);
 			return true;
 		}
 		else
 			return false;
+		
 	}
 
 	//Per Connettere la Cartridge sul BUS principale
 	public boolean Write(char addr, Byte data)
 	{
-		char mapped_addr = 0x0000;
+		Character mapped_addr = 0x0000;
 		if (pMapper.mapWrite(addr, mapped_addr))
 		{
 			vPRGMemory.set(mapped_addr, data);
@@ -188,7 +196,7 @@ public class Cartridge {
 	//Per Connettere la Cartridge sul BUS della PPU
 	public boolean ppuRead(char addr, Byte data)
 	{
-		char mapped_addr = 0x0000;
+		Character mapped_addr = 0x0000;
 		if (pMapper.ppuMapRead(addr, mapped_addr))
 		{
 			data = vCHRMemory.get(mapped_addr);
@@ -201,7 +209,7 @@ public class Cartridge {
 	//Per Connettere la Cartridge sul BUS della PPU
 	public boolean ppuWrite(char addr, Byte data)
 	{
-		char mapped_addr = 0x0000;
+		Character mapped_addr = 0x0000;
 		if (pMapper.ppuMapWrite(addr, mapped_addr))
 		{
 			vCHRMemory.set(mapped_addr, data);
