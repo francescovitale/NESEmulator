@@ -319,6 +319,10 @@ public class OperativeUnit {
 	
 	//Fetch dell'opcode 
 	public Byte fetch() {
+		/*Debug*/
+		System.out.println("PC fetch");
+		System.out.println((byte)PC_register);
+		System.out.println((byte)(PC_register>>8));
 		return BusOU.read(PC_register);					//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
 	}
 
@@ -1675,11 +1679,15 @@ public class OperativeUnit {
 		//Salvo il valore prelevato come Program Counter
 		PC_register = (char)((hi << 8) | lo);
 		
+		/*Debug*/
+		System.out.println("PC");
+		System.out.println((byte)PC_register);
+		System.out.println((byte)(PC_register>>8));
+		
 		// Resetto i registri interni e i registri di utilità
 		A_register = 0x00;
 		X_register = 0x00;
 		Y_register = 0x00;
-		PC_register = 0x0000;
 		Status_register = 0x00;	
 		Stack_pointer= (byte) 0xFD;	
 		fetched = 0x00;
