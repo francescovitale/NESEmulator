@@ -4,25 +4,15 @@ import java.util.ArrayList;
 
 public class Mapper_000 extends Mapper{
 
-	private volatile static Mapper_000 Map = null;			//Singleton
 	private int nPRGBanks;
 	private int nCHRBanks;
 	
 	
-	private Mapper_000() {}
+	protected Mapper_000() {}
 	
 
 	//Punto di ingresso globale all'istanza
-	public static Mapper_000 getIstance() {
-		if(Map==null) {
-			synchronized(Mapper_000.class) {
-				if(Map==null) {
-					Map = new Mapper_000();
-				}
-			}
-		}
-		return Map;
-	}
+	
 
 	public void setAttributes(Integer prgBanks, Integer chrBanks) {
 		nPRGBanks = (int)prgBanks;
