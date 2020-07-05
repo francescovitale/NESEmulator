@@ -6,25 +6,13 @@ public class ControlUnitExecute extends ControlUnitState {
 
 	StateFacade SF;
 	ControlUnit CU;
-	private volatile static ControlUnitExecute ControlUnitExecute = null;	//Singleton
-	
 	
 	protected ControlUnitExecute() {
 		//Collegamento con il facade dello STATE
 		SF = new StateFacade();
 	}
 	
-	//Punto di ingresso globale all'istanza
-	public static ControlUnitExecute getInstance(){
-		if(ControlUnitExecute==null) {
-			synchronized(ControlUnitExecute.class) {
-				if(ControlUnitExecute==null) {
-					ControlUnitExecute= new ControlUnitExecute();
-				}
-			}
-		}
-		return ControlUnitExecute;
-	}
+	
 	
 	protected void changeState(ControlUnit CU, ControlUnitState NewState) {
 		CU.changeState(NewState);
@@ -43,7 +31,7 @@ public class ControlUnitExecute extends ControlUnitState {
 		//if(CU.getInstructionRegister().byteValue() == (byte)0xD0)								//Condizione di terminazione
 			CU.setInstructionRegister((byte)0xF);
 		//else 
-		//	changeState(CU, ControlUnitFetch.getInstance());
+		//	changeState(CU, ControlUnitState.getInstance("Fetch"));
 	}
 
 }

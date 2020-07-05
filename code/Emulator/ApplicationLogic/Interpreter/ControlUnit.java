@@ -18,7 +18,7 @@ public class ControlUnit {
 		cycles = 0;
 		setBool_opcode(false);
 		setBool_addr(false);
-		State = ControlUnitReset.getInstance();
+		State = ControlUnitState.getInstance("Reset");
 	};
 	
 	//Punto di ingresso globale all'istanza

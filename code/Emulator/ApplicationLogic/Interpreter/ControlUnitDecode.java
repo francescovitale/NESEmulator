@@ -6,9 +6,6 @@ public class ControlUnitDecode extends ControlUnitState {
 
 	StateFacade SF;
 	ControlUnit CU;
-
-	private volatile static ControlUnitDecode ControlUnitDecode = null;			//Singleton
-	
 	protected void changeState(ControlUnit CU, ControlUnitState NewState) {
 		CU.changeState(NewState);
 	};
@@ -18,17 +15,6 @@ public class ControlUnitDecode extends ControlUnitState {
 		SF = new StateFacade();
 	}
 	
-	//Punto di ingresso globale all'istanza
-	public static ControlUnitDecode getInstance(){
-		if(ControlUnitDecode==null) {
-			synchronized(ControlUnitDecode.class) {
-				if(ControlUnitDecode==null) {
-					ControlUnitDecode= new ControlUnitDecode();
-				}
-			}
-		}
-		return ControlUnitDecode;
-	}
 	
 	/**
 	 * 
@@ -51,7 +37,7 @@ public class ControlUnitDecode extends ControlUnitState {
 		System.out.println(CU.getCurrentInstruction().addressing_mode);
 		//if(opcode == 0xD) //Debug
 		
-		changeState(CU, ControlUnitExecute.getInstance());
+		changeState(CU, ControlUnitState.getInstance("Execute"));
 	}
 
 }

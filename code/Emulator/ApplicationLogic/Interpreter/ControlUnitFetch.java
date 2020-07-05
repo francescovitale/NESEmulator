@@ -6,26 +6,11 @@ public class ControlUnitFetch extends ControlUnitState {
 
 	ControlUnit CU;
 	StateFacade SF;
-	private volatile static ControlUnitFetch ControlUnitFetch = null;		//Singleton
-	
 	
 	protected ControlUnitFetch() {
 		//Collegamento con il facade dello STATE
 		SF = new StateFacade();
 	}
-	
-	//Punto di ingresso globale all'istanza
-	public static ControlUnitFetch getInstance(){
-		if(ControlUnitFetch==null) {
-			synchronized(ControlUnitFetch.class) {
-				if(ControlUnitFetch==null) {
-					ControlUnitFetch= new ControlUnitFetch();
-				}
-			}
-		}
-		return ControlUnitFetch;
-	}
-	
 
 	protected void changeState(ControlUnit CU, ControlUnitState NewState) {
 		CU.changeState(NewState);
@@ -48,7 +33,7 @@ public class ControlUnitFetch extends ControlUnitState {
 		//System.out.println(Byte.toUnsignedInt(OU.getIstance().fetch()));									//Stampa DEBUG del codice operativo
 		//ControlUnit.getInstance().setInstructionRegister((byte)0xD);
 		
-		changeState(CU, ControlUnitDecode.getInstance());
+		changeState(CU, ControlUnitState.getInstance("Decode"));
 	}
 	
 	private Boolean clock() {
