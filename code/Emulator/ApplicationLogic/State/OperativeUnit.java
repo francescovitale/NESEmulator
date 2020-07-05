@@ -5,7 +5,7 @@ import Emulator.ApplicationLogic.Interpreter.ControlUnit;
 public class OperativeUnit {
 		/*public static void main(String args[]) {
 		
-			OperativeUnit.getIstance().addressingMode("prova");
+			OperativeUnit.getInstance().addressingMode("prova");
 			
 		}*/
 
@@ -31,7 +31,7 @@ public class OperativeUnit {
 	private OperativeUnit() {
 		
 		//Collegamento con il Bus
-		BusOU = Bus.getIstance();
+		BusOU = Bus.getInstance();
 		
 		//INIZIALIZZAZIONE REGISTRI
 		
@@ -306,7 +306,7 @@ public class OperativeUnit {
 	}
 
 	//Punto di ingresso globale all'istanza
-	public static OperativeUnit getIstance() {
+	public static OperativeUnit getInstance() {
 		if(UO==null) {
 			synchronized(OperativeUnit.class) {
 				if(UO==null) {
@@ -319,8 +319,8 @@ public class OperativeUnit {
 	
 	//Fetch dell'opcode 
 	public Byte fetch() {
-		fetched = BusOU.read(PC_register);
-		return fetched;							//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
+		fetched = BusOU.read(addr_abs);
+		return BusOU.read(PC_register);							//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
 	}
 
 	//Scelta modo di indirizzamento
@@ -611,20 +611,19 @@ public class OperativeUnit {
 	//Absolute 
 	private Boolean ABS() {
 		byte lo = BusOU.read(PC_register).byteValue();						//Leggo il primo byte in memoria	
-		PC_register++;															//Incremento il PC
+		PC_register++;														//Incremento il PC
 		byte hi = BusOU.read(PC_register).byteValue();						//Leggo il secondo byte in memoria
-		PC_register++;															//Incremento il PC
+		PC_register++;														//Incremento il PC
 		
-		addr_abs = (char)((hi << 8) | lo);										//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
-
+		addr_abs = (char)((hi << 8) | lo);									//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
 		return false;
 	}	
 	
 	//Absolute with X Offset
 	private Boolean ABX() {
-		byte lo = BusOU.read(PC_register).byteValue();						//Leggo il primo byte in memoria	
+		byte lo = BusOU.read(PC_register).byteValue();							//Leggo il primo byte in memoria	
 		PC_register++;															//Incremento il PC
-		byte hi = BusOU.read(PC_register).byteValue();						//Leggo il secondo byte in memoria
+		byte hi = BusOU.read(PC_register).byteValue();							//Leggo il secondo byte in memoria
 		PC_register++;															//Incremento il PC
 	
 		addr_abs = (char)((hi << 8) | lo);										//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
@@ -1199,7 +1198,7 @@ public class OperativeUnit {
 	private boolean LDA() {
 		
 		fetch();
-		A_register= fetched;
+		A_register = fetched;
 	    setFlag("Z", A_register == 0x00);
 		setFlag("N", 0x00 != (A_register & 0x80));
 		return true;
@@ -1227,7 +1226,6 @@ public class OperativeUnit {
 	// Function:    Y = M
 	// Flags Out:   N, Z
 	private boolean LDY() {
-		
 		
 		fetch();
 		Y_register= fetched;
@@ -1259,18 +1257,19 @@ public class OperativeUnit {
 		
 	//No Operation
 	private boolean NOP() {
+
+		Instruction CurrentInstruction= ControlUnit.getInstance().getCurrentInstruction();
+		Instruction NoOp1= MicroRom[28];
+		Instruction NoOp2= MicroRom[60];
+		Instruction NoOp3= MicroRom[92];;
+		Instruction NoOp4= MicroRom[220];;
+		Instruction NoOp5= MicroRom[252];;
 		
-		/*switch (ControlUnit.getInstance().getCurrentInstruction().opcode) {
-		case 0x1C:
-		case 0x3C:
-		case 0x5C:
-		case 0x7C:
-		case 0xDC:
-		case 0xFC:
+		if ( CurrentInstruction == NoOp1 ||CurrentInstruction== NoOp2 ||CurrentInstruction== NoOp3 ||CurrentInstruction== NoOp4 ||CurrentInstruction== NoOp5 )
 			return true;
-			break;
-		}*/
 		
+		
+		else 
 		return false;
 	}
 	
@@ -1690,6 +1689,9 @@ public class OperativeUnit {
 		ControlUnit.getInstance().setCycles(8);
 	}
 	
+	public void increasePC() {
+		PC_register++;
+	}
 	
 	//GETTER & SETTERS
 	public Instruction getMicrorom(int i) {

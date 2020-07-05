@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Emulator.ApplicationLogic.Interpreter.*;
 import Emulator.ApplicationLogic.State.*;
+import Emulator.Control.ReturnedState;
 import Emulator.TechnicalServices.TechnicalServicesFacade;
 
 public class EmulatorFacade {
@@ -53,6 +54,20 @@ public class EmulatorFacade {
 	public Boolean startCycle() {
 		return IF.startCycle();
 	}
+
+	public State getState() {
+		return SF.getState();
+	}
+
+	public void resetStateTaken() {
+		SF.resetStateTaken();
+		
+	}
+
+	public StateFacade getSF() {
+		return SF;
+	}
+
 	
 	//Recupero lo stato attuale dell'architettura
 	/*public State getState() {

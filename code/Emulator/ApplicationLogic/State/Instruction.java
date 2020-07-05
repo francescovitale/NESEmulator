@@ -29,5 +29,7 @@ public class Instruction {
         addressing_mode = i.addressing_mode;
         cycles = i.cycles;
     }
+	
+	
 }
 

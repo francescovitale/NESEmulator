@@ -26,14 +26,24 @@ public class ControlUnitFetch extends ControlUnitState {
 		boolean stop=false;
 		while (stop == false)																	
 			stop = clock();							
+		/*try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		
-		CU.setInstructionRegister(SF.fetch().byteValue());				//Fetcho l'istruzione e la salvo nell'IR
-		
-		/*DEBUG*/
-		//System.out.println(Byte.toUnsignedInt(OU.getIstance().fetch()));									//Stampa DEBUG del codice operativo
-		//ControlUnit.getInstance().setInstructionRegister((byte)0xD);
-		
-		changeState(CU, ControlUnitState.getInstance("Decode"));
+		if(CU.getInstructionRegister().byteValue() == (byte)0xFF)								//Condizione di terminazione
+			CU.setInstructionRegister((byte)0xF);
+		else {	
+			CU.setInstructionRegister(SF.fetch().byteValue());				//Fetcho l'istruzione e la salvo nell'IR
+			SF.increasePC();
+			/*DEBUG*/
+			//System.out.println(Byte.toUnsignedInt(OU.getInstance().fetch()));									//Stampa DEBUG del codice operativo
+			//ControlUnit.getInstance().setInstructionRegister((byte)0xD);
+			
+			changeState(CU, ControlUnitState.getInstance("Decode"));
+		}	
 	}
 	
 	private Boolean clock() {

@@ -12,14 +12,14 @@ public class State {
 	
 	//Costruttore privato
 	private State() {
-		Taken = false;
-		CS = CPUState.getIstance();
-		MS = MemoryState.getIstance();
-		PS = PPUState.getIstance();
+		Taken = true;
+		CS = CPUState.getInstance();
+		MS = MemoryState.getInstance();
+		PS = PPUState.getInstance();
 	}
 
 	//Punto di ingresso globale all'istanza
-	public static State getIstance() {
+	public static State getInstance() {
 		if(State==null) {
 			synchronized(State.class) {
 				if(State==null) {
@@ -46,6 +46,30 @@ public class State {
 	}
 	public void setTaken(Boolean taken) {
 		Taken = taken;
+	}
+
+	public CPUState getCS() {
+		return CS;
+	}
+
+	public void setCS(CPUState cS) {
+		CS = cS;
+	}
+
+	public MemoryState getMS() {
+		return MS;
+	}
+
+	public void setMS(MemoryState mS) {
+		MS = mS;
+	}
+
+	public PPUState getPS() {
+		return PS;
+	}
+
+	public void setPS(PPUState pS) {
+		PS = pS;
 	}
 
 	

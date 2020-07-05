@@ -28,10 +28,7 @@ public class ControlUnitExecute extends ControlUnitState {
 		if(CU.getBool_addr() & CU.getBool_opcode())												//Se entrambi i bool sono veri
 			CU.increaseCycles();																//Va aggiunto un ciclo per l'istruzione corrente
 		
-		//if(CU.getInstructionRegister().byteValue() == (byte)0xD0)								//Condizione di terminazione
-			CU.setInstructionRegister((byte)0xF);
-		//else 
-		//	changeState(CU, ControlUnitState.getInstance("Fetch"));
+		changeState(CU, ControlUnitState.getInstance("Fetch"));
 	}
 
 }

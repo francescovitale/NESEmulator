@@ -14,7 +14,7 @@ public class PPU {
  	
 	protected PPU() {
 		//Collegamento con il Bus
-		BusPPU = Bus.getIstance();	
+		BusPPU = Bus.getInstance();	
 		
 		//VRAM 
 		tblNAME1 = new ArrayList<Byte>();

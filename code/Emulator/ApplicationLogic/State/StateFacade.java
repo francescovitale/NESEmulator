@@ -11,9 +11,9 @@ public class StateFacade {
 	State S;	 			//Collegamento con lo State
 	
 	public StateFacade() {
-		OU = OperativeUnit.getIstance();	//Recupero l'istanza dell'unità operativa
-		Crtg = Cartridge.getIstance();		//Recupero l'istanza della Cartridge
-		S = State.getIstance();				//Recupero l'istenza di State
+		OU = OperativeUnit.getInstance();	//Recupero l'istanza dell'unità operativa
+		Crtg = Cartridge.getInstance();		//Recupero l'istanza della Cartridge
+		S = State.getInstance();				//Recupero l'istenza di State
 	}
 	
 	//Inizializzo il programma in memoria
@@ -31,6 +31,11 @@ public class StateFacade {
 		return OU.fetch();
 	}
 	
+	//Incrementa il PC
+	public void increasePC() {
+		OU.increasePC();
+	}
+	
 	//Modalità di indirizzamento
 	public Boolean addressingMode(String AddrMode) {
 		return OU.addressingMode(AddrMode);
@@ -43,7 +48,23 @@ public class StateFacade {
 	
 	//Aggiorno lo stato 
 	public void refreshState() {
-		S.refreshState();
+		synchronized(this.S.getInstance()){
+			while(S.getTaken() == true) {
+				try {
+					//System.out.println("P) Mi blocco su "  + S.getInstance().toString());
+					this.S.getInstance().wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			S.refreshState();
+			this.S.getInstance().notify();
+			//System.out.println("P) Mi sblocco" + S.getInstance().toString());
+		}
+
+
 	}
 	
 	//Recupero lo Stato
@@ -55,4 +76,10 @@ public class StateFacade {
 	public void reset() {
 		OU.reset();
 	}
+
+	public void resetStateTaken() {
+		S.setTaken(false);
+		
+	}
+
 }

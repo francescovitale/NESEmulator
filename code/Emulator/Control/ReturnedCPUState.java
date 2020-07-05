@@ -1,19 +1,17 @@
-package Emulator.ApplicationLogic.State;
+package Emulator.Control;
 
-public class CPUState {
+public class ReturnedCPUState {
 	//Attributi
-	private volatile static CPUState CPUState = null;			//Singleton
+	private volatile static ReturnedCPUState CPUState = null;			//Singleton
 	private Byte A;
 	private Byte X;
 	private Byte Y;
 	private Byte SP;	//STACK POINTER
 	private char PC;	//PROGRAM COUNTER
 	private Byte SR;	//STATUS REGISTER
-	OperativeUnit OU;
 	
 	//Costruttore privato
-	private CPUState() {
-		OU = OperativeUnit.getInstance();	//Collegamento con l'unità operativa
+	private ReturnedCPUState() {
 		
 		//Inizializzo variabili
 		A = 0x00;
@@ -25,32 +23,15 @@ public class CPUState {
 	}
 
 	//Punto di ingresso globale all'istanza
-	public static CPUState getInstance() {
+	public static ReturnedCPUState getIstance() {
 		if(CPUState==null) {
-			synchronized(State.class) {
+			synchronized(ReturnedCPUState.class) {
 				if(CPUState==null) {
-					CPUState = new CPUState();
+					CPUState = new ReturnedCPUState();
 				}
 			}
 		}
 		return CPUState;
-	}
-
-	public void refreshCPUState() {
-		A = OU.getA_register();
-		X = OU.getX_register();
-		Y = OU.getY_register();
-		SP = OU.getStack_pointer();
-		PC = OU.getPC_register();
-		SR = OU.getStatus_register();
-		
-		System.out.println("STATO DEL PROCESSORE"); 
-		System.out.println("PC: " + Integer.toHexString(PC));
-		System.out.println("A: " + Integer.toHexString(A));
-		System.out.println("X: " + Integer.toHexString(X));
-		System.out.println("Y: " + Integer.toHexString(Y));
-		System.out.println("SP: " + Integer.toHexString(SP));
-		System.out.println("SR: " + Integer.toHexString(SR));
 	}
 
 	public Byte getA() {
@@ -102,4 +83,5 @@ public class CPUState {
 	}
 	
 	
+
 }

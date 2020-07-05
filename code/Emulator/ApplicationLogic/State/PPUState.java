@@ -8,7 +8,7 @@ public class PPUState {
 	private PPUState() {}
 
 	//Punto di ingresso globale all'istanza
-	public static PPUState getIstance() {
+	public static PPUState getInstance() {
 		if(PPUState==null) {
 			synchronized(PPUState.class) {
 				if(PPUState==null) {
@@ -23,5 +23,6 @@ public class PPUState {
 	public void refreshPPUState() {
 		//DA IMPLEMENTARE
 	}
+	
 	
 }

@@ -11,14 +11,14 @@ public class Bus {
 	
 	private Bus() {
 		//Collegamento con RAM
-		Ram = Memory.getIstance();
+		Ram = Memory.getInstance();
 		//Collegamento con la Cartridge
-		Crtg = Cartridge.getIstance();
+		Crtg = Cartridge.getInstance();
 	}
 
 	//Punto di ingresso globale all'istanza
 	
-	public static Bus getIstance() {
+	public static Bus getInstance() {
 		if(BUS==null) {
 			synchronized(Bus.class) {
 				if(BUS==null) {
@@ -33,11 +33,12 @@ public class Bus {
 	
 	
 	public Byte read(char Address) {
-		Byte data= null;
+		Byte data = null;
 		P = PPU.getInstance();
 		
-		if (Crtg.Read(Address, data))
+		if (Crtg.Read(Address))
 		{
+			data = Crtg.getData();
 		        // The cartridge "sees all" and has the facility to veto
 		        // the propagation of the bus transaction if it requires.
 		        // This allows the cartridge to map any address to some
@@ -57,13 +58,15 @@ public class Bus {
 		else {
 			data= Ram.read((char)(Address & 0x07FF));	//DEBUG
 		}
+		/*DEBUG*/
+		//data= Ram.read((char)(Address));
 		return data;
 	}
 
 	public void write(char Address, Byte Data) {
 		P = PPU.getInstance();
 		//Se l'address è compreso tra 0x0000 e 0x1FFF voglio scrivere in RAM
-		Byte data = 0x00;	
+		Byte data = 0x00;
 		if (Crtg.Write(Address, data))
 		{
 			// Cartridge Address Range
@@ -78,10 +81,12 @@ public class Bus {
 		else {
 			Ram.write((char)(Address & 0x07FF), Data);  //DEBUG
 		}
+		/*DEBUG*/
+		//Ram.write((char)(Address), Data);
 	}
 
 
 	public void reset(){}	//Da implementare
 	
-	public void clock(){} //Da implementare
+	public void clock(){} 	//Da implementare
 }

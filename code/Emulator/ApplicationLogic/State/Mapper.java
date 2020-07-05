@@ -2,7 +2,6 @@ package Emulator.ApplicationLogic.State;
 
 public abstract class Mapper {
 	
-
 	private volatile static Mapper_000 Map = null;			//Singleton
 	
 	public static Mapper_000 getInstance(String SelectedMapper) {
@@ -17,12 +16,16 @@ public abstract class Mapper {
 		return Map;
 	}
 	
-	public abstract boolean mapRead(char addr, Character mapped_addr);
+	public abstract boolean mapRead(char addr);
 	
-	public abstract boolean mapWrite(char addr, Character mapped_addr);
+	public abstract boolean mapWrite(char addr);
 	
-	public abstract boolean ppuMapRead(char addr, Character mapped_addr);
+	public abstract boolean ppuMapRead(char addr);
 	
-	public abstract boolean ppuMapWrite(char addr, Character mapped_addr);
-	
+	public abstract boolean ppuMapWrite(char addr);
+
+	protected abstract void setAttributes(Integer nPRGBanks, Integer nCHRBanks);
+
+	//Getter
+	public abstract char getMapped_addr();
 }

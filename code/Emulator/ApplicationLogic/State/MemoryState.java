@@ -11,14 +11,14 @@ public class MemoryState {
 	
 	//Costruttore privato
 	private MemoryState() {
-		Mem = Memory.getIstance();
+		Mem = Memory.getInstance();
 		RAM = new ArrayList<Byte>();
 		for(int i = 0; i < (int)0xFFFF; i++)
 			RAM.add((byte)0x0);
 	}
 
 	//Punto di ingresso globale all'istanza
-	public static MemoryState getIstance() {
+	public static MemoryState getInstance() {
 		if(MemoryState==null) {
 			synchronized(MemoryState.class) {
 				if(MemoryState==null) {
@@ -33,5 +33,23 @@ public class MemoryState {
 	public void refreshMemoryState() {
 		RAM = Mem.getWord();
 	}
+
+	public ArrayList<Byte> getRAM() {
+		return RAM;
+	}
+
+	public void setRAM(ArrayList<Byte> rAM) {
+		RAM = rAM;
+	}
+
+	public Memory getMem() {
+		return Mem;
+	}
+
+	public void setMem(Memory mem) {
+		Mem = mem;
+	}
+	
+	
 
 }
