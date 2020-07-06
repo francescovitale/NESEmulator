@@ -39,6 +39,7 @@ public class ProgramDAO {
 		
 		DBSession.getTransaction().commit();
 		closeSession();
+		System.out.println("Acceduto");
 		return result;
 	}
 	

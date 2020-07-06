@@ -12,11 +12,13 @@ public class AccessProgramFS extends AccessProgram{
 	public AccessProgramFS() {};
 	
 	public ArrayList<Program> loadProgram(String SelectedPath) {
-		ArrayList<Program> Prog = new ArrayList<Program>();
 		Fsm = FileSystemManager.getInstance();
-		Fsm.setDefaultPath(SelectedPath);
-		Prog.add(new Program(-1,"",Fsm.getData()));
-		return Prog;
+		String TempFileType = SelectedPath.substring(SelectedPath.length()-4,SelectedPath.length());
+		if(TempFileType.equals("ines"))
+			return new ArrayList<Program>(Fsm.getProgram(SelectedPath, 0));
+		else
+			return new ArrayList<Program>(Fsm.getProgram(SelectedPath, 1));
+		
 	};
 
 }

@@ -36,12 +36,10 @@ public class Program {
 	public ArrayList<Byte> getParsedROMData(){
 		ArrayList<Byte> ReturnedByteList = new ArrayList<Byte>();
 		Byte temp;
-		String[] parts = ROMData.split(" ");
 		    
-		    
-		for(int i = 0; i<parts.length; i++)
+		for(int i = 0; i<ROMData.length()-1; i=i+2)
 		{
-		    temp = parseUnsignedByte(parts[i]);
+		    temp = parseUnsignedByte(ROMData.substring(i,i+2));
 		    ReturnedByteList.add(temp);
 		}
 		
