@@ -123,4 +123,9 @@ public class PPU {
 	//Clock della PPU (Dovrebbe essere 3 volte più veloce di quello della CPU)
 	public void clock() {}
 
+	public void reset() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

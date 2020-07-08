@@ -6,13 +6,13 @@ public abstract class Mapper {
 	
 	public static Mapper_000 getInstance(String SelectedMapper) {
 		if(SelectedMapper.equals("Mapper_000"))
-		if(Map==null) {
-			synchronized(Mapper_000.class) {
-				if(Map==null) {
-					Map = new Mapper_000();
+			if(Map==null) {
+				synchronized(Mapper_000.class) {
+					if(Map==null) {
+						Map = new Mapper_000();
+					}
 				}
 			}
-		}
 		return Map;
 	}
 	

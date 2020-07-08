@@ -191,8 +191,6 @@ public class EmulatorBoundary extends JFrame {
 					Configuration.setProgramName(FileName);
 					Configuration.setPath(Path);
 					Configuration.setMode(Mode);
-					
-					Controller.executeProgram(FileName,-1,Path);
 				}
 			}
 		});
@@ -361,7 +359,7 @@ public class EmulatorBoundary extends JFrame {
 			protected Void doInBackground() throws Exception {
 				
 			//Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), Configuration.getPath());
-			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\Daniele\\eclipse-workspace\\NES_new\\src\\Emulator\\programmi di prova\\Baseball (USA, Europe).ines");
+			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\aceep\\Desktop\\Programmi\\GIOCO2.ines");
 			
 			return null;
 

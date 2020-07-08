@@ -8,7 +8,7 @@ public class InterpreterFacade {
 
 	//Aziono il ciclo del processore
 	public Boolean startCycle() {
-		Emulator.ApplicationLogic.Interpreter.ControlUnit.getInstance().execCycle();
+		ControlUnit.getInstance().execCycle();
 		return true;
 	}
 }

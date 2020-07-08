@@ -9,8 +9,10 @@ public class StateFacade {
 	OperativeUnit OU;		//Collegamento con l'unità operativa
 	Cartridge Crtg;			//Collegamento con il Cartridge
 	State S;	 			//Collegamento con lo State
+	PPU P;
 	
 	public StateFacade() {
+		P = PPU.getInstance();
 		OU = OperativeUnit.getInstance();	//Recupero l'istanza dell'unità operativa
 		Crtg = Cartridge.getInstance();		//Recupero l'istanza della Cartridge
 		S = State.getInstance();				//Recupero l'istenza di State
@@ -75,10 +77,17 @@ public class StateFacade {
 	//Resetto 
 	public void reset() {
 		OU.reset();
+		P.reset();
 	}
 
 	public void resetStateTaken() {
 		S.setTaken(false);
+		
+	}
+	
+	public Boolean clock() {
+		ClockManager CM = ClockManager.getInstance();
+		return CM.clock();
 		
 	}
 

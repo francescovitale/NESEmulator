@@ -546,6 +546,14 @@ public class OperativeUnit {
 		case "XXX":
 			return this.XXX();
 			
+		case "NMI":
+			this.nmi();
+			return false;
+		
+		case "IRQ":
+			this.irq();
+			return false;
+			
 		default: 
 			System.out.println("Code ??? not recognised");
 			break;

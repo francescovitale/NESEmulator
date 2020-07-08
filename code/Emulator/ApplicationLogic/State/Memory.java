@@ -16,8 +16,7 @@ public class Memory {
 		
 		
 		/*DEBUG*/
-		Word.set(0xFFFC, (byte)0x00);
-		Word.set(0xFFFD, (byte)0x80);
+		Word.set(0xFFFC, (byte)0x80);
 		Word.set(0x8000, (byte)0xA2);
 		Word.set(0x8001, (byte)0x0A);
 		Word.set(0x8002, (byte)0x8E);
