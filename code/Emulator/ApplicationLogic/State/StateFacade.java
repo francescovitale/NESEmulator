@@ -50,23 +50,7 @@ public class StateFacade {
 	
 	//Aggiorno lo stato 
 	public void refreshState() {
-		synchronized(this.S.getInstance()){
-			while(S.getTaken() == true) {
-				try {
-					//System.out.println("P) Mi blocco su "  + S.getInstance().toString());
-					this.S.getInstance().wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			S.refreshState();
-			this.S.getInstance().notify();
-			//System.out.println("P) Mi sblocco" + S.getInstance().toString());
-		}
-
-
+		S.refreshState();
 	}
 	
 	//Recupero lo Stato

@@ -42,14 +42,13 @@ public class EmulatorFacade {
 		Programs = new ArrayList<Program>(Tsf.loadCartridgeData(SelectedPath));
 		int index;
 		
-		/*if(SelectedPath.isEmpty()) {
+		if(SelectedPath.isEmpty()) {
 			index = selectProgram(ROMName, ID);
 			return SF.loadData(Programs.get(index).getParsedROMData());
 		}
 		else {
 			return SF.loadData(Programs.get(0).getParsedROMData());
-		}*/
-		return true;
+		}
 			
 	}
 

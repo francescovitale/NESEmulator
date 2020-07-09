@@ -37,12 +37,6 @@ public class Controller {
 	public Boolean getState() {
 		
 		Boolean T = Emu.getState().getTaken();
-		try {
-			Thread.sleep(1);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		if(T == true) {
 			State.setCS(Emu.getState().getCS());
 			//State.setMS(Emu.getState().getMS());

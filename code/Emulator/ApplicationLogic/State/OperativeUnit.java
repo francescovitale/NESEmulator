@@ -1697,7 +1697,8 @@ public class OperativeUnit {
 		addr_abs = 0x0000;
 		addr_rel = 0x00;
 		
-		NMIRequest = true;
+		NMIRequest = false;
+		IRQRequest = false;
 
 		// Resetto i cycle a 8
 		ControlUnit.getInstance().setCycles(8);
@@ -1770,7 +1771,8 @@ public class OperativeUnit {
 			PC_register = (char)((hi << 8) | lo);
 			
 			// IRQs take time
-			ControlUnit.getInstance().setCycles(7);
+			Integer temp_cycle = ControlUnit.getInstance().getCycles();
+			ControlUnit.getInstance().setCycles(7 + temp_cycle);
 		}
 	}
 
@@ -1801,7 +1803,8 @@ public class OperativeUnit {
 		PC_register = (char)((hi << 8) | lo);
 					
 		// IRQs take time
-		ControlUnit.getInstance().setCycles(8);
+		Integer temp_cycle = ControlUnit.getInstance().getCycles();
+		ControlUnit.getInstance().setCycles(8 + temp_cycle);
 	}
 
 	public Boolean getIRQRequest() {

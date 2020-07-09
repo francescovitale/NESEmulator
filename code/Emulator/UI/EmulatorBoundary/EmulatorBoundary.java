@@ -17,6 +17,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JList;
 import javax.swing.border.LineBorder;
@@ -191,6 +192,8 @@ public class EmulatorBoundary extends JFrame {
 					Configuration.setProgramName(FileName);
 					Configuration.setPath(Path);
 					Configuration.setMode(Mode);
+					
+					Controller.executeProgram(FileName,-1,Path);
 				}
 			}
 		});
@@ -313,14 +316,15 @@ public class EmulatorBoundary extends JFrame {
 		Polling.execute();
 	}
 	
+	
+
 	public void CreatePollingEntity() {
 			Polling = new SwingWorker<Void,ReturnedState>(){
 			@Override
 			protected Void doInBackground() throws Exception {
 				int i = 0;
-
 				while(i == 0) {
-					synchronized(Controller.getEmulatorFacade().getSF().getState().getInstance()) {
+					/*synchronized(Controller.getEmulatorFacade().getSF().getState().getInstance()) {
 						while(Controller.getState() == false) {
 							//System.out.println("C) Mi blocco su " + Controller.getEmulatorFacade().getSF().getState().getIstance().toString());
 							Controller.getEmulatorFacade().getSF().getState().getInstance().wait();
@@ -328,9 +332,12 @@ public class EmulatorBoundary extends JFrame {
 						//System.out.println("C) Mi sblocco su " + Controller.getEmulatorFacade().getSF().getState().getIstance().toString());
 						publish((Controller.getReturnedState()));
 						Controller.getEmulatorFacade().getSF().getState().getInstance().notify();
-						Thread.sleep(1000);
-					}
-							
+					}*/
+					
+						Controller.getState();
+						Display.NESDisplay.RenderScreen();
+						publish((Controller.getReturnedState()));
+
 				}
 				return null;
 			}
@@ -345,7 +352,9 @@ public class EmulatorBoundary extends JFrame {
 					Display.getCPUFrame().RegSSPLabel.setText("Reg SP : " + Controller.getReturnedState().getIstance().getCS().getSP());
 					Display.getCPUFrame().RegPCLabel.setText("Reg PC : " + Integer.toHexString(Controller.getReturnedState().getIstance().getCS().getPC()));
 					Display.getCPUFrame().RegSRLabel.setText("Reg SR : " + Controller.getReturnedState().getIstance().getCS().getSR());
+	
 				 /* PPU Frame
+				  * 
 				 * Memory Frame
 				}*/
 			}
@@ -359,7 +368,7 @@ public class EmulatorBoundary extends JFrame {
 			protected Void doInBackground() throws Exception {
 				
 			//Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), Configuration.getPath());
-			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\aceep\\Desktop\\Programmi\\GIOCO2.ines");
+			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\danie\\OneDrive\\Desktop\\NESEmulator-ppu\\Programmi\\GIOCO2.ines");
 			
 			return null;
 
