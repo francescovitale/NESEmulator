@@ -16,7 +16,16 @@ public class Memory {
 		
 		
 		/*DEBUG*/
-		Word.set(0xFFFC, (byte)0x80);
+		Word.set(0xFFFC, (byte)0x00);
+		Word.set(0xFFFD, (byte)0x80);
+		Word.set(0x8000, (byte)0xA2);
+		Word.set(0xFFFA, (byte)0x00);
+		Word.set(0xFFFB, (byte)0x10);
+		Word.set(0x1000, (byte)0xAA);
+		Word.set(0x1001, (byte)0xAB);
+		
+		/*Word.set(0xFFFC, (byte)0x00);
+		Word.set(0xFFFD, (byte)0x80);
 		Word.set(0x8000, (byte)0xA2);
 		Word.set(0x8001, (byte)0x0A);
 		Word.set(0x8002, (byte)0x8E);
@@ -55,7 +64,7 @@ public class Memory {
 		Word.set(0x8023, (byte)0x00);
 		Word.set(0x8024, (byte)0x00);
 		Word.set(0x8025, (byte)0x00);
-		Word.set(0x8019, (byte)0xFF);
+		Word.set(0x8019, (byte)0xFF);*/
 	}
 
 	//Punto di ingresso globale all'istanza

@@ -6,6 +6,7 @@ public abstract class ControlUnitState {
 	private volatile static ControlUnitDecode CUD = null;			//Singleton
 	private volatile static ControlUnitExecute CUE = null;	//Singleton
 	private volatile static ControlUnitReset CUR = null;		//Singleton
+	private volatile static ControlUnitInterrupt CUI = null;		//Singleton
 	
 	public static ControlUnitState getInstance(String SelectedState) {
 		if(SelectedState.equals("Fetch"))
@@ -38,6 +39,16 @@ public abstract class ControlUnitState {
 				}
 			}
 			return CUE;
+		}
+		else if(SelectedState.equals("Interrupt")) {
+			if(CUI==null) {
+				synchronized(ControlUnitExecute.class) {
+					if(CUI==null) {
+						CUI= new ControlUnitInterrupt();
+					}
+				}
+			}
+			return CUI;
 		}
 		else {
 			if(CUR==null) {

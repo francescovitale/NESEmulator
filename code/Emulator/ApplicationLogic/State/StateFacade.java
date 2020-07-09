@@ -90,5 +90,17 @@ public class StateFacade {
 		return CM.clock();
 		
 	}
-
+	public Boolean getIRQRequest() {
+		return OU.getIRQRequest();
+	}
+	public Boolean getNMIRequest() {
+		return OU.getNMIRequest();
+	}
+	public void setNMIRequest(Boolean NMI) {
+		OU.setNMIRequest(NMI);
+	}
+	public void setIRQRequest(Boolean IRQ) {
+		OU.setNMIRequest(IRQ);
+	}
+	
 }

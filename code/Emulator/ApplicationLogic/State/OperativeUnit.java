@@ -22,6 +22,10 @@ public class OperativeUnit {
 	private char PC_register;
 	private Byte Status_register;
 	
+	//RICHIESTE DI INTERRUPT
+	private Boolean NMIRequest = false;
+	private Boolean IRQRequest = false;
+	
 	//ATTRIBUTI INTERNI DI COMODO
 	private Byte fetched ;									   //Dati che memorizzo	
 	private char addr_abs;   								   //Locazione assoluta di memoria
@@ -1688,10 +1692,12 @@ public class OperativeUnit {
 		X_register = 0x00;
 		Y_register = 0x00;
 		Status_register = 0x00;	
-		Stack_pointer= (byte) 0xFD;	
+		Stack_pointer= (byte) 0x00FD;	
 		fetched = 0x00;
 		addr_abs = 0x0000;
 		addr_rel = 0x00;
+		
+		NMIRequest = true;
 
 		// Resetto i cycle a 8
 		ControlUnit.getInstance().setCycles(8);
@@ -1798,5 +1804,16 @@ public class OperativeUnit {
 		ControlUnit.getInstance().setCycles(8);
 	}
 
-	
+	public Boolean getIRQRequest() {
+		return IRQRequest;
+	}
+	public Boolean getNMIRequest() {
+		return NMIRequest;
+	}
+	public void setIRQRequest(Boolean IRQ) {
+		IRQRequest = IRQ;
+	}
+	public void setNMIRequest(Boolean NMI) {
+		NMIRequest = NMI;
+	}
 }
