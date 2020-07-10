@@ -302,8 +302,16 @@ Tra gli shift registers ritroviamo:
 	2 shift registers di 8-bit ciascuno che memorizzano gli attributi peri l tile corrente.
 	}
 \end{itemize}
-Da qua abbiamo semplicemente da consultare il frame timing per gestire opportunamente tutti gli elementi che abbiamo elencato.
+\clearpage
+Gli shift registers si rivelano necessari poichè consentono di renderizzare un pixel alla volta. Concettualmente, quando si avvierà un nuovo ciclo nella parte di rendering grafico, si avrà una disposizione di questo tipo:
+\begin{figure}[h]
+\hspace*{-1.2cm}
+\centering
+\includegraphics[width=450px, height=330px]{PIXEL_RENDERING_LOGIC.png}
+\end{figure}\\
+Concettualmente, supponiamo di disporre già una coppia di shift-registers pronti per essere renderizzati. Questi shift-registers sono quelli i cui singoli flip-flop sono etichettati con `A'. Il valore di questi shift-registers si combinano con quelli dei corrispondenti attributi (shift-registers i cui singoli flip-flop sono etichettati con `P'), secondo il valore specificato dal loopy register \emph{fine x}: il multiplexer consente di selezionare il pixel da renderizzare avendo come segnale di abilitazione \emph{fine x}. 
 
+Ovviamente quanto appena descritto fa riferimento alla situazione nominale per cui si dispone di tutti gli shift-registers riempiti, tuttavia la logica di controllo è più complessa di così; difatti si spenderanno cicli di clock della PPU a caricare i dati da immettere negli shift-registers, ad aggiornare la VRAM, ecc.
 \section{Analisi dei requisiti}
 \subsection{Prima iterazione}
 
