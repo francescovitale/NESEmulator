@@ -1,10 +1,13 @@
 package Emulator.ApplicationLogic.State;
 
+import Emulator.ApplicationLogic.State.IOSubSystem.IOManager;
+import Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem.PPU;
+
 public class Bus {
 
-	PPU P;											//Collegamento con la PPU
 	Memory Ram;										//Collegamento con RAM
 	Cartridge Crtg;									//Collegamento con il Cartridge
+	IOManager IOM;
 	private volatile static Bus BUS = null;			//Singleton
 
 	//Costruttore privato
@@ -14,6 +17,8 @@ public class Bus {
 		Ram = Memory.getInstance();
 		//Collegamento con la Cartridge
 		Crtg = Cartridge.getInstance();
+		
+		//IOM = IOManager.getInstance();
 	}
 
 	//Punto di ingresso globale all'istanza
@@ -34,7 +39,7 @@ public class Bus {
 	
 	public Byte read(char Address) {
 		Byte data = null;
-		P = PPU.getInstance();
+		IOM = IOManager.getInstance();
 		
 		if (Crtg.Read(Address))
 		{
@@ -53,7 +58,7 @@ public class Bus {
 		}
 		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio leggere dalla PPU
 		else if((Address >= 0x2000) && (Address <= 0x3FFF)) {
-			data = P.Read((char)(Address & 0x0007), false);	//Faccio il mirroring della PPU (& 0x0007)
+			data = IOM.read((char)(Address & 0x0007),false);	//Faccio il mirroring della PPU (& 0x0007)
 		}
 		/*else {
 			data= Ram.read((char)(Address & 0x07FF));	//DEBUG
@@ -64,7 +69,6 @@ public class Bus {
 	}
 
 	public void write(char Address, Byte Data) {
-		P = PPU.getInstance();
 		//Se l'address è compreso tra 0x0000 e 0x1FFF voglio scrivere in RAM
 		Byte data = 0x00;
 		if (Crtg.Write(Address, data))
@@ -76,7 +80,7 @@ public class Bus {
 		}
 		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio scrivere sulla PPU
 		else if((Address >= 0x2000) && (Address <= 0x3FFF)) {
-			P.Write((char)(Address & 0x0007), Data);	//Faccio il mirroring della PPU (& 0x0007)
+			IOM.write((char)(Address & 0x0007), Data);	//Faccio il mirroring della PPU (& 0x0007)
 		}
 		/*else {
 			Ram.write((char)(Address & 0x07FF), Data);  //DEBUG

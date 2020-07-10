@@ -3,6 +3,8 @@ package Emulator.ApplicationLogic.State;
 import java.util.ArrayList;
 
 import Emulator.ApplicationLogic.Program;
+import Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem.PPUBus;
+import Emulator.ApplicationLogic.State.MapperSubsystem.Mapper;
 import Emulator.TechnicalServices.TechnicalServicesFacade;
 
 public class Cartridge {
@@ -17,6 +19,8 @@ public class Cartridge {
 	private ArrayList<Byte> vPRGMemory;				//Program
 	private ArrayList<Byte> vCHRMemory;				//Character
 	private ArrayList<Byte> ROM;					//ROM completa
+	
+	private PPUBus PBus;
 	
 	private Mapper pMapper;
 	
@@ -42,6 +46,7 @@ public class Cartridge {
 		nCHRBanks = 0;
 		mirror = MIRROR.HORIZONTAL;
 		bImageValid = false;
+		//PBus = PPUBus.getInstance();
 	}
 
 	//Punto di ingresso globale all'istanza

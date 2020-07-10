@@ -3,6 +3,7 @@ package Emulator.ApplicationLogic.State;
 import java.util.ArrayList;
 
 import Emulator.ApplicationLogic.Program;
+import Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem.PPU;
 
 public class StateFacade {
 	

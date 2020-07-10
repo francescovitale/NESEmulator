@@ -1,6 +1,7 @@
 package Emulator.ApplicationLogic.State;
 
 import Emulator.ApplicationLogic.Interpreter.ControlUnit;
+import Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem.PPU;
 
 public class ClockManager {
 

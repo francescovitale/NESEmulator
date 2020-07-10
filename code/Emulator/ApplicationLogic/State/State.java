@@ -1,5 +1,7 @@
 package Emulator.ApplicationLogic.State;
 
+import Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem.PPUState;
+
 public class State {
 	
 
