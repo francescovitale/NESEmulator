@@ -3,19 +3,24 @@ package Emulator.UI.DisplayBoundary;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JPanel;
 
+import Emulator.Control.ReturnedState;
+
 public class Screen extends JPanel {
 
 	public Byte VRAM[][] = new Byte[256][240];
-	public int current_x;
-	public int current_y;
-	private int width = 256;
-	private int height = 240;
+	public Integer current_x;
+	public Integer current_y;
+	private Integer width = 256;
+	private Integer height = 240;
+	private ArrayList<String> PaletteSet;
 	
 	public Screen() {
+		
 		setBackground(Color.DARK_GRAY);
 		setBounds(173, 11, width , height);
 		current_x = 0;
@@ -77,7 +82,7 @@ public class Screen extends JPanel {
 		return hexcolor;
 	}
 
-	public void RenderScreen() {
+	public void RenderScreen(ReturnedState instance) {
 		int R = (int)(Math.random()*256);
 		int G = (int)(Math.random()*256);
 		int B= (int)(Math.random()*256);

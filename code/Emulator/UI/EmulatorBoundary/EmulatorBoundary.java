@@ -316,8 +316,6 @@ public class EmulatorBoundary extends JFrame {
 		Polling.execute();
 	}
 	
-	
-
 	public void CreatePollingEntity() {
 			Polling = new SwingWorker<Void,ReturnedState>(){
 			@Override
@@ -335,7 +333,7 @@ public class EmulatorBoundary extends JFrame {
 					}*/
 					
 						Controller.getState();
-						Display.NESDisplay.RenderScreen();
+						Display.UpdateDisplayScreen(Controller.getReturnedState());
 						publish((Controller.getReturnedState()));
 
 				}
@@ -344,19 +342,7 @@ public class EmulatorBoundary extends JFrame {
 
 			@Override
 			protected void process(List<ReturnedState> chunks) {
-				/*Internamente al display boundary saranno presenti altri 3 frame come attributi:
-				 * CPU Frame*/
-					Display.getCPUFrame().RegXLabel.setText("Reg X : " + Controller.getReturnedState().getIstance().getCS().getX());
-					Display.getCPUFrame().RegALabel.setText("Reg A : " + Controller.getReturnedState().getIstance().getCS().getA());
-					Display.getCPUFrame().RegYLabel.setText("Reg Y : " + Controller.getReturnedState().getIstance().getCS().getY());
-					Display.getCPUFrame().RegSSPLabel.setText("Reg SP : " + Controller.getReturnedState().getIstance().getCS().getSP());
-					Display.getCPUFrame().RegPCLabel.setText("Reg PC : " + Integer.toHexString(Controller.getReturnedState().getIstance().getCS().getPC()));
-					Display.getCPUFrame().RegSRLabel.setText("Reg SR : " + Controller.getReturnedState().getIstance().getCS().getSR());
-	
-				 /* PPU Frame
-				  * 
-				 * Memory Frame
-				}*/
+					Display.UpdateDisplayBoundary(Controller.getReturnedState());
 			}
 						
 		};

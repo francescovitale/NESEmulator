@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Emulator.Control.Controller;
+import Emulator.Control.ReturnedState;
 import Emulator.UI.EmulatorBoundary.UIConfiguration;
 
 import javax.swing.JLabel;
@@ -144,5 +146,34 @@ public class DisplayBoundary extends JFrame {
 
 	public void setPPUFrame(PPUFrame pPUFrame) {
 		PPUFrame = pPUFrame;
+	}
+
+	public void UpdateDisplayBoundary(ReturnedState instance) {
+		UpdateCPUState(instance);
+		UpdateMemState(instance);
+		UpdatePPUState(instance);
+		
+	}
+	
+	public void UpdateDisplayScreen(ReturnedState instance) {
+		NESDisplay.RenderScreen(instance);
+	}
+
+	private void UpdateCPUState(ReturnedState instance) {
+		getCPUFrame().RegXLabel.setText("Reg X : " + instance.getCS().getX());
+		getCPUFrame().RegALabel.setText("Reg A : " + instance.getCS().getA());
+		getCPUFrame().RegYLabel.setText("Reg Y : " + instance.getCS().getY());
+		getCPUFrame().RegSSPLabel.setText("Reg SP : " +instance.getCS().getSP());
+		getCPUFrame().RegPCLabel.setText("Reg PC : " + Integer.toHexString(instance.getCS().getPC()));
+		getCPUFrame().RegSRLabel.setText("Reg SR : " + instance.getCS().getSR());
+		
+	}
+	
+	public void UpdateMemState(ReturnedState instance) {
+		
+	}
+	
+	public void UpdatePPUState(ReturnedState instance) {
+		
 	}
 }
