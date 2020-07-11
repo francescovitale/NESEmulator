@@ -225,5 +225,3 @@ public class PPURenderer {
 		Bus.PPUWrite(addr, data);
 	}
 }
-
-
