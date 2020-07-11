@@ -577,7 +577,7 @@ public class OperativeUnit {
 	
 	//Immediate
 	private Boolean IMM() {
-		//Andrò a leggere il prossimo byte		
+		//AndrÃ² a leggere il prossimo byte		
 		addr_abs = PC_register++;	
 		return false;
 	}	
@@ -587,7 +587,7 @@ public class OperativeUnit {
 		//Leggo l'offset del program counter nella pagina 0
 		addr_abs = (char)BusOU.read(PC_register).byteValue();	//Vado a leggere il contenuto in memoria nella locazione indicata dal PC
 		PC_register++;												//Incremento il PC
-		addr_abs &= 0x00FF;											//L'Indirizzo a cui dovrò leggere è nella pagina 0
+		addr_abs &= 0x00FF;											//L'Indirizzo a cui dovrÃ² leggere Ã¨ nella pagina 0
 		return false;
 	}	
 	
@@ -596,7 +596,7 @@ public class OperativeUnit {
 		//Leggo l'offset del program counter + x nella pagina 0
 		addr_abs = (char)BusOU.read((char)(PC_register + Byte.toUnsignedInt(X_register))).byteValue();   //Vado a leggere il contenuto in memoria nella locazione PC+X
 		PC_register++;															    						//Incremento il PC
-		addr_abs &= 0x00FF;																					//L'Indirizzo a cui dovrò leggere è nella pagina 0
+		addr_abs &= 0x00FF;																					//L'Indirizzo a cui dovrÃ² leggere Ã¨ nella pagina 0
 				
 		return false;
 	}	
@@ -606,7 +606,7 @@ public class OperativeUnit {
 		//Leggo l'offset del program counter +y nella pagina 0
 		addr_abs = (char)BusOU.read((char)(PC_register + Byte.toUnsignedInt(Y_register))).byteValue(); //Vado a leggere il contenuto in memoria nella locazione PC+Y
 		PC_register++;															 					      //Incremento il PC
-		addr_abs &= 0x00FF;															  					  //L'Indirizzo a cui dovrò leggere è nella pagina 0
+		addr_abs &= 0x00FF;															  					  //L'Indirizzo a cui dovrÃ² leggere Ã¨ nella pagina 0
 				
 		return false;
 	}	
@@ -616,7 +616,7 @@ public class OperativeUnit {
 		addr_rel = (char)BusOU.read(PC_register).byteValue();						//Leggo il primo byte in memoria	
 		PC_register++;
 		if ((byte)addr_rel < 0)															//Se il valore del byte supera 0x80 
-			addr_rel |= 0xFF00;															//Diventa negativo così da far rimanere il valore tra -128 e 127
+			addr_rel |= 0xFF00;															//Diventa negativo cosÃ¬ da far rimanere il valore tra -128 e 127
 		return false;
 	}
 	
@@ -627,7 +627,7 @@ public class OperativeUnit {
 		byte hi = BusOU.read(PC_register).byteValue();						//Leggo il secondo byte in memoria
 		PC_register++;														//Incremento il PC
 		
-		addr_abs = (char)((hi << 8) | lo);									//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
+		addr_abs = (char)((hi << 8) | lo);									//L'indirizzo assoluto Ã¨ composto dal primo e dal secondo byte letti
 		return false;
 	}	
 	
@@ -638,10 +638,10 @@ public class OperativeUnit {
 		byte hi = BusOU.read(PC_register).byteValue();							//Leggo il secondo byte in memoria
 		PC_register++;															//Incremento il PC
 	
-		addr_abs = (char)((hi << 8) | lo);										//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
+		addr_abs = (char)((hi << 8) | lo);										//L'indirizzo assoluto Ã¨ composto dal primo e dal secondo byte letti
 		addr_abs += Byte.toUnsignedInt(X_register);								//Sommo il contenuto del registro x all'indirizzo
 
-		if ((addr_abs & 0xFF00) != (hi << 8))									//Se ho cambiato pagina allora ci metterò più tempo ad eseguire l'istruzione
+		if ((addr_abs & 0xFF00) != (hi << 8))									//Se ho cambiato pagina allora ci metterÃ² piÃ¹ tempo ad eseguire l'istruzione
 			return true;
 		else
 			return false;
@@ -654,10 +654,10 @@ public class OperativeUnit {
 		byte hi = BusOU.read(PC_register).byteValue();						//Leggo il secondo byte in memoria
 		PC_register++;															//Incremento il PC
 	
-		addr_abs = (char)((hi << 8) | lo);										//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
+		addr_abs = (char)((hi << 8) | lo);										//L'indirizzo assoluto Ã¨ composto dal primo e dal secondo byte letti
 		addr_abs += Byte.toUnsignedInt(Y_register);								//Sommo il contenuto del registro y all'indirizzo
 
-		if ((addr_abs & 0xFF00) != (hi << 8))									//Se ho cambiato pagina allora ci metterò più tempo ad eseguire l'istruzione
+		if ((addr_abs & 0xFF00) != (hi << 8))									//Se ho cambiato pagina allora ci metterÃ² piÃ¹ tempo ad eseguire l'istruzione
 			return true;
 		else
 			return false;
@@ -673,7 +673,7 @@ public class OperativeUnit {
 
 		char ptr = (char)((ptr_hi << 8) | ptr_lo);								//Costruisco un puntatore per andare a prendere il vero e proprio indirizzo
 
-		if (ptr_lo == 0x00FF) 													// Simula un bug hardware (Se il +1 causa un cambiamento di pagina in realtà la pagina non viene cambiata)
+		if (ptr_lo == 0x00FF) 													// Simula un bug hardware (Se il +1 causa un cambiamento di pagina in realtÃ  la pagina non viene cambiata)
 		{
 			ptr = (char)((ptr_hi << 8) | 0x00);		
 			addr_abs = (char) ((BusOU.read(ptr).byteValue() << 8) | BusOU.read(ptr).byteValue());
@@ -711,12 +711,13 @@ public class OperativeUnit {
 		addr_abs = (char)((hi << 8) | lo);
 		addr_abs += Byte.toUnsignedInt(Y_register);			
 		
-		if ((addr_abs & 0xFF00) != (hi << 8))										//Se cambio pagina potrei metterci più tempo a eseguire l'istruzione
+		if ((addr_abs & 0xFF00) != (hi << 8))										//Se cambio pagina potrei metterci piÃ¹ tempo a eseguire l'istruzione
 			return true;
 		else
 			return false;
 	}
 	
+
 
 	//OPCODES
 	
@@ -732,10 +733,10 @@ public class OperativeUnit {
 		else
 			temp = (char)(Byte.toUnsignedInt(A_register) + Byte.toUnsignedInt(fetched));
 		
-		// Se il valore di temp è maggiore di 255 avrò un carry
+		// Se il valore di temp Ã¨ maggiore di 255 avrÃ² un carry
 		setFlag("C", temp > 255);
 		
-		// Setto il flag Z a 1 se il risultato è 0
+		// Setto il flag Z a 1 se il risultato Ã¨ 0
 		setFlag("Z", (int)(temp & 0x00FF) == 0);
 		
 		int A = Byte.toUnsignedInt(A_register);
@@ -744,7 +745,7 @@ public class OperativeUnit {
 		//Setto il flag di overflow
 		setFlag("V",(((~(A ^ f) & (A ^ temp))& 0x0080)) != 0x00);			
 		
-		// Il flag negativo è settato al valore del bit più significativo
+		// Il flag negativo Ã¨ settato al valore del bit piÃ¹ significativo
 		setFlag("N", (temp & 0x80) != 0);
 		
 		// Carico il risultato nell'accumulatore (passa ad 8-bit)
@@ -764,12 +765,12 @@ public class OperativeUnit {
 		char value = (char)((char)fetched.byteValue() ^ 0x00FF);
 		
 		
-		// Da qui è esattamente come la addizione
+		// Da qui Ã¨ esattamente come la addizione
 		char temp;
 		if(getFlag("C"))
-			temp = (char)(Byte.toUnsignedInt(A_register) + Byte.toUnsignedInt(fetched) + 1);
+			temp = (char)(Byte.toUnsignedInt(A_register) + Byte.toUnsignedInt((byte) value) + 1);
 		else
-			temp = (char)(Byte.toUnsignedInt(A_register) + Byte.toUnsignedInt(fetched));
+			temp = (char)(Byte.toUnsignedInt(A_register) + Byte.toUnsignedInt((byte) value));
 		
 
 		setFlag("C", (temp & 0xFF00) != 0);
@@ -789,12 +790,12 @@ public class OperativeUnit {
 	//Logic AND
 	private boolean AND() {
 		
-		//Byte fetched = fetch();
+		fetch();
 
 		A_register = (byte)(A_register & fetched);
 
 		setFlag("Z",A_register == 0x00); //Se la AND ha dato risultato 0x00, abilita il registro 0
-		setFlag("N",0x00 != (A_register & 0x80));  //Se il bit più significativo del registro A è alto, setta il flag Negative.
+		setFlag("N",0x00 != (A_register & 0x80));  //Se il bit piÃ¹ significativo del registro A Ã¨ alto, setta il flag Negative.
 		
 		return true;	
 	}
@@ -809,7 +810,7 @@ public class OperativeUnit {
 		setFlag("Z", (temp & 0x00FF) == 0x00); //se lo shift porta i primi 8 bit ad essere nulli, alza il flag zero
 		setFlag("N", 0x00 != (temp & 0x80)); //se lo shift porta ad avere il bit alto alla posizione 8, abilita il flag Negative
 		
-		if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP") //se l'address mode è implied, scrivi in A, altrimenti in memoria
+		if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP") //se l'address mode Ã¨ implied, scrivi in A, altrimenti in memoria
 			A_register = (byte)(temp & 0x00FF);
 		else
 			BusOU.write(addr_abs, (byte)(temp & 0x00FF));
@@ -879,8 +880,8 @@ public class OperativeUnit {
 		fetched= fetch();
 		char temp = (char) (A_register & fetched); // AND tra valore fetchato d il registro A
 		setFlag("Z", (temp & 0x00FF) == 0x00); //se la AND porta i primi 8 bit ad essere nulli, alza il flag zero
-		setFlag("N", (fetched & (1<<7))!=0); // se il settimo bit di Fetched è 1 alza il flag N
-		setFlag("V", (fetched & (1<<6))!=0);// se il sesto bit di Fetched è 1 alza il flag V
+		setFlag("N", (fetched & (1<<7))!=0); // se il settimo bit di Fetched Ã¨ 1 alza il flag N
+		setFlag("V", (fetched & (1<<6))!=0);// se il sesto bit di Fetched Ã¨ 1 alza il flag V
 		
 		return false;
 		
@@ -1033,8 +1034,7 @@ public class OperativeUnit {
 		
 		fetch();
 		
-		int temp= (int)(A_register & 0xff)- (int) (fetched & 0xff);
-		temp= temp* 0xff;
+		byte temp= (byte) (Byte.toUnsignedInt(A_register)- Byte.toUnsignedInt(fetched));
 		setFlag("C", A_register>= fetched);
 		setFlag("Z", (temp & 0x00FF) == 0x00);
 		setFlag("N", 0x00 != (temp & 0x80));
@@ -1051,8 +1051,7 @@ public class OperativeUnit {
 		
 		fetch();
 		
-		int temp= (int)(X_register & 0xff)- (int) (fetched & 0xff);
-		temp= temp* 0xff;
+		byte temp= (byte) (Byte.toUnsignedInt(X_register)- Byte.toUnsignedInt(fetched));
 		setFlag("C", X_register>= fetched);
 		setFlag("Z", (temp & 0x00FF) == 0x00);
 		setFlag("N", 0x00 != (temp & 0x80));
@@ -1069,8 +1068,7 @@ public class OperativeUnit {
 		
 		fetch();
 		
-		int temp= (int)(Y_register & 0xff)- (int) (fetched & 0xff);
-		temp= temp* 0xff;
+		byte temp= (byte) (Byte.toUnsignedInt(Y_register)- Byte.toUnsignedInt(fetched));
 		setFlag("C", Y_register>= fetched);
 		setFlag("Z", (temp & 0x00FF) == 0x00);
 		setFlag("N", 0x00 != (temp & 0x80));
@@ -1088,7 +1086,7 @@ public class OperativeUnit {
 		
 		byte temp= (byte) (fetched-1);
 		
-		BusOU.write(addr_abs, (byte) (temp & 0x80));
+		BusOU.write(addr_abs, (byte) (temp & 0xFF));
 		setFlag("Z", (temp & 0x00FF) == 0x00);
 		setFlag("N", 0x00 != (temp & 0x80));
 		
@@ -1315,13 +1313,13 @@ public class OperativeUnit {
 		
 		Byte B,U;
 		
-		if (getFlag("B"))  
+		if (getFlag("B")==true)  
 			B= 1;
 		
 		else 
 			B=0;
 		
-		if (getFlag("U"))  
+		if (getFlag("U")==true)  
 			U= 1;
 		
 		else 
@@ -1369,14 +1367,13 @@ public class OperativeUnit {
         fetch();
         byte C;
        
-        if(getFlag("C"))
+        if(getFlag("C")==true)
             C=1;
        
         else
             C=0;
        
-        int temp= (int)((fetched<<1) & 0xFF) | C; // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
-        temp= temp & 0xFF;
+        byte temp= (byte) (Byte.toUnsignedInt( (byte) (fetched<<1))| C); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
         setFlag("Z",  0x00 == (temp & 0x00FF));
         setFlag("N", 0x00 != (temp & 0x80));
         setFlag("C", 0x00 != (temp & 0xFF00));
@@ -1404,8 +1401,7 @@ public class OperativeUnit {
         else
             C=0;
        
-        int temp= (int)((fetched<<1) & 0xFF)| (C<<7); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
-        temp= temp & 0xFF;
+        int temp= (byte) (Byte.toUnsignedInt( (byte) (fetched<<1))| (C<<7); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
         setFlag("Z",  0x00 == (temp & 0x00FF));
         setFlag("N", 0x00 != (temp & 0x80));
         setFlag("C", 0x00 != (fetched & 0x01));
@@ -1513,7 +1509,7 @@ public class OperativeUnit {
 	private boolean TAX() {
 		
 		X_register= A_register;
-		setFlag("Z",  0x00 == (X_register & 0x00FF));
+		setFlag("Z",   (0x00 ==X_register));
 		setFlag("N", 0x00 != (X_register & 0x80));
 		return false;
 	}
@@ -1524,7 +1520,7 @@ public class OperativeUnit {
 	private boolean TAY() {
 		
 		Y_register= A_register;
-		setFlag("Z",  0x00 == (Y_register & 0x00FF));
+		setFlag("Z", (0x00 ==Y_register));
 		setFlag("N", 0x00 != (Y_register & 0x80));
 		return false;
 	
@@ -1537,7 +1533,7 @@ public class OperativeUnit {
 	private boolean TSX() {
 		
 		X_register= Stack_pointer;
-		setFlag("Z",  0x00 == (X_register & 0x00FF));
+		setFlag("Z",  (0x00 == X_register));
 		setFlag("N", 0x00 != (X_register & 0x80));
 		return false;
 	
@@ -1551,7 +1547,7 @@ public class OperativeUnit {
 	private boolean TXA() {
 		
 		A_register= X_register;
-		setFlag("Z",  0x00 == (A_register & 0x00FF));
+		setFlag("Z", (0x00 ==A_register));
 		setFlag("N", 0x00 != (A_register & 0x80));
 		return false;
 	
@@ -1576,7 +1572,7 @@ public class OperativeUnit {
 	private boolean TYA() {
 		
 		A_register= Y_register;
-		setFlag("Z",  0x00 == (A_register & 0x00FF));
+		setFlag("Z",  (0x00 ==A_register));
 		setFlag("N", 0x00 != (A_register & 0x80));
 		return false;
 		
@@ -1687,7 +1683,7 @@ public class OperativeUnit {
 		//Salvo il valore prelevato come Program Counter
 		PC_register = (char)((hi << 8) | lo);
 		
-		// Resetto i registri interni e i registri di utilità
+		// Resetto i registri interni e i registri di utilitÃ 
 		A_register = 0x00;
 		X_register = 0x00;
 		Y_register = 0x00;
