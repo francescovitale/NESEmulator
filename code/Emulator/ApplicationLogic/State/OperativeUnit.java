@@ -1401,7 +1401,7 @@ public class OperativeUnit {
         else
             C=0;
        
-        int temp= (byte) (Byte.toUnsignedInt( (byte) (fetched<<1))| (C<<7); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
+        int temp= (byte) (Byte.toUnsignedInt( (byte) (fetched<<1))| (C<<7)); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
         setFlag("Z",  0x00 == (temp & 0x00FF));
         setFlag("N", 0x00 != (temp & 0x80));
         setFlag("C", 0x00 != (fetched & 0x01));
