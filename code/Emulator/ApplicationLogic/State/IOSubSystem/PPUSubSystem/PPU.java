@@ -92,7 +92,7 @@ public class PPU {
 		bg_shifter_attrib_lo = 0x0000;
 		bg_shifter_attrib_hi = 0x0000;
 		
-		/* È necessario resettare i registri di comunicazione verso il processore */
+		/* Ãˆ necessario resettare i registri di comunicazione verso il processore */
 		IOM.setPPUData((byte)0x00);
 		IOM.setPPUStatus((byte)0x00);
 		IOM.setPPUMask((byte)0x00);
@@ -127,7 +127,7 @@ public class PPU {
 	
 	public Byte PPURead(char addr)
 	{
-		/* La lettura verso la PPU può portare a leggere verso la pattern memory, la VRAM, oppure la palette memory */
+		/* La lettura verso la PPU puÃ² portare a leggere verso la pattern memory, la VRAM, oppure la palette memory */
 		return PPUR.PPURead(addr);
 	}
 
@@ -154,7 +154,7 @@ public class PPU {
 				int enable_nmi = ByteManager.extractBit(7,control);
 				OperativeUnit OU;
 				if(enable_nmi == 1) {
-					// Bisogna impostare una richiesta di interruzione. È necessaria la chiamata alla CPU.
+					// Bisogna impostare una richiesta di interruzione. Ãˆ necessaria la chiamata alla CPU.
 					OU = OperativeUnit.getInstance();
 					OU.setNMIRequest(true);
 				}
@@ -166,6 +166,7 @@ public class PPU {
 		cycles++;
 		if(cycles >= 341) {
 			cycles = 0;
+			scanline++;
 			if(scanline >= 261)
 				scanline = -1;
 		}
