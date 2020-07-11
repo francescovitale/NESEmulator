@@ -1,9 +1,8 @@
 package Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem;
 
-import java.util.ArrayList;
 
-import Emulator.ApplicationLogic.State.Bus;
-import Emulator.ApplicationLogic.State.ClockManager;
+import Emulator.ApplicationLogic.ByteManager;
+import Emulator.ApplicationLogic.State.OperativeUnit;
 import Emulator.ApplicationLogic.State.IOSubSystem.IOManager;
 
 public class PPU {
@@ -16,8 +15,6 @@ public class PPU {
 	private char bg_shifter_pattern_hi;
  	private char bg_shifter_attrib_lo;
  	private char bg_shifter_attrib_hi;
-	
- 	private Byte PPU_data_buffer;
  	private Byte fine_x;
  	
  	private Byte bg_next_tile_id;
@@ -30,13 +27,11 @@ public class PPU {
  	private Integer cycles;
 	
  	private IOManager IOM;
- 	private ClockManager CM;
  	private PPURenderer PPUR;
  	
 	protected PPU() {
 		
-		//IOM = IOManager.getInstance();
-		//CM = ClockManager.getInstance();
+		
 		PPUR = PPURenderer.getInstance();
 		
 	 	vram_addr = 0x0000;
@@ -46,7 +41,6 @@ public class PPU {
 		bg_shifter_attrib_lo = 0x0000;
 		bg_shifter_attrib_hi = 0x0000;
 		
-		PPU_data_buffer = 0x00;
 	 	fine_x = 0x00;
 	 	
 		bg_next_tile_id = 0x00;
@@ -76,24 +70,105 @@ public class PPU {
 	}
 	
 	void refresh_vram() {
+		vram_addr = tram_addr;
+	}
+	
+	public void reset() {
+		IOM = IOManager.getInstance();
 		
+		/* cicli e scanline azzerati */
+		scanline = 0;
+		cycles = 0;
+		
+		/* Variabili di comodo per immagazzinare i tile da renderizzare successivamente */
+		bg_next_tile_id = 0x00;
+		bg_next_tile_attr = 0x00;
+		bg_next_tile_lsb = 0x00;
+		bg_next_tile_msb = 0x00;
+		
+		/* Gli shift registers vanno azzerati */
+		bg_shifter_pattern_lo = 0x0000;
+		bg_shifter_pattern_hi = 0x0000;
+		bg_shifter_attrib_lo = 0x0000;
+		bg_shifter_attrib_hi = 0x0000;
+		
+		/* È necessario resettare i registri di comunicazione verso il processore */
+		IOM.setPPUData((byte)0x00);
+		IOM.setPPUStatus((byte)0x00);
+		IOM.setPPUMask((byte)0x00);
+		IOM.setPPUControl((byte)0x00);
+		
+		/* Reset dei loopy registers */
+		vram_addr = 0x0000;
+		tram_addr = 0x0000;
+		fine_x = 0x00;
+		address_latch = 0x00;
+		/*
+		System.out.println(scanline);
+		System.out.println(cycles);
+		System.out.println(bg_next_tile_id);
+		System.out.println(bg_next_tile_attr);
+		System.out.println(bg_next_tile_lsb);
+		System.out.println(bg_next_tile_msb);
+		System.out.println(bg_shifter_pattern_lo);
+		System.out.println(bg_shifter_pattern_hi);
+		System.out.println(bg_shifter_attrib_lo);
+		System.out.println(bg_shifter_attrib_hi);
+		System.out.println(IOM.getPPUData());
+		System.out.println(IOM.getPPUStatus());
+		System.out.println(IOM.getPPUMask());
+		System.out.println(IOM.getPPUControl());
+		System.out.println(vram_addr);
+		System.out.println(tram_addr);
+		System.out.println(fine_x);
+		System.out.println(address_latch);
+		*/
 	}
 	
 	public Byte PPURead(char addr)
 	{
-		return null;
+		/* La lettura verso la PPU può portare a leggere verso la pattern memory, la VRAM, oppure la palette memory */
+		return PPUR.PPURead(addr);
 	}
 
 	//Per Connettere la PPU sul BUS principale
 	public void PPUWrite(char addr, Byte data)
 	{
-
+		PPUR.PPUWrite(addr, data);
 	}
 
-	public void clock() {}
-
-	public void reset() {
-
+	public void clock() {
+		if(scanline >= -1 && scanline <= 239) {
+			PPUR.Render(scanline, cycles);
+		}
+			
+		if(scanline == 240) {}
+			
+		if(scanline >= 241 && scanline <= 261) {
+			if(scanline == 241 && cycles == 1) {
+				Byte status = IOM.getPPUStatus();
+				status = ByteManager.setBit(7,1,status);
+				IOM.setPPUStatus(status);
+				
+				Byte control = IOM.getPPUControl();
+				int enable_nmi = ByteManager.extractBit(7,control);
+				OperativeUnit OU;
+				if(enable_nmi == 1) {
+					// Bisogna impostare una richiesta di interruzione. È necessaria la chiamata alla CPU.
+					OU = OperativeUnit.getInstance();
+					OU.setNMIRequest(true);
+				}
+			}
+		}
+			
+		//extractPixel();
+		
+		cycles++;
+		if(cycles >= 341) {
+			cycles = 0;
+			if(scanline >= 261)
+				scanline = -1;
+		}
 	}
 
 	public char getVram_addr() {
