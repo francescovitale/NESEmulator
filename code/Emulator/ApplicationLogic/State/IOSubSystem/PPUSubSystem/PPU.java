@@ -13,7 +13,7 @@ public class PPU {
  	private char vram_addr;
  	private char tram_addr;
  	private char bg_shifter_pattern_lo;
- 	private char bg_shifter_pattern_hi;
+	private char bg_shifter_pattern_hi;
  	private char bg_shifter_attrib_lo;
  	private char bg_shifter_attrib_hi;
 	
@@ -136,6 +136,67 @@ public class PPU {
 		this.cycles = cycles;
 	}
 	
-	
+	public char getBg_shifter_pattern_lo() {
+		return bg_shifter_pattern_lo;
+	}
 
+	public void setBg_shifter_pattern_lo(char bg_shifter_pattern_lo) {
+		this.bg_shifter_pattern_lo = bg_shifter_pattern_lo;
+	}
+
+	public char getBg_shifter_pattern_hi() {
+		return bg_shifter_pattern_hi;
+	}
+
+	public void setBg_shifter_pattern_hi(char bg_shifter_pattern_hi) {
+		this.bg_shifter_pattern_hi = bg_shifter_pattern_hi;
+	}
+
+	public char getBg_shifter_attrib_lo() {
+		return bg_shifter_attrib_lo;
+	}
+
+	public void setBg_shifter_attrib_lo(char bg_shifter_attrib_lo) {
+		this.bg_shifter_attrib_lo = bg_shifter_attrib_lo;
+	}
+
+	public char getBg_shifter_attrib_hi() {
+		return bg_shifter_attrib_hi;
+	}
+
+	public void setBg_shifter_attrib_hi(char bg_shifter_attrib_hi) {
+		this.bg_shifter_attrib_hi = bg_shifter_attrib_hi;
+	}
+
+	public Byte getBg_next_tile_id() {
+		return bg_next_tile_id;
+	}
+
+	public void setBg_next_tile_id(Byte bg_next_tile_id) {
+		this.bg_next_tile_id = bg_next_tile_id;
+	}
+
+	public Byte getBg_next_tile_attr() {
+		return bg_next_tile_attr;
+	}
+
+	public void setBg_next_tile_attr(Byte bg_next_tile_attr) {
+		this.bg_next_tile_attr = bg_next_tile_attr;
+	}
+
+	public Byte getBg_next_tile_lsb() {
+		return bg_next_tile_lsb;
+	}
+
+	public void setBg_next_tile_lsb(Byte bg_next_tile_lsb) {
+		this.bg_next_tile_lsb = bg_next_tile_lsb;
+	}
+
+	public Byte getBg_next_tile_msb() {
+		return bg_next_tile_msb;
+	}
+
+	public void setBg_next_tile_msb(Byte bg_next_tile_msb) {
+		this.bg_next_tile_msb = bg_next_tile_msb;
+	}
 }
