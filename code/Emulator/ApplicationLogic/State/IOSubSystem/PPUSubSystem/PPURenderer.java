@@ -236,12 +236,13 @@ public class PPURenderer {
 			char vram = P.getVram_addr();											//Prelevo la vram
 			
 			switch ((cycle - 1) % 8){ 
-			case 0: 
+			case 0:{
 				LoadBackgroundShifters();											//Carico i tile del background sugli shifter 
 				Byte bg_next_tile_id = P.PPURead((char)(0x2000 | (vram & 0x0FFF)));	//Fetch del prossimo background tile ID
 				P.setBg_next_tile_id(bg_next_tile_id);								//Lo inserisco nella PPU
 				break; 
-			case 2: 
+			}
+			case 2:{
 				int nametable_y = ByteManager.extractCharBit(NAMETABLE_Y, vram);			//prendo nametable_y 
 				int nametable_x = ByteManager.extractCharBit(NAMETABLE_X, vram);			//prendo nametable_x
 				char coarse_y = (char)((vram & 0x03E0) >> 5);								//Prelevo coarse_y 
@@ -261,7 +262,8 @@ public class PPURenderer {
 				
 				P.setBg_next_tile_attr(bg_next_tile_attrib);									//Lo inserisco nella PPU
 				break;
-			case 4: 
+			}
+			case 4:{
 				Byte control = IOM.getPPUControl();												//Prelevo il control register
 				byte ppu_bg_next_tile_id = P.getBg_next_tile_id();								//Prelevo il bg_next_tile_id dalla PPU
 				int pattern_background = ByteManager.extractBit(PATTERN_BACKGROUND, control);	//Prelevo il bit PATTERN_BACKGROUND dal registro control
@@ -273,21 +275,24 @@ public class PPURenderer {
 				
 				P.setBg_next_tile_lsb(bg_next_tile_lsb);										//Lo inserisco nella PPU
 				break;
-			case 6: 
-				Byte control1 = IOM.getPPUControl();											//Prelevo il control register
-				byte ppu_bg_next_tile_id1 = P.getBg_next_tile_id();								//Prelevo il bg_next_tile_id dalla PPU
-				int pattern_background1 = ByteManager.extractBit(PATTERN_BACKGROUND, control1);	//Prelevo il bit PATTERN_BACKGROUND dal registro control
-				char fine_y1 = (char)((vram & 0x7000) >> 12);									//Prelev fine_y 
+			}
+			case 6:{
+				Byte control = IOM.getPPUControl();												//Prelevo il control register
+				byte ppu_bg_next_tile_id = P.getBg_next_tile_id();								//Prelevo il bg_next_tile_id dalla PPU
+				int pattern_background = ByteManager.extractBit(PATTERN_BACKGROUND, control);	//Prelevo il bit PATTERN_BACKGROUND dal registro control
+				char fine_y = (char)((vram & 0x7000) >> 12);									//Prelev fine_y 
 				
-				Byte bg_next_tile_msb = P.PPURead((char)((pattern_background1 << 12) 			// Fetch del prossimo background tile MSB bit plane dalla pattern memory
-												+ ((char)(ppu_bg_next_tile_id1 << 4)) 
-												+ (fine_y1) + 8));
+				Byte bg_next_tile_msb = P.PPURead((char)((pattern_background << 12) 			// Fetch del prossimo background tile MSB bit plane dalla pattern memory
+												+ ((char)(ppu_bg_next_tile_id << 4)) 
+												+ (fine_y) + 8));
 				
 				P.setBg_next_tile_msb(bg_next_tile_msb);										//Lo inserisco nella PPU
 				break;
-			case 7: 
+			}
+			case 7:{
 				incrementScrollX();																// Incremento il "puntatore" background tile al prossimo tile orizzontale nella nametable memory.									
 				break; 
+			}
 			}
 			
 		}
