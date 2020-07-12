@@ -24,7 +24,7 @@ public class PPU {
  	
  	private Integer address_latch;
  	private Integer scanline;
- 	private Integer cycles;
+	private Integer cycles;
 	
  	private IOManager IOM;
  	private PPURenderer PPUR;
@@ -210,6 +210,14 @@ public class PPU {
 
 	public void setCycles(Integer cycles) {
 		this.cycles = cycles;
+	}
+	
+ 	public Integer getScanline() {
+		return scanline;
+	}
+
+	public void setScanline(Integer scanline) {
+		this.scanline = scanline;
 	}
 	
 	public char getBg_shifter_pattern_lo() {
