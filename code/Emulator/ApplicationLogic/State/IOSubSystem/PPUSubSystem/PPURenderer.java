@@ -225,13 +225,15 @@ public class PPURenderer {
 			//"Odd frame" scarto il cycle
 			P.setCycles(1);
 		}
-		else if(cycle == 1 && scanline == 1) {
+		
+		if(cycle == 1 && scanline == 1) {
 			// Inizia effettivamente un nuovo ciclo quindi pulisco il vertical blank flag
 			Byte status = IOM.getPPUStatus();
 			ByteManager.setBit(VERTICAL_BLANK, 0, status);
 			IOM.setPPUStatus(status);
 		}
-		else if ((cycle >= 2 && cycle < 258) || (cycle >= 321 && cycle < 338)){
+		
+		if ((cycle >= 2 && cycle < 258) || (cycle >= 321 && cycle < 338)){
 			UpdateShifters();														//Aggiorno gli shift register
 			char vram = P.getVram_addr();											//Prelevo la vram
 			
@@ -295,6 +297,31 @@ public class PPURenderer {
 			}
 			}
 			
+		}
+		if(cycle == 256){
+			// End of a visible scanline, so increment downwards...
+			incrementScrollY();
+		}
+		
+		if(cycle == 257){
+			//...and reset the x position
+			LoadBackgroundShifters();
+			TransferAddressX();			
+		}
+		
+		if (cycle == 338 || cycle == 340)
+		{
+			// Superfluous reads of tile id at end of scanline
+			Byte bg_next_tile_id = P.getBg_next_tile_id();							//Prelevo bg_next_tile_id
+			char vram = P.getVram_addr();											//Prelevo la vram
+			bg_next_tile_id = P.PPURead((char) (0x2000 | (vram & 0x0FFF)));		
+			P.setBg_next_tile_id(bg_next_tile_id);
+		}
+
+		if (scanline == -1 && cycle >= 280 && cycle < 305)
+		{
+			// End of vertical blank period so reset the Y address ready for rendering
+			TransferAddressY();
 		}
 	}
 	
