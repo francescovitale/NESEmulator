@@ -9,7 +9,7 @@ public class Main {
 		Controller C = new Controller();
 		String Nome = "GIOCO";
 
-		C.executeProgram("MarioBros", 0, "");
+		C.executeProgram("MarioBros", 0, "C:\\Users\\aceep\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\Balloon Fight (USA).ines");
 		//C.DumpCartridge();
 		//C.DumpMemory();
 

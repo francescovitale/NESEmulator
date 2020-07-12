@@ -1,6 +1,5 @@
 package Emulator.ApplicationLogic.State;
 
-import Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem.PPUState;
 
 public class State {
 	
@@ -36,7 +35,6 @@ public class State {
 	public void refreshState() {
 		CS.refreshCPUState();
 		MS.refreshMemoryState();
-		PS.refreshPPUState();
 		
 		Taken = true; //Lo stato è stato aggiornato
 	}

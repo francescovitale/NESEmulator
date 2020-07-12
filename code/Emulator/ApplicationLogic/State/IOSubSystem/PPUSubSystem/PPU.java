@@ -1,11 +1,19 @@
 package Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem;
+import Emulator.ApplicationLogic.State.PPUState;
 
+import java.util.ArrayList;
 
 import Emulator.ApplicationLogic.ByteManager;
 import Emulator.ApplicationLogic.State.OperativeUnit;
 import Emulator.ApplicationLogic.State.IOSubSystem.IOManager;
 
+
+
 public class PPU {
+	
+	private ArrayList<String> NESPalette;
+	private ArrayList<Pixel> returnedPixels;
+	
 
  	private volatile static PPU PPU = null;				//Singleton							//Bus
 
@@ -24,7 +32,7 @@ public class PPU {
  	
  	private Integer address_latch;
  	private Integer scanline;
-	private Integer cycles;
+ 	private Integer cycles;
 	
  	private IOManager IOM;
  	private PPURenderer PPUR;
@@ -51,8 +59,81 @@ public class PPU {
 	 	address_latch = 0;
 		scanline = 0;
 		cycles = 0;
+		
+		initializeNESPalette();
+		returnedPixels = new ArrayList<Pixel>();
 	};
 	
+	private void initializeNESPalette() {
+		NESPalette = new ArrayList<String>();
+		for(int i = 0; i <= (int)0x003F; i++)
+			NESPalette.add("");
+		NESPalette.set(0x00, "#545454");
+		NESPalette.set(0x01,"#001e74");
+		NESPalette.set(0x02,"#081090");
+		NESPalette.set(0x03,"#300088");
+		NESPalette.set(0x04,"#440064");
+		NESPalette.set(0x05,"#5c0030");
+		NESPalette.set(0x06,"#540400");
+		NESPalette.set(0x07,"#3c1800");
+		NESPalette.set(0x08,"#202a00");
+		NESPalette.set(0x09,"#083a00");
+		NESPalette.set(0x0A,"#004000");
+		NESPalette.set(0x0B,"#003c00");
+		NESPalette.set(0x0C,"#00323c");
+		NESPalette.set(0x0D,"#000000");
+		NESPalette.set(0x0E,"#000000");
+		NESPalette.set(0x0F,"#000000");
+		NESPalette.set(0x10,"#989698");
+		NESPalette.set(0x11,"#084cc4");
+		NESPalette.set(0x12,"#3032ec");
+		NESPalette.set(0x13,"#5c1ee4");
+		NESPalette.set(0x14,"#8814b0");
+		NESPalette.set(0x15,"#a01464");
+		NESPalette.set(0x16,"#982220");
+		NESPalette.set(0x17,"#783c00");
+		NESPalette.set(0x18,"#545a00");
+		NESPalette.set(0x19,"#287200");
+		NESPalette.set(0x1A,"#087c00");
+		NESPalette.set(0x1B,"#007628");
+		NESPalette.set(0x1C,"#006678");
+		NESPalette.set(0x1D,"#000000");
+		NESPalette.set(0x1E,"#000000");
+		NESPalette.set(0x1F,"#000000");
+		NESPalette.set(0x20,"#eceeec");
+		NESPalette.set(0x21,"#4c9aec");
+		NESPalette.set(0x22,"#787cec");
+		NESPalette.set(0x23,"#b062ec");
+		NESPalette.set(0x24,"#e454ec");
+		NESPalette.set(0x25,"#ec58b4");
+		NESPalette.set(0x26,"#ec6a64");
+		NESPalette.set(0x27,"#d48820");
+		NESPalette.set(0x28,"#a0aa00");
+		NESPalette.set(0x29,"#74c400");
+		NESPalette.set(0x2A,"#4cd020");
+		NESPalette.set(0x2B,"#38cc6c");
+		NESPalette.set(0x2C,"#38b4cc");
+		NESPalette.set(0x2D,"#3c3c3c");
+		NESPalette.set(0x2E,"#000000");
+		NESPalette.set(0x2F,"#000000");
+		NESPalette.set(0x30,"#eceeec");
+		NESPalette.set(0x31,"#a8ccec");
+		NESPalette.set(0x32,"#bcbcec");
+		NESPalette.set(0x33,"#d4b2ec");
+		NESPalette.set(0x34,"#ecaeec");
+		NESPalette.set(0x35,"#ecaed4");
+		NESPalette.set(0x36,"#ecb4b0");
+		NESPalette.set(0x37,"#e4c490");
+		NESPalette.set(0x38,"#ccd278");
+		NESPalette.set(0x39,"#b4de78");
+		NESPalette.set(0x3A,"#a8e290");
+		NESPalette.set(0x3B,"#98e2b4");
+		NESPalette.set(0x3C,"#a0d6e4");
+		NESPalette.set(0x3D,"#a0a2a0");
+		NESPalette.set(0x3E,"#000000");
+		NESPalette.set(0x3F,"#000000");
+	}
+
 	//Punto di ingresso globale all'istanza
 	public static PPU getInstance(){
 		if(PPU==null) {
@@ -63,10 +144,6 @@ public class PPU {
 			}
 		}
 		return PPU;
-	}
-	
-	Integer getColourFromPaletteRam(Byte Palette, Byte Pixel) {
-		return 0;
 	}
 	
 	void refresh_vram() {
@@ -94,6 +171,7 @@ public class PPU {
 		
 		/* Ãˆ necessario resettare i registri di comunicazione verso il processore */
 		IOM.setPPUData((byte)0x00);
+		IOM.setPPUAddress((byte)0x00);
 		IOM.setPPUStatus((byte)0x00);
 		IOM.setPPUMask((byte)0x00);
 		IOM.setPPUControl((byte)0x00);
@@ -103,26 +181,8 @@ public class PPU {
 		tram_addr = 0x0000;
 		fine_x = 0x00;
 		address_latch = 0x00;
-		/*
-		System.out.println(scanline);
-		System.out.println(cycles);
-		System.out.println(bg_next_tile_id);
-		System.out.println(bg_next_tile_attr);
-		System.out.println(bg_next_tile_lsb);
-		System.out.println(bg_next_tile_msb);
-		System.out.println(bg_shifter_pattern_lo);
-		System.out.println(bg_shifter_pattern_hi);
-		System.out.println(bg_shifter_attrib_lo);
-		System.out.println(bg_shifter_attrib_hi);
-		System.out.println(IOM.getPPUData());
-		System.out.println(IOM.getPPUStatus());
-		System.out.println(IOM.getPPUMask());
-		System.out.println(IOM.getPPUControl());
-		System.out.println(vram_addr);
-		System.out.println(tram_addr);
-		System.out.println(fine_x);
-		System.out.println(address_latch);
-		*/
+		
+		
 	}
 	
 	public Byte PPURead(char addr)
@@ -154,14 +214,24 @@ public class PPU {
 				int enable_nmi = ByteManager.extractBit(7,control);
 				OperativeUnit OU;
 				if(enable_nmi == 1) {
-					// Bisogna impostare una richiesta di interruzione. Ãˆ necessaria la chiamata alla CPU.
+					// Bisogna impostare una richiesta di interruzione. E' necessaria la chiamata alla CPU.
 					OU = OperativeUnit.getInstance();
 					OU.setNMIRequest(true);
 				}
 			}
 		}
 			
-		//extractPixel();
+		Pixel temp = extractPixel();
+		if(cycles % 3 != 0)
+		{
+			returnedPixels.add(temp);
+		}
+		else {
+			PPUState PState = PPUState.getInstance();
+			PState.refreshPPUState(returnedPixels);
+			returnedPixels.clear();
+		} // Potrebbe dipendere dalla velocità relativa... Concorrenza? Si, ma problemi di velocità se il thread in polling viene
+		// sincronizzato..
 		
 		cycles++;
 		if(cycles >= 341) {
@@ -174,6 +244,87 @@ public class PPU {
 
 	public char getVram_addr() {
 		return vram_addr;
+	}
+	
+	private Pixel extractPixel() {
+		IOM = IOManager.getInstance();
+		Byte bg_pattern_info = 0x00;  
+		Byte bg_palette_info = 0x00; 
+		Byte hex_color;
+		
+		Byte mask = IOM.getPPUMask();
+		int render_background = ByteManager.extractBit(3,mask);
+		
+		if (render_background == 1)
+		{
+			/* bit_mux consentira' di estrarre solamente il singolo pixel da renderizzare */
+			char bit_mux = (char)(0x8000 >> fine_x);
+
+			Byte p0_pattern_info; // LSB
+			Byte p1_pattern_info; // MSB
+			boolean temp = (bg_shifter_pattern_lo & bit_mux) > 0;
+			if(temp == true)
+				p0_pattern_info = 0x01;
+			else
+				p0_pattern_info = 0x00;
+			//System.out.println("p0_pattern_info: "+p0_pattern_info);
+			temp = (bg_shifter_pattern_hi & bit_mux) > 0;
+			if(temp == true)
+				p1_pattern_info = 0x01;
+			else
+				p1_pattern_info = 0x00;
+			//System.out.println("p1_pattern_info: "+p1_pattern_info);
+
+			// Combine to form pixel index
+			bg_pattern_info = (byte) ((p1_pattern_info << 1) | p0_pattern_info);
+			//System.out.println("bg_pattern_info: "+bg_pattern_info);
+			
+
+			Byte p0_palette_info; // LSB
+			Byte p1_palette_info; // MSB
+			temp = (bg_shifter_attrib_lo & bit_mux) > 0;
+			if(temp == true)
+				p0_palette_info = 0x01;
+			else
+				p0_palette_info = 0x00;
+			//System.out.println("p0_palette_info: "+p0_palette_info);
+			temp = (bg_shifter_attrib_hi & bit_mux) > 0;
+			if(temp == true)
+				p1_palette_info = 0x01;
+			else
+				p1_palette_info = 0x00;
+			//System.out.println("p1_palette_info: "+p1_palette_info);
+			bg_palette_info = (byte) ((p1_palette_info << 1) | p0_palette_info);
+			/*System.out.println("bg_palette_info: "+bg_palette_info);
+			
+			System.out.println("bg_palette_info << 2: "+ (bg_palette_info << 2));
+			System.out.println("(bg_palette_info << 2)+bg_pattern_info: "+((bg_palette_info << 2)+bg_pattern_info));
+			System.out.println("0x3F00 + (bg_palette_info << 2) + bg_pattern_info: "+ (0x3F00+(bg_palette_info << 2)+bg_pattern_info));*/
+		}
+		
+		hex_color = getColourFromPaletteRam(bg_palette_info, bg_pattern_info); // Il colore tratto; servirà a indirizzare NESPalette
+		Integer intTemp = Byte.toUnsignedInt(hex_color);
+		//String stringTemp = Integer.toHexString(intTemp);
+		/*System.out.println("Colore palette: "+stringTemp);
+		System.out.println("Colore in esadecimale: "+ NESPalette.get(hex_color));*/
+		
+		
+		//return new Pixel(cycles,scanline,stringTemp,NESPalette.get(hex_color));
+		return null;
+	}
+	
+	
+	Byte getColourFromPaletteRam(Byte Palette, Byte Pixel) {
+		//return PPURead((char) (0x3F00 + (Palette << 2) + Pixel));
+		return (byte)0x2c; // STUB
+	}
+	
+	public Integer getScanline() {
+		return scanline;
+	}
+
+	public void setScanline(Integer scanline) {
+		this.scanline = scanline;
 	}
 
 	public void setVram_addr(char vram_addr) {
@@ -210,14 +361,6 @@ public class PPU {
 
 	public void setCycles(Integer cycles) {
 		this.cycles = cycles;
-	}
-	
- 	public Integer getScanline() {
-		return scanline;
-	}
-
-	public void setScanline(Integer scanline) {
-		this.scanline = scanline;
 	}
 	
 	public char getBg_shifter_pattern_lo() {

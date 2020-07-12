@@ -327,11 +327,12 @@ public class PPURenderer {
 	
 	public Byte PPURead(char addr)
 	{
-		return Bus.PPURead(addr);
+		//return Bus.PPURead(addr); 
+		return (byte)0x00; // STUB
 	}
 
 	public void PPUWrite(char addr, Byte data)
 	{
-		Bus.PPUWrite(addr, data);
+		//Bus.PPUWrite(addr, data); 
 	}
 }
