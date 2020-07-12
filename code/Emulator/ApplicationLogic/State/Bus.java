@@ -57,8 +57,8 @@ public class Bus {
 			data= Ram.read((char)(Address & 0x07FF));		//Faccio il mirroring della RAM (& 0x07FF)
 		}
 		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio leggere dalla PPU
-		else if((Address >= 0x2000) && (Address <= 0x3FFF)) {
-			data = IOM.read((char)(Address & 0x0007),false);	//Faccio il mirroring della PPU (& 0x0007)
+		else {
+			data = IOM.read((char)(Address),false);	//Faccio il mirroring della PPU (& 0x0007)
 		}
 		/*else {
 			data= Ram.read((char)(Address & 0x07FF));	//DEBUG
@@ -79,8 +79,8 @@ public class Bus {
 			Ram.write((char)(Address & 0x07FF), Data);  //Faccio il mirroring della RAM (& 0x07FF)
 		}
 		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio scrivere sulla PPU
-		else if((Address >= 0x2000) && (Address <= 0x3FFF)) {
-			IOM.write((char)(Address & 0x0007), Data);	//Faccio il mirroring della PPU (& 0x0007)
+		else{
+			IOM.write((char)(Address), Data);	//Faccio il mirroring della PPU (& 0x0007)
 		}
 		/*else {
 			Ram.write((char)(Address & 0x07FF), Data);  //DEBUG
