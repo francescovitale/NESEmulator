@@ -32,7 +32,7 @@ public class PPUBus {
 	
 	public Byte PPURead(char addr)
 	{
-		Byte data = 0;
+		Byte data = 0x00;
 		addr &= 0x3FFF;
 		
 		/* Da verificare */
@@ -82,12 +82,13 @@ public class PPUBus {
 			Byte mask = IOManager.getInstance().getPPUMask();
 			// È necessario estrarre il bit grayscale dal mask register
 			int grayscale = ByteManager.extractBit(0,mask);
-			if(grayscale == 0)
+			if(grayscale == 0) 
 				data = (byte)(Palette.read(addr) & 0x30);
-			else
+			else 
 				data = (byte)(Palette.read(addr) & 0x3F);
-				
+			
 		}
+		
 
 		return data;
 	}
@@ -97,7 +98,6 @@ public class PPUBus {
 	//Per Connettere la PPU sul BUS principale
 	public void PPUWrite(char addr, byte data)
 	{
-	
 		addr &= 0x3FFF;
 		
 		/* Da verificare */

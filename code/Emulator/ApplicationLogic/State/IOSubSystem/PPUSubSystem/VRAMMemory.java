@@ -10,7 +10,11 @@ public class VRAMMemory {
 	
 	protected VRAMMemory() {
 		NameTable1 = new ArrayList<Byte>();
+		for(int i = 0; i < (int)0x400; i++)
+			NameTable1.add((byte)0x00);
 		NameTable2 = new ArrayList<Byte>();
+		for(int i = 0; i < (int)0x400; i++)
+			NameTable2.add((byte)0x00);
 	};
 	
 	//Punto di ingresso globale all'istanza

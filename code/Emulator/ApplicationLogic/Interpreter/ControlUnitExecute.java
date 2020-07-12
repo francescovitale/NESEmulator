@@ -32,6 +32,8 @@ public class ControlUnitExecute extends ControlUnitState {
 		if(CU.getBool_addr() & CU.getBool_opcode())												//Se entrambi i bool sono veri
 			CU.increaseCycles();																//Va aggiunto un ciclo per l'istruzione corrente
 		
+		SF.setFlag("U", true);
+		
 		NMIRequest_temp = SF.getNMIRequest();
 		IRQRequest_temp = SF.getIRQRequest();
 		

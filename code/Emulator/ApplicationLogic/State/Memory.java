@@ -14,8 +14,8 @@ public class Memory {
 		for(int i = 0; i < (int)0xFFFF; i++)
 			Word.add((byte)0x0);
 		
-		
-		/*DEBUG*/
+		/*
+		//DEBUG
 		Word.set(0xFFFC, (byte)0x00);
 		Word.set(0xFFFD, (byte)0x80);
 		Word.set(0x8000, (byte)0xA2);
@@ -23,6 +23,7 @@ public class Memory {
 		Word.set(0xFFFB, (byte)0x10);
 		Word.set(0x1000, (byte)0xAA);
 		Word.set(0x1001, (byte)0xAB);
+		*/
 		
 		/*Word.set(0xFFFC, (byte)0x00);
 		Word.set(0xFFFD, (byte)0x80);

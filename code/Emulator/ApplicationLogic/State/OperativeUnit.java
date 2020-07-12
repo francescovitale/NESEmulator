@@ -54,7 +54,7 @@ public class OperativeUnit {
 		MicroRom[1] = new Instruction( "ORA", "IZX", 6 );
 		MicroRom[2] = new Instruction( "???", "IMP", 2 );
 		MicroRom[3] = new Instruction( "???", "IMP", 8 );
-		MicroRom[4] = new Instruction( "???", "IMP", 3 );
+		MicroRom[4] = new Instruction( "NOP", "IMP", 3 );
 		MicroRom[5] = new Instruction( "ORA", "ZP0", 3 );
 		MicroRom[6] = new Instruction( "ASL", "ZP0", 5 );
 		MicroRom[7] = new Instruction( "???", "IMP", 5 );
@@ -62,7 +62,7 @@ public class OperativeUnit {
 		MicroRom[9] = new Instruction( "ORA", "IMM", 2 );
 		MicroRom[10] = new Instruction( "ASL", "IMP", 2 );
 		MicroRom[11] = new Instruction( "???", "IMP", 2 );
-		MicroRom[12] = new Instruction( "???", "IMP", 4 );
+		MicroRom[12] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[13] = new Instruction( "ORA", "ABS", 4 );
 		MicroRom[14] = new Instruction( "ASL", "ABS", 6 );
 		MicroRom[15] = new Instruction( "???", "IMP", 6 );
@@ -70,15 +70,15 @@ public class OperativeUnit {
 		MicroRom[17] = new Instruction( "ORA", "IZY", 5 );
 		MicroRom[18] = new Instruction( "???", "IMP", 2 );
 		MicroRom[19] = new Instruction( "???", "IMP", 8 );
-		MicroRom[20] = new Instruction( "???", "IMP", 4 );
+		MicroRom[20] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[21] = new Instruction( "ORA", "ZPX", 4 );
 		MicroRom[22] = new Instruction( "ASL", "ZPX", 6 );
 		MicroRom[23] = new Instruction( "???", "IMP", 6 );
 		MicroRom[24] = new Instruction( "CLC", "IMP", 2 );
 		MicroRom[25] = new Instruction( "ORA", "ABY", 4 );
-		MicroRom[26] = new Instruction( "???", "IMP", 2 );
+		MicroRom[26] = new Instruction( "NOP", "IMP", 2 );
 		MicroRom[27] = new Instruction( "???", "IMP", 7 );
-		MicroRom[28] = new Instruction( "???", "IMP", 4 );
+		MicroRom[28] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[29] = new Instruction( "ORA", "ABX", 4 );
 		MicroRom[30] = new Instruction( "ASL", "ABX", 7 );
 		MicroRom[31] = new Instruction( "???", "IMP", 7 );
@@ -102,15 +102,15 @@ public class OperativeUnit {
 		MicroRom[49] = new Instruction( "AND", "IZY", 5 );
 		MicroRom[50] = new Instruction( "???", "IMP", 2 );
 		MicroRom[51] = new Instruction( "???", "IMP", 8 );
-		MicroRom[52] = new Instruction( "???", "IMP", 4 );
+		MicroRom[52] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[53] = new Instruction( "AND", "ZPX", 4 );
 		MicroRom[54] = new Instruction( "ROL", "ZPX", 6 );
 		MicroRom[55] = new Instruction( "???", "IMP", 6 );
 		MicroRom[56] = new Instruction( "SEC", "IMP", 2 );
 		MicroRom[57] = new Instruction( "AND", "ABY", 4 );
-		MicroRom[58] = new Instruction( "???", "IMP", 2 );
+		MicroRom[58] = new Instruction( "NOP", "IMP", 2 );
 		MicroRom[59] = new Instruction( "???", "IMP", 7 );
-		MicroRom[60] = new Instruction( "???", "IMP", 4 );
+		MicroRom[60] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[61] = new Instruction( "AND", "ABX", 4 );
 		MicroRom[62] = new Instruction( "ROL", "ABX", 7 );
 		MicroRom[63] = new Instruction( "???", "IMP", 7 );
@@ -118,7 +118,7 @@ public class OperativeUnit {
 		MicroRom[65] = new Instruction( "EOR", "IZX", 6 );
 		MicroRom[66] = new Instruction( "???", "IMP", 2 );
 		MicroRom[67] = new Instruction( "???", "IMP", 8 );
-		MicroRom[68] = new Instruction( "???", "IMP", 3 );
+		MicroRom[68] = new Instruction( "NOP", "IMP", 3 );
 		MicroRom[69] = new Instruction( "EOR", "ZP0", 3 );
 		MicroRom[70] = new Instruction( "LSR", "ZP0", 5 );
 		MicroRom[71] = new Instruction( "???", "IMP", 5 );
@@ -134,15 +134,15 @@ public class OperativeUnit {
 		MicroRom[81] = new Instruction( "EOR", "IZY", 5 );
 		MicroRom[82] = new Instruction( "???", "IMP", 2 );
 		MicroRom[83] = new Instruction( "???", "IMP", 8 );
-		MicroRom[84] = new Instruction( "???", "IMP", 4 );
+		MicroRom[84] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[85] = new Instruction( "EOR", "ZPX", 4 );
 		MicroRom[86] = new Instruction( "LSR", "ZPX", 6 );
 		MicroRom[87] = new Instruction( "???", "IMP", 6 );
 		MicroRom[88] = new Instruction( "CLI", "IMP", 2 );
 		MicroRom[89] = new Instruction( "EOR", "ABY", 4 );
-		MicroRom[90] = new Instruction( "???", "IMP", 2 );
+		MicroRom[90] = new Instruction( "NOP", "IMP", 2 );
 		MicroRom[91] = new Instruction( "???", "IMP", 7 );
-		MicroRom[92] = new Instruction( "???", "IMP", 4 );
+		MicroRom[92] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[93] = new Instruction( "EOR", "ABX", 4 );
 		MicroRom[94] = new Instruction( "LSR", "ABX", 7 );
 		MicroRom[95] = new Instruction( "???", "IMP", 7 );
@@ -150,7 +150,7 @@ public class OperativeUnit {
 		MicroRom[97] = new Instruction( "ADC", "IZX", 6 );
 		MicroRom[98] = new Instruction( "???", "IMP", 2 );
 		MicroRom[99] = new Instruction( "???", "IMP", 8 );
-		MicroRom[100] = new Instruction( "???", "IMP", 3 );
+		MicroRom[100] = new Instruction( "NOP", "IMP", 3 );
 		MicroRom[101] = new Instruction( "ADC", "ZP0", 3 );
 		MicroRom[102] = new Instruction( "ROR", "ZP0", 5 );
 		MicroRom[103] = new Instruction( "???", "IMP", 5 );
@@ -166,28 +166,28 @@ public class OperativeUnit {
 		MicroRom[113] = new Instruction( "ADC", "IZY", 5 );
 		MicroRom[114] = new Instruction( "???", "IMP", 2 );
 		MicroRom[115] = new Instruction( "???", "IMP", 8 );
-		MicroRom[116] = new Instruction( "???", "IMP", 4 );
+		MicroRom[116] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[117] = new Instruction( "ADC", "ZPX", 4 );
 		MicroRom[118] = new Instruction( "ROR", "ZPX", 6 );
 		MicroRom[119] = new Instruction( "???", "IMP", 6 );
 		MicroRom[120] = new Instruction( "SEI", "IMP", 2 );
 		MicroRom[121] = new Instruction( "ADC", "ABY", 4 );
-		MicroRom[122] = new Instruction( "???", "IMP", 2 );
+		MicroRom[122] = new Instruction( "NOP", "IMP", 2 );
 		MicroRom[123] = new Instruction( "???", "IMP", 7 );
-		MicroRom[124] = new Instruction( "???", "IMP", 4 );
+		MicroRom[124] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[125] = new Instruction( "ADC", "ABX", 4 );
 		MicroRom[126] = new Instruction( "ROR", "ABX", 7 );
 		MicroRom[127] = new Instruction( "???", "IMP", 7 );
-		MicroRom[128] = new Instruction( "???", "IMP", 2 );
+		MicroRom[128] = new Instruction( "NOP", "IMP", 2 );
 		MicroRom[129] = new Instruction( "STA", "IZX", 6 );
-		MicroRom[130] = new Instruction( "???", "IMP", 2 );
+		MicroRom[130] = new Instruction( "NOP", "IMP", 2 );
 		MicroRom[131] = new Instruction( "???", "IMP", 6 );
 		MicroRom[132] = new Instruction( "STY", "ZP0", 3 );
 		MicroRom[133] = new Instruction( "STA", "ZP0", 3 );
 		MicroRom[134] = new Instruction( "STX", "ZP0", 3 );
 		MicroRom[135] = new Instruction( "???", "IMP", 3 );
 		MicroRom[136] = new Instruction( "DEY", "IMP", 2 );
-		MicroRom[137] = new Instruction( "???", "IMP", 2 );
+		MicroRom[137] = new Instruction( "NOP", "IMP", 2 );
 		MicroRom[138] = new Instruction( "TXA", "IMP", 2 );
 		MicroRom[139] = new Instruction( "???", "IMP", 2 );
 		MicroRom[140] = new Instruction( "STY", "ABS", 4 );
@@ -206,7 +206,7 @@ public class OperativeUnit {
 		MicroRom[153] = new Instruction( "STA", "ABY", 5 );
 		MicroRom[154] = new Instruction( "TXS", "IMP", 2 );
 		MicroRom[155] = new Instruction( "???", "IMP", 5 );
-		MicroRom[156] = new Instruction( "???", "IMP", 5 );
+		MicroRom[156] = new Instruction( "NOP", "IMP", 5 );
 		MicroRom[157] = new Instruction( "STA", "ABX", 5 );
 		MicroRom[158] = new Instruction( "???", "IMP", 5 );
 		MicroRom[159] = new Instruction( "???", "IMP", 5 );
@@ -244,7 +244,7 @@ public class OperativeUnit {
 		MicroRom[191] = new Instruction( "???", "IMP", 4 );
 		MicroRom[192] = new Instruction( "CPY", "IMM", 2 );
 		MicroRom[193] = new Instruction( "CMP", "IZX", 6 );
-		MicroRom[194] = new Instruction( "???", "IMP", 2 );
+		MicroRom[194] = new Instruction( "NOP", "IMP", 2 );
 		MicroRom[195] = new Instruction( "???", "IMP", 8 );
 		MicroRom[196] = new Instruction( "CPY", "ZP0", 3 );
 		MicroRom[197] = new Instruction( "CMP", "ZP0", 3 );
@@ -262,7 +262,7 @@ public class OperativeUnit {
 		MicroRom[209] = new Instruction( "CMP", "IZY", 5 );
 		MicroRom[210] = new Instruction( "???", "IMP", 2 );
 		MicroRom[211] = new Instruction( "???", "IMP", 8 );
-		MicroRom[212] = new Instruction( "???", "IMP", 4 );
+		MicroRom[212] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[213] = new Instruction( "CMP", "ZPX", 4 );
 		MicroRom[214] = new Instruction( "DEC", "ZPX", 6 );
 		MicroRom[215] = new Instruction( "???", "IMP", 6 );
@@ -270,13 +270,13 @@ public class OperativeUnit {
 		MicroRom[217] = new Instruction( "CMP", "ABY", 4 );
 		MicroRom[218] = new Instruction( "NOP", "IMP", 2 );
 		MicroRom[219] = new Instruction( "???", "IMP", 7 );
-		MicroRom[220] = new Instruction( "???", "IMP", 4 );
+		MicroRom[220] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[221] = new Instruction( "CMP", "ABX", 4 );
 		MicroRom[222] = new Instruction( "DEC", "ABX", 7 );
 		MicroRom[223] = new Instruction( "???", "IMP", 7 );
 		MicroRom[224] = new Instruction( "CPX", "IMM", 2 );
 		MicroRom[225] = new Instruction( "SBC", "IZX", 6 );
-		MicroRom[226] = new Instruction( "???", "IMP", 2 );
+		MicroRom[226] = new Instruction( "NOP", "IMP", 2 );
 		MicroRom[227] = new Instruction( "???", "IMP", 8 );
 		MicroRom[228] = new Instruction( "CPX", "ZP0", 3 );
 		MicroRom[229] = new Instruction( "SBC", "ZP0", 3 );
@@ -294,7 +294,7 @@ public class OperativeUnit {
 		MicroRom[241] = new Instruction( "SBC", "IZY", 5 );
 		MicroRom[242] = new Instruction( "???", "IMP", 2 );
 		MicroRom[243] = new Instruction( "???", "IMP", 8 );
-		MicroRom[244] = new Instruction( "???", "IMP", 4 );
+		MicroRom[244] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[245] = new Instruction( "SBC", "ZPX", 4 );
 		MicroRom[246] = new Instruction( "INC", "ZPX", 6 );
 		MicroRom[247] = new Instruction( "???", "IMP", 6 );
@@ -302,7 +302,7 @@ public class OperativeUnit {
 		MicroRom[249] = new Instruction( "SBC", "ABY", 4 );
 		MicroRom[250] = new Instruction( "NOP", "IMP", 2 );
 		MicroRom[251] = new Instruction( "???", "IMP", 7 );
-		MicroRom[252] = new Instruction( "???", "IMP", 4 );
+		MicroRom[252] = new Instruction( "NOP", "IMP", 4 );
 		MicroRom[253] = new Instruction( "SBC", "ABX", 4 );
 		MicroRom[254] = new Instruction( "INC", "ABX", 7 );
 		MicroRom[255] = new Instruction( "???", "IMP", 7 );
@@ -548,7 +548,7 @@ public class OperativeUnit {
 		case "TYA":
 			return this.TYA();
 			
-		case "XXX":
+		case "???":
 			return this.XXX();
 			
 		case "NMI":
@@ -586,7 +586,7 @@ public class OperativeUnit {
 	//Zero Page
 	private Boolean ZP0() {
 		//Leggo l'offset del program counter nella pagina 0
-		addr_abs = (char)BusOU.read(PC_register).byteValue();	//Vado a leggere il contenuto in memoria nella locazione indicata dal PC
+		addr_abs = (char)BusOU.read(PC_register).byteValue();		//Vado a leggere il contenuto in memoria nella locazione indicata dal PC
 		PC_register++;												//Incremento il PC
 		addr_abs &= 0x00FF;											//L'Indirizzo a cui dovrò leggere è nella pagina 0
 		return false;
@@ -616,7 +616,7 @@ public class OperativeUnit {
 	private Boolean REL() {
 		addr_rel = (char)BusOU.read(PC_register).byteValue();						//Leggo il primo byte in memoria	
 		PC_register++;
-		if ((byte)addr_rel < 0)															//Se il valore del byte supera 0x80 
+		if ((addr_rel & 0x80) != 0)															//Se il valore del byte supera 0x80 
 			addr_rel |= 0xFF00;															//Diventa negativo così da far rimanere il valore tra -128 e 127
 		return false;
 	}
@@ -676,13 +676,13 @@ public class OperativeUnit {
 
 		if (ptr_lo == 0x00FF) 													// Simula un bug hardware (Se il +1 causa un cambiamento di pagina in realtà la pagina non viene cambiata)
 		{
-			ptr = (char)((ptr_hi << 8) | 0x00);		
-			addr_abs = (char) ((BusOU.read(ptr).byteValue() << 8) | BusOU.read(ptr).byteValue());
+			//ptr = (char)((ptr_hi << 8) | 0x00);		
+			addr_abs = (char) (((char)BusOU.read((char)(ptr & 0xFF00)).byteValue() << 8) | (char)BusOU.read(ptr).byteValue());
 		}
 		else 				 													//Comportamento normale 
 		{
-			char ptr1 = (char)((ptr_hi << 8) | (ptr_lo +1));
-			addr_abs = (char) ((BusOU.read(ptr1).byteValue() << 8) | BusOU.read(ptr).byteValue());
+			//char ptr1 = (char)((ptr_hi << 8) | (ptr_lo +1));
+			addr_abs = (char) (((char)BusOU.read((char)(ptr + 1)).byteValue() << 8) | (char)BusOU.read(ptr).byteValue());
 		}
 		
 		return false;
@@ -693,8 +693,8 @@ public class OperativeUnit {
 		char t = (char)BusOU.read(PC_register).byteValue();											//Leggo il primo byte in memoria	
 		PC_register++;	
 		
-		byte lo = BusOU.read((char)((byte)t + Byte.toUnsignedInt(X_register))).byteValue();			//Leggo il primo byte in pagina 0 sommando x al valore t preso in memoria
-		byte hi = BusOU.read((char)((byte)t + Byte.toUnsignedInt(X_register) + 0x01)).byteValue();	//Leggo il secondo byte in pagina 0 sommando x e 1 al valore t preso in memoria
+		byte lo = BusOU.read((char)(t + Byte.toUnsignedInt(X_register))).byteValue();			//Leggo il primo byte in pagina 0 sommando x al valore t preso in memoria
+		byte hi = BusOU.read((char)(t + Byte.toUnsignedInt(X_register) + 1)).byteValue();		//Leggo il secondo byte in pagina 0 sommando x e 1 al valore t preso in memoria
 
 		addr_abs = (char)((hi << 8) | lo);
 		
@@ -706,8 +706,8 @@ public class OperativeUnit {
 		char t = (char)BusOU.read(PC_register).byteValue();						//Leggo il primo byte in memoria	
 		PC_register++;	
 	
-		byte lo = BusOU.read(t).byteValue();										//Leggo il primo byte in pagina 0 del valore t
-		byte hi = BusOU.read((char)(t + 0x01)).byteValue();						//Leggo il secondo byte in pagina 0 sommando t e 1 
+		byte lo = BusOU.read((char)(t & 0x00FF)).byteValue();										//Leggo il primo byte in pagina 0 del valore t
+		byte hi = BusOU.read((char)((char)(t + 1) & 0x00FF)).byteValue();						//Leggo il secondo byte in pagina 0 sommando t e 1 
 			
 		addr_abs = (char)((hi << 8) | lo);
 		addr_abs += Byte.toUnsignedInt(Y_register);			
@@ -795,8 +795,8 @@ public class OperativeUnit {
 
 		A_register = (byte)(A_register & fetched);
 
-		setFlag("Z",A_register == 0x00); //Se la AND ha dato risultato 0x00, abilita il registro 0
-		setFlag("N",0x00 != (A_register & 0x80));  //Se il bit più significativo del registro A è alto, setta il flag Negative.
+		setFlag("Z",A_register == 0x00);		 //Se la AND ha dato risultato 0x00, abilita il registro 0
+		setFlag("N",0 != (A_register & 0x80));   //Se il bit più significativo del registro A è alto, setta il flag Negative.
 		
 		return true;	
 	}
@@ -805,12 +805,12 @@ public class OperativeUnit {
 	private boolean ASL() {
 		
 		fetch();
-		
-		char temp = (char)(byte)fetched; //Shifta a sinistra il valore fetchato
-		temp = (char)(temp << 1); //Shifta a sinistra il valore fetchato
-		setFlag("C", (temp & 0xFF00) > 0); //se tale shift rende un valore maggiore di 256, allora alza il carry flag
-		setFlag("Z", (temp & 0x00FF) == 0x00); //se lo shift porta i primi 8 bit ad essere nulli, alza il flag zero
-		setFlag("N", 0x00 != (temp & 0x80)); //se lo shift porta ad avere il bit alto alla posizione 8, abilita il flag Negative
+		 
+		char temp = (char)(byte)fetched; 		   	//Shifta a sinistra il valore fetchato
+		temp = (char)(temp << 1);					//Shifta a sinistra il valore fetchato
+		setFlag("C", (temp & 0xFF00) > 0); 			//se tale shift rende un valore maggiore di 256, allora alza il carry flag
+		setFlag("Z", (temp & 0x00FF) == 0x00); 		//se lo shift porta i primi 8 bit ad essere nulli, alza il flag zero
+		setFlag("N", 0x00 != (temp & 0x80)); 		//se lo shift porta ad avere il bit alto alla posizione 8, abilita il flag Negative
 		
 		if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP") //se l'address mode è implied, scrivi in A, altrimenti in memoria
 			A_register = (byte)(temp & 0x00FF);
@@ -879,11 +879,11 @@ public class OperativeUnit {
 	//BIT
 	private boolean BIT() {
 		
-		fetched= fetch();
-		char temp = (char) (A_register & fetched); // AND tra valore fetchato d il registro A
-		setFlag("Z", (temp & 0x00FF) == 0x00); //se la AND porta i primi 8 bit ad essere nulli, alza il flag zero
-		setFlag("N", (fetched & (1<<7))!=0); // se il settimo bit di Fetched è 1 alza il flag N
-		setFlag("V", (fetched & (1<<6))!=0);// se il sesto bit di Fetched è 1 alza il flag V
+		fetch();
+		char temp = (char) (A_register & fetched); 	// AND tra valore fetchato d il registro A
+		setFlag("Z", (temp & 0x00FF) == 0x00); 		//se la AND porta i primi 8 bit ad essere nulli, alza il flag zero
+		setFlag("N", (fetched & (1<<7))!=0);		// se il settimo bit di Fetched è 1 alza il flag N
+		setFlag("V", (fetched & (1<<6))!=0);		// se il sesto bit di Fetched è 1 alza il flag V
 		
 		return false;
 		
@@ -944,23 +944,23 @@ public class OperativeUnit {
 	//Break
 	private boolean BRK() {
 		
-		PC_register= (char)(PC_register+1);
+		PC_register++;
 		
 		setFlag("I", true);
-		BusOU.write((char) (0x0100 + Stack_pointer), (byte) ((PC_register>>8) & 0x00FF));
+		BusOU.write((char)(0x0100 + Stack_pointer), (byte)((PC_register>>8) & 0x00FF));
 		
 		Stack_pointer= (byte) (Stack_pointer-1);
-		BusOU.write((char) (0x0100 + Stack_pointer), (byte) (PC_register & 0x00FF));
-		Stack_pointer= (byte) (Stack_pointer-1);
+		BusOU.write((char)(0x0100 + Stack_pointer), (byte)(PC_register & 0x00FF));
+		Stack_pointer= (byte)(Stack_pointer-1);
 		
 		setFlag("B",true);
-		BusOU.write((char) (0x0100 + Stack_pointer), (byte) Status_register);
-		Stack_pointer= (byte) (Stack_pointer-1);
+		BusOU.write((char)(0x0100 + Stack_pointer), (byte)Status_register);
+		Stack_pointer= (byte)(Stack_pointer-1);
 		
 		setFlag("B",false);
 		
 		
-		PC_register= (char) (( BusOU.read((char) 0xFFFE).byteValue()) | (( BusOU.read((char) 0xFFFF).byteValue()<< 8)));
+		PC_register= (char) (( (char)BusOU.read((char)0xFFFE).byteValue()) | ((char)((char)BusOU.read((char) 0xFFFF).byteValue()<< 8)));
 			
 			
 		return false;
@@ -1036,14 +1036,12 @@ public class OperativeUnit {
 		
 		fetch();
 		
-		byte temp= (byte) (Byte.toUnsignedInt(A_register)- Byte.toUnsignedInt(fetched));
+		char temp= (char)(Byte.toUnsignedInt(A_register)- Byte.toUnsignedInt(fetched));
 		setFlag("C", A_register>= fetched);
-		setFlag("Z", (temp & 0x00FF) == 0x00);
-		setFlag("N", 0x00 != (temp & 0x80));
+		setFlag("Z", (temp & 0x00FF) == 0x0000);
+		setFlag("N", 0 != (temp & 0x0080));
 		
 		return true;
-		
-		
 	}
 	
 	//Compare X Register
@@ -1053,10 +1051,10 @@ public class OperativeUnit {
 		
 		fetch();
 		
-		byte temp= (byte) (Byte.toUnsignedInt(X_register)- Byte.toUnsignedInt(fetched));
+		char temp= (char)(Byte.toUnsignedInt(X_register)- Byte.toUnsignedInt(fetched));
 		setFlag("C", X_register>= fetched);
-		setFlag("Z", (temp & 0x00FF) == 0x00);
-		setFlag("N", 0x00 != (temp & 0x80));
+		setFlag("Z", (temp & 0x00FF) == 0x0000);
+		setFlag("N", 0 != (temp & 0x0080));
 		
 		return false;
 		
@@ -1070,10 +1068,10 @@ public class OperativeUnit {
 		
 		fetch();
 		
-		byte temp= (byte) (Byte.toUnsignedInt(Y_register)- Byte.toUnsignedInt(fetched));
+		char temp= (char)(Byte.toUnsignedInt(Y_register)- Byte.toUnsignedInt(fetched));
 		setFlag("C", Y_register>= fetched);
-		setFlag("Z", (temp & 0x00FF) == 0x00);
-		setFlag("N", 0x00 != (temp & 0x80));
+		setFlag("Z", (temp & 0x00FF) == 0x0000);
+		setFlag("N", 0 != (temp & 0x0080));
 		
 		return false;
 		
@@ -1086,11 +1084,11 @@ public class OperativeUnit {
 		
 		fetch();
 		
-		byte temp= (byte) (fetched-1);
+		char temp= (char)(Byte.toUnsignedInt(fetched)-1);
 		
-		BusOU.write(addr_abs, (byte) (temp & 0xFF));
+		BusOU.write(addr_abs, (byte)(temp & 0x00FF));
 		setFlag("Z", (temp & 0x00FF) == 0x00);
-		setFlag("N", 0x00 != (temp & 0x80));
+		setFlag("N", 0 != (temp & 0x0080));
 		
 		return false;
 		
@@ -1101,9 +1099,9 @@ public class OperativeUnit {
 	// Flags Out:   N, Z
 	private boolean DEX() {
 		
-		X_register= (byte) (X_register-1);
+		X_register= (byte)(X_register-1);
 	    setFlag("Z", X_register == 0x00);
-		setFlag("N", 0x00 != (X_register & 0x80));
+		setFlag("N", 0 != (X_register & 0x80));
 		return false;
 
 	}
@@ -1113,9 +1111,9 @@ public class OperativeUnit {
 	// Flags Out:   N, Z
 	private boolean DEY() {
 		
-		Y_register= (byte) (Y_register-1);
+		Y_register= (byte)(Y_register-1);
 	    setFlag("Z", Y_register == 0x00);
-		setFlag("N", 0x00 != (Y_register & 0x80));
+		setFlag("N", 0 != (Y_register & 0x80));
 		
 		return false;
 		
@@ -1127,9 +1125,9 @@ public class OperativeUnit {
 	private boolean EOR() {
 		
 		fetch();
-		A_register= (byte) (A_register^(fetched));
+		A_register= (byte)(A_register^fetched);
 		setFlag("Z", A_register == 0x00);
-		setFlag("N", 0x00 != (A_register & 0x80));
+		setFlag("N", 0 != (A_register & 0x80));
 		
 		return true;
 		
@@ -1143,11 +1141,11 @@ public class OperativeUnit {
 		
 		fetch();
 	
-		byte temp= (byte) (fetched+1);
+		char temp= (char)(fetched+1);
 	
-		BusOU.write(addr_abs, (byte) (temp & 0xFF));
-		setFlag("Z", (temp & 0x00FF) == 0x00);
-		setFlag("N", 0x00 != (temp & 0x80));
+		BusOU.write(addr_abs, (byte) (temp & 0x00FF));
+		setFlag("Z", (temp & 0x00FF) == 0x0000);
+		setFlag("N", 0 != (temp & 0x0080));
 	
 		return false;
 	
@@ -1158,9 +1156,9 @@ public class OperativeUnit {
 	// Flags Out:   N, Z
 	private boolean INX() {
 		
-		X_register= (byte) (X_register+1);
+		X_register= (byte)(X_register+1);
 	    setFlag("Z", X_register == 0x00);
-		setFlag("N", 0x00 != (X_register & 0x80));
+		setFlag("N", 0 != (X_register & 0x80));
 		return false;
 		
 	}
@@ -1171,9 +1169,9 @@ public class OperativeUnit {
 	private boolean INY() {
 		
 
-		Y_register= (byte) (Y_register+1);
+		Y_register= (byte)(Y_register+1);
 	    setFlag("Z", Y_register == 0x00);
-		setFlag("N", 0x00 != (Y_register & 0x80));
+		setFlag("N", 0 != (Y_register & 0x80));
 		return false;
 		
 	}
@@ -1193,10 +1191,10 @@ public class OperativeUnit {
 	// Function:    Push current pc to stack, pc = address
 	private boolean JSR() {
 		
-		PC_register= (char) (PC_register-1);
+		PC_register--;
 		
-		BusOU.write((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer)), (byte)((PC_register >> 8) & 0x00FF));
-		Stack_pointer= (byte) (Stack_pointer-1);
+		BusOU.write((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer)), (byte)((char)(PC_register >> 8) & 0x00FF));
+		Stack_pointer=(byte)(Stack_pointer-1);
 		
 		PC_register= addr_abs;
 		
@@ -1213,7 +1211,7 @@ public class OperativeUnit {
 		A_register = fetched;
 		
 	    setFlag("Z", A_register == 0x00);
-		setFlag("N", 0x00 != (A_register & 0x80));
+		setFlag("N", 0 != (A_register & 0x80));
 		
 		return true;
 		
@@ -1228,7 +1226,7 @@ public class OperativeUnit {
 		fetch();
 		X_register= fetched;
 	    setFlag("Z", X_register == 0x00);
-		setFlag("N", 0x00 != (X_register & 0x80));
+		setFlag("N", 0 != (X_register & 0x80));
 		
 		return true;
 		
@@ -1244,7 +1242,7 @@ public class OperativeUnit {
 		fetch();
 		Y_register= fetched;
 	    setFlag("Z", Y_register == 0x00);
-		setFlag("N", 0x00 != (Y_register & 0x80));
+		setFlag("N", 0 != (Y_register & 0x80));
 		
 		return true;
 		
@@ -1254,17 +1252,16 @@ public class OperativeUnit {
 	private boolean LSR() {
 		
 		fetch();
-		byte temp;
-		setFlag("C", 0x00 !=(fetched & 0x0001) );
-		temp= (byte) (fetched>>1);
-		setFlag("Z", temp == 0x00);
-		setFlag("N", 0x00 != (temp & 0x80));
+		setFlag("C", 0 !=(fetched & 0x0001) );
+		char temp= (char)(fetched>>1);
+		setFlag("Z", (temp & 0x00FF) == 0x0000);
+		setFlag("N", 0 != (temp & 0x0080));
 		
 		if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP")
-			A_register= (byte) (temp & 0x00FF);
+			A_register= (byte)(temp & 0x00FF);
 		
 		else 
-			BusOU.write((char)addr_abs, (byte) (temp & 0x00FF));
+			BusOU.write(addr_abs, (byte)(temp & 0x00FF));
 		
 		return false;
 	}
@@ -1281,10 +1278,8 @@ public class OperativeUnit {
 		
 		if ( CurrentInstruction == NoOp1 ||CurrentInstruction== NoOp2 ||CurrentInstruction== NoOp3 ||CurrentInstruction== NoOp4 ||CurrentInstruction== NoOp5 )
 			return true;
-		
-		
 		else 
-		return false;
+			return false;
 	}
 	
 	//Bitwise Logic OR
@@ -1293,9 +1288,9 @@ public class OperativeUnit {
 	private boolean ORA() {
 		
 		fetch();
-		A_register= (byte) (A_register | fetched);
+		A_register= (byte)(A_register | fetched);
 		setFlag("Z", A_register == 0x00);
-		setFlag("N", 0x00 != (A_register & 0x80));
+		setFlag("N", 0 != (A_register & 0x80));
 		
 		return true;
 	}
@@ -1304,8 +1299,8 @@ public class OperativeUnit {
 	// Function:    A -> stack
 	private boolean PHA() {
 		
-		BusOU.write( (char)(0x0100+ Stack_pointer), A_register);
-		Stack_pointer= (byte) (Stack_pointer-1);
+		BusOU.write( (char)(0x0100+ Byte.toUnsignedInt(Stack_pointer)), A_register);
+		Stack_pointer= (byte)(Stack_pointer-1);
 		return false;
 		
 	}
@@ -1318,22 +1313,20 @@ public class OperativeUnit {
 		Byte B,U;
 		
 		if (getFlag("B")==true)  
-			B= 1;
-		
+			B= 0x01;
 		else 
-			B=0;
+			B=0x00;
 		
 		if (getFlag("U")==true)  
-			U= 1;
-		
+			U= 0x01;
 		else 
-			U=0;
+			U=0x00;
 		
 		
-		BusOU.write( (char)(0x0100+ Stack_pointer), (byte)(Status_register | B | U) );
+		BusOU.write((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer)), (byte)(Status_register | B | U));
 		setFlag("B", false);
 		setFlag("U", false);
-		Stack_pointer= (byte) (Stack_pointer-1);
+		Stack_pointer= (byte)(Stack_pointer-1);
 		
 		return false;
 		
@@ -1344,10 +1337,10 @@ public class OperativeUnit {
 	// Flags Out:   N, Z
 	private boolean PLA() {
 		
-		Stack_pointer= (byte) (Stack_pointer+1);
-		A_register= BusOU.read((char) (0x0100 + Stack_pointer));
+		Stack_pointer= (byte)(Stack_pointer+1);
+		A_register= BusOU.read((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer)));
 		setFlag("Z", A_register == 0x00);
-		setFlag("N", 0x00 != (A_register & 0x80));
+		setFlag("N", 0 != (A_register & 0x80));
 		
 		return false;
 		
@@ -1357,8 +1350,8 @@ public class OperativeUnit {
 	// Function:    Status <- stack
 	private boolean PLP() {
 		
-		Stack_pointer= (byte) (Stack_pointer+1);
-		Status_register= BusOU.read((char) (0x0100 + Stack_pointer));
+		Stack_pointer= (byte)(Stack_pointer+1);
+		Status_register= BusOU.read((char) (0x0100 + Byte.toUnsignedInt(Stack_pointer)));
 		setFlag("U", true);
 		
 		
@@ -1369,29 +1362,26 @@ public class OperativeUnit {
     private boolean ROL() {
         
         fetch();
-        byte C;
+        Byte C;
        
         if(getFlag("C")==true)
-            C=1;
-       
+            C=0x01;
         else
-            C=0;
+            C=0x00;
        
-        byte temp= (byte) (Byte.toUnsignedInt( (byte) (fetched<<1))| C); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
-        setFlag("Z",  0x00 == (temp & 0x00FF));
-        setFlag("N", 0x00 != (temp & 0x80));
-        setFlag("C", 0x00 != (temp & 0xFF00));
+        char temp= (char)((char)Byte.toUnsignedInt((byte)(fetched<<1))| C); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
+        setFlag("C", 0x0000 != (temp & 0xFF00));
+        setFlag("Z", 0x0000 == (temp & 0x00FF));
+        setFlag("N", 0x0000 != (temp & 0x0080));
+        
        
         if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP")
-            A_register= (byte) (temp & 0x00FF);
+            A_register= (byte)(temp & 0x00FF);
        
         else
-            BusOU.write((char)addr_abs, (byte) (temp & 0x00FF));
+            BusOU.write(addr_abs, (byte)(temp & 0x00FF));
        
         return false;
-       
-       
-       
     }
    
     private boolean ROR() {
@@ -1400,21 +1390,20 @@ public class OperativeUnit {
         byte C;
        
         if(getFlag("C"))
-            C=1;
-       
+            C=0x01;
         else
-            C=0;
+            C=0x00;
        
-        int temp= (byte) (Byte.toUnsignedInt( (byte) (fetched<<1))| (C<<7)); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
-        setFlag("Z",  0x00 == (temp & 0x00FF));
-        setFlag("N", 0x00 != (temp & 0x80));
-        setFlag("C", 0x00 != (fetched & 0x01));
+        char temp= (char)((char)Byte.toUnsignedInt((byte)(fetched<<1))| (C<<7)); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
+        setFlag("C", 0 != (fetched & 0x01));
+        setFlag("Z", 0x0000 == (temp & 0x00FF));
+        setFlag("N", 0x0000 != (temp & 0x0080));
        
         if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP")
-            A_register= (byte) (temp & 0x00FF);
+            A_register= (byte)(temp & 0x00FF);
        
         else
-            BusOU.write((char)addr_abs, (byte) (temp & 0x00FF));
+            BusOU.write(addr_abs, (byte)(temp & 0x00FF));
        
         return false;
        
@@ -1431,9 +1420,9 @@ public class OperativeUnit {
 		Status_register = (0<<4);
 		Status_register = (0<<0);
 		Stack_pointer= (byte) (Stack_pointer+1);
-		PC_register = (char)BusOU.read((char) (0x0100+ Stack_pointer)).byteValue();
-		Stack_pointer= (byte) (Stack_pointer+1);
-		PC_register = (char) (((char)BusOU.read((char) (0x0100+ Stack_pointer)).byteValue())<<8);
+		PC_register = (char)BusOU.read((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer))).byteValue();
+		Stack_pointer= (byte)(Stack_pointer+1);
+		PC_register = (char)(((char)BusOU.read((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer))).byteValue())<<8);
 		
 		return false;
 		
@@ -1444,11 +1433,11 @@ public class OperativeUnit {
 	private boolean RTS() {
 		
 		Stack_pointer= (byte) (Stack_pointer+1);
-		PC_register = (char)BusOU.read((char) (0x0100+ Stack_pointer)).byteValue();
+		PC_register = (char)BusOU.read((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer))).byteValue();
 		Stack_pointer= (byte) (Stack_pointer+1);
-		PC_register = (char) (((char)BusOU.read((char) (0x0100+ Stack_pointer)).byteValue())<<8);
+		PC_register = (char)(((char)BusOU.read((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer))).byteValue())<<8);
 		
-		PC_register = (char) (PC_register+1);
+		PC_register++;
 		
 		return false;
 	}
@@ -1482,7 +1471,6 @@ public class OperativeUnit {
 	//Store Accumulator at Address
 	// Function:    M = A
 	private boolean STA() {
-		
 		
 		BusOU.write(addr_abs, A_register);
 		return false;

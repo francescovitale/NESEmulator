@@ -11,6 +11,8 @@ public class PaletteMemory {
 	protected PaletteMemory() {
 		
 		PaletteTable = new ArrayList<Byte>();
+		for(int i = 0; i < (int)0x20; i++)
+			PaletteTable.add((byte)0x00);
 	};
 	
 	//Punto di ingresso globale all'istanza

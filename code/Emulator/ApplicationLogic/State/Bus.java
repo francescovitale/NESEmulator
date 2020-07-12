@@ -71,7 +71,6 @@ public class Bus {
 	public void write(char Address, Byte Data) {
 		//Se l'address è compreso tra 0x0000 e 0x1FFF voglio scrivere in RAM
 		Byte data = 0x00;
-		
 		if (Crtg.Write(Address, data))
 		{
 			// Cartridge Address Range
@@ -81,7 +80,6 @@ public class Bus {
 		}
 		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio scrivere sulla PPU
 		else{
-			
 			IOM.write((char)(Address), Data);	//Faccio il mirroring della PPU (& 0x0007)
 		}
 		/*else {

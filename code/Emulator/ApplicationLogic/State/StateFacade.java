@@ -88,4 +88,7 @@ public class StateFacade {
 		OU.setNMIRequest(IRQ);
 	}
 	
+	public void setFlag(String bit, boolean value) {
+		OU.setFlag(bit, value);
+	}
 }

@@ -58,7 +58,7 @@ public class PPURenderer {
 				vram = (char)(vram & 0xFFE0);  									    //vram.coarse_x = 0
 				int nametable_x = ByteManager.extractCharBit(NAMETABLE_X, vram);	//prendo nametable_x
 				nametable_x = ((nametable_x == 0) ? 1 : 0);							//Inverto nametable_x
-				ByteManager.setCharBit(NAMETABLE_X, nametable_x, vram);				//reinserisco nametable_x
+				vram = ByteManager.setCharBit(NAMETABLE_X, nametable_x, vram);				//reinserisco nametable_x
 			}
 			else {
 				coarse_x++;															//Incremento coarse_x
@@ -97,7 +97,7 @@ public class PPURenderer {
 					vram = (char)(vram & 0xFC1F);										//coarse_y = 0
 					int nametable_y = ByteManager.extractCharBit(NAMETABLE_Y, vram);	//prendo nametable_y
 					nametable_y = ((nametable_y == 0) ? 1 : 0);							//Inverto nametable_y
-					ByteManager.setCharBit(NAMETABLE_Y, nametable_y, vram);				//reinserisco nametable_y
+					vram = ByteManager.setCharBit(NAMETABLE_Y, nametable_y, vram);				//reinserisco nametable_y
 					
 				}
 				else if(coarse_y == 31) {
@@ -127,7 +127,7 @@ public class PPURenderer {
 			char tram = P.getTram_addr();											//Prelevo tram_addr
 			
 			int nametable_x = ByteManager.extractCharBit(NAMETABLE_X, tram);		//prendo nametable_x da tram
-			ByteManager.setCharBit(NAMETABLE_X, nametable_x, vram);					//Inserisco nametable_x in vram
+			vram = ByteManager.setCharBit(NAMETABLE_X, nametable_x, vram);					//Inserisco nametable_x in vram
 			
 			char coarse_x = (char)(tram & 0x001F);									//prelevo coarse_x dalla tram
 			vram = (char)((vram & 0xFFE0) | coarse_x);								//Inserisco il nuovo coarse_x in vram
@@ -153,7 +153,7 @@ public class PPURenderer {
 			vram = (char)((vram & 0x8FFF) | (fine_y << 12));						//Riassegno il nuovo valore di fine_y in vram
 			
 			int nametable_y = ByteManager.extractCharBit(NAMETABLE_Y, tram);		//prendo nametable_y dalla tram
-			ByteManager.setCharBit(NAMETABLE_Y, nametable_y, vram);					//reinserisco nametable_y in vram
+			vram = ByteManager.setCharBit(NAMETABLE_Y, nametable_y, vram);					//reinserisco nametable_y in vram
 			
 			char coarse_y = (char)((tram & 0x03E0) >> 5);							//Prelevo coarse_y dalla tram
 			vram = (char)((vram & 0xFC1F) | (coarse_y << 5));						//Riassegno il nuovo valore di coarse_y in vram
@@ -327,12 +327,12 @@ public class PPURenderer {
 	
 	public Byte PPURead(char addr)
 	{
-		//return Bus.PPURead(addr); 
-		return (byte)0x00; // STUB
+		return Bus.PPURead(addr); 
+		//return (byte)0x00; // STUB
 	}
 
 	public void PPUWrite(char addr, Byte data)
 	{
-		//Bus.PPUWrite(addr, data); 
+		Bus.PPUWrite(addr, data); 
 	}
 }

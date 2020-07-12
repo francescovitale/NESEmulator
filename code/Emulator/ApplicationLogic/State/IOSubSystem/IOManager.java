@@ -117,11 +117,11 @@ public class IOManager {
 				
 				break;
 			}
-
+		
 		}
 		
 		return data;
-
+		
 	}
 	
 	public void write(char address, Byte data) {
@@ -139,20 +139,19 @@ public class IOManager {
 			int nametable_y;
 			
 			address = (char)(address & 0x0007); //Mirroring
-
 			switch (address)
 			{
 			case 0x0000: // Control
 				
-				PPUData = data;
+				PPUControl = data;
 				
 				tram_addr = PictureProcessingUnit.getTram_addr();
 				
 				nametable_x = ByteManager.extractBit(0, PPUControl); //BIT nametable_x
 				nametable_y = ByteManager.extractBit(1, PPUControl); //BIT nametable_y
 				
-				ByteManager.setCharBit(10,nametable_x,tram_addr);
-				ByteManager.setCharBit(11,nametable_y,tram_addr);
+				tram_addr = ByteManager.setCharBit(10,nametable_x,tram_addr);
+				tram_addr = ByteManager.setCharBit(11,nametable_y,tram_addr);
 				
 				PictureProcessingUnit.setTram_addr(tram_addr);
 				
@@ -178,8 +177,8 @@ public class IOManager {
 					PictureProcessingUnit.setFine_x(temp_fine_x);
 					
 					tram_addr = PictureProcessingUnit.getTram_addr();
-					data = (byte)((data >> 3) & 0x1F); //riporto il dato ai primi 5 bit meno significativi
-					tram_addr = (char)((tram_addr & 0xFFE0) | data); //Setta i 5 bit di coarse_x del loopy register al valore di data shiftato.
+					data = (byte)((data >> 3) & 0x1F);					 //riporto il dato ai primi 5 bit meno significativi
+					tram_addr = (char)((tram_addr & 0xFFE0) | data);	 //Setta i 5 bit di coarse_x del loopy register al valore di data shiftato.
 					
 					PictureProcessingUnit.setTram_addr(tram_addr);
 					PictureProcessingUnit.setAddress_latch(1);
@@ -220,7 +219,6 @@ public class IOManager {
 				}
 				break;
 			case 0x0007: // PPU Data
-				
 				vram_addr = PictureProcessingUnit.getVram_addr();
 				PictureProcessingUnit.PPUWrite(PictureProcessingUnit.getVram_addr(), data);
 				// Tutte le scritture sulla PPU incrementano il nametable, e tale incremento dipende da quanto specificato nel registro control
