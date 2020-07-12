@@ -12,6 +12,7 @@ public class PPUState {
 	//Costruttore privato
 	private PPUState() {
 		returnedPixels = new ArrayList<Pixel>();
+		returnedPixels.add(new Pixel());
 	}
 
 	//Punto di ingresso globale all'istanza
@@ -29,6 +30,14 @@ public class PPUState {
 	//Aggiorno lo stato della PPU
 	public void refreshPPUState(ArrayList<Pixel> refreshedPixels) {
 		returnedPixels = new ArrayList<Pixel>(refreshedPixels);
+	}
+
+	public ArrayList<Pixel> getReturnedPixels() {
+		return returnedPixels;
+	}
+
+	public void setReturnedPixels(ArrayList<Pixel> returnedPixels) {
+		this.returnedPixels = returnedPixels;
 	}
 	
 	

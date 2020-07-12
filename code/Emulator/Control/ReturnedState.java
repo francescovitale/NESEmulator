@@ -1,6 +1,7 @@
 package Emulator.Control;
 
 import Emulator.ApplicationLogic.State.CPUState;
+import Emulator.ApplicationLogic.State.PPUState;
 
 public class ReturnedState {
 	
@@ -72,8 +73,8 @@ public class ReturnedState {
 		return PS;
 	}
 
-	public void setPS(ReturnedPPUState pS) {
-		PS = pS;
+	public void setPS(PPUState pS) {
+		PS.setReturnedPixels(pS.getReturnedPixels());
 	}
 
 	

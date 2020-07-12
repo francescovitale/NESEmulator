@@ -336,6 +336,7 @@ public class EmulatorBoundary extends JFrame {
 						Display.UpdateDisplayScreen(Controller.getReturnedState());
 						publish((Controller.getReturnedState()));
 
+
 				}
 				return null;
 			}
@@ -354,7 +355,8 @@ public class EmulatorBoundary extends JFrame {
 			protected Void doInBackground() throws Exception {
 				
 			//Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), Configuration.getPath());
-			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\aceep\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\Balloon Fight (USA).ines");
+			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\Stefano\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\Balloon Fight (USA).ines");
+			
 			
 			return null;
 

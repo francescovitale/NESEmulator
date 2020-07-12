@@ -26,5 +26,39 @@ public class Pixel {
 		NES_hex_code = P.NES_hex_code;
 		rgb_info = P.rgb_info;
 	}
+
+	public int getX_coord() {
+		return x_coord;
+	}
+
+	public void setX_coord(int x_coord) {
+		this.x_coord = x_coord;
+	}
+
+	public int getY_coord() {
+		return y_coord;
+	}
+
+	public void setY_coord(int y_coord) {
+		this.y_coord = y_coord;
+	}
+
+	public String getNES_hex_code() {
+		return NES_hex_code;
+	}
+
+	public void setNES_hex_code(String nES_hex_code) {
+		NES_hex_code = nES_hex_code;
+	}
+
+	public String getRgb_info() {
+		return rgb_info;
+	}
+
+	public void setRgb_info(String rgb_info) {
+		this.rgb_info = rgb_info;
+	}
+	
+	
 }
 

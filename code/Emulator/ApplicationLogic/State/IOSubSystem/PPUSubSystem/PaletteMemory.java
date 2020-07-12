@@ -25,14 +25,15 @@ public class PaletteMemory {
 		return PaletteMemory;
 	}
 	
-	public void read(char addr, Byte data)
+	public Byte read(char addr)
 	{
+		return PaletteTable.get(addr);
 	}
 
 	//Per Connettere la PPU sul BUS principale
 	public void write(char addr, Byte data)
 	{
-
+		PaletteTable.set(addr, data);
 	}
 
 }

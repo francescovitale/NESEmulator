@@ -28,6 +28,7 @@ public class ClockManager {
  	}
  	
  	public Boolean clock() {
+
  		P.clock();
  		if(ElapsedClockTicks % 3 == 0)
  		{

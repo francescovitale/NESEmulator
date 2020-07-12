@@ -229,7 +229,7 @@ public class PPURenderer {
 		if(cycle == 1 && scanline == 1) {
 			// Inizia effettivamente un nuovo ciclo quindi pulisco il vertical blank flag
 			Byte status = IOM.getPPUStatus();
-			ByteManager.setBit(VERTICAL_BLANK, 0, status);
+			status = ByteManager.setBit(VERTICAL_BLANK, 0, status);
 			IOM.setPPUStatus(status);
 		}
 		

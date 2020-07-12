@@ -25,14 +25,21 @@ public class VRAMMemory {
 		return VRAMMemory;
 	}
 	
-	public void read(char addr, Byte data)
+	public Byte read(char addr, int ChosenTable)
 	{
+		if(ChosenTable == 1)
+			return NameTable1.get(addr);
+		else
+			return NameTable2.get(addr);
 	}
 
 	//Per Connettere la PPU sul BUS principale
-	public void write(char addr, Byte data)
+	public void write(char addr, Byte data, int ChosenTable)
 	{
-
+		if(ChosenTable == 1)
+			NameTable1.set(addr,data);
+		else
+			NameTable2.set(addr,data);
 	}
 
 }

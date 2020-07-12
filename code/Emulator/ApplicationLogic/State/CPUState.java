@@ -44,13 +44,13 @@ public class CPUState {
 		PC = OU.getPC_register();
 		SR = OU.getStatus_register();
 		
-		System.out.println("STATO DEL PROCESSORE"); 
+		/*System.out.println("STATO DEL PROCESSORE"); 
 		System.out.println("PC: " + Integer.toHexString(PC));
 		System.out.println("A: " + Integer.toHexString(A));
 		System.out.println("X: " + Integer.toHexString(X));
 		System.out.println("Y: " + Integer.toHexString(Y));
 		System.out.println("SP: " + Integer.toHexString(SP));
-		System.out.println("SR: " + Integer.toHexString(SR));
+		System.out.println("SR: " + Integer.toHexString(SR));*/
 	}
 
 	public Byte getA() {

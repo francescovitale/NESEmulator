@@ -45,8 +45,10 @@ public class ByteManager {
 		case 7:
 			if(val == 1)
 				return (byte)(0x80 | reg);
-			else
+			else {
 				return (byte)(0x7F & reg);
+			}
+				
 		default:
 			return 0;
 		}

@@ -69,7 +69,7 @@ public class IOManager {
 				data = (byte)((PPUStatus & 0xE0) | (PPUData & 0x1F));
 				
 				// Bisogna resettare il bit del vertical_blank
-				ByteManager.setBit(7, 0, PPUStatus);
+				PPUStatus = ByteManager.setBit(7, 0, PPUStatus);
 				
 				// Resetta l'address_latch nella ppu
 				PictureProcessingUnit.setAddress_latch(0);
@@ -158,6 +158,7 @@ public class IOManager {
 				
 				break;
 			case 0x0001: // Mask
+				PPUMask = data;
 				break;
 			case 0x0002: // Status
 				break;
@@ -249,12 +250,14 @@ public class IOManager {
 		PPUStatus = pPUStatus;
 	}
 
-	public Byte getPPUMask() {
+	public Byte getPPUMask(){
 		return PPUMask;
 	}
-
-	public void setPPUMask(Byte pPUMask) {
-		PPUMask = pPUMask;
+	
+	public void setPPUMask(Byte Mask) {
+		
+		PPUMask= Mask;
+		
 	}
 
 	public Byte getPPUControl() {

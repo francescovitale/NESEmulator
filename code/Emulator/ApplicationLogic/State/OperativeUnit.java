@@ -324,6 +324,7 @@ public class OperativeUnit {
 	//Fetch dell'opcode 
 	public Byte fetch() {
 		fetched = BusOU.read(addr_abs);
+		//System.out.println("addr_abs: " + Integer.toHexString(addr_abs));
 		return BusOU.read(PC_register);							//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
 	}
 
@@ -805,7 +806,8 @@ public class OperativeUnit {
 		
 		fetch();
 		
-		char temp = (char)(fetched << 1); //Shifta a sinistra il valore fetchato
+		char temp = (char)(byte)fetched; //Shifta a sinistra il valore fetchato
+		temp = (char)(temp << 1); //Shifta a sinistra il valore fetchato
 		setFlag("C", (temp & 0xFF00) > 0); //se tale shift rende un valore maggiore di 256, allora alza il carry flag
 		setFlag("Z", (temp & 0x00FF) == 0x00); //se lo shift porta i primi 8 bit ad essere nulli, alza il flag zero
 		setFlag("N", 0x00 != (temp & 0x80)); //se lo shift porta ad avere il bit alto alla posizione 8, abilita il flag Negative
@@ -1193,7 +1195,7 @@ public class OperativeUnit {
 		
 		PC_register= (char) (PC_register-1);
 		
-		BusOU.write((char)(0x0100 + Stack_pointer), (byte)((PC_register >> 8) & 0x00FF));
+		BusOU.write((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer)), (byte)((PC_register >> 8) & 0x00FF));
 		Stack_pointer= (byte) (Stack_pointer-1);
 		
 		PC_register= addr_abs;
@@ -1209,8 +1211,10 @@ public class OperativeUnit {
 		
 		fetch();
 		A_register = fetched;
+		
 	    setFlag("Z", A_register == 0x00);
 		setFlag("N", 0x00 != (A_register & 0x80));
+		
 		return true;
 		
 	}

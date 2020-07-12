@@ -2,6 +2,7 @@ package Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem;
 import Emulator.ApplicationLogic.State.PPUState;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import Emulator.ApplicationLogic.ByteManager;
 import Emulator.ApplicationLogic.State.OperativeUnit;
@@ -222,16 +223,45 @@ public class PPU {
 		}
 			
 		Pixel temp = extractPixel();
-		if(cycles % 3 != 0)
-		{
-			returnedPixels.add(temp);
-		}
-		else {
-			PPUState PState = PPUState.getInstance();
-			PState.refreshPPUState(returnedPixels);
-			returnedPixels.clear();
-		} // Potrebbe dipendere dalla velocità relativa... Concorrenza? Si, ma problemi di velocità se il thread in polling viene
-		// sincronizzato..
+		/*Random random = new Random();
+		int value = random.nextInt();
+		if(value % 2 == 0) temp.setRgb_info("#000000");*/
+		
+		if(scanline == 0) {
+            if(cycles % 3 != 0)
+            {
+            	temp.setX_coord(temp.getX_coord()-1);
+                returnedPixels.add(temp);
+                //System.out.println("Coord:" + returnedPixels.get(returnedPixels.size()-1).getX_coord() + " " + returnedPixels.get(returnedPixels.size()-1).getY_coord());
+                
+            }
+            else {
+                PPUState PState = PPUState.getInstance();
+                temp.setX_coord(temp.getX_coord()-1);
+                returnedPixels.add(temp);
+                PState.refreshPPUState(returnedPixels);
+                //System.out.println("Coord:" + returnedPixels.get(returnedPixels.size()-1).getX_coord() + " " + returnedPixels.get(returnedPixels.size()-1).getY_coord());
+                returnedPixels.clear();
+            }
+        }
+        else
+        {
+            if((cycles+1) % 3 != 0)
+            {
+            	temp.setX_coord(temp.getX_coord()-1);
+                returnedPixels.add(temp);
+                
+            }
+            else {
+                PPUState PState = PPUState.getInstance();
+                temp.setX_coord(temp.getX_coord()-1);
+                returnedPixels.add(temp);
+                PState.refreshPPUState(returnedPixels);
+               
+                returnedPixels.clear();
+            } // Potrebbe dipendere dalla velocità relativa... Concorrenza? Si, ma problemi di velocità se il thread in polling viene
+            // sincronizzato..
+        }
 		
 		cycles++;
 		if(cycles >= 341) {
@@ -304,19 +334,18 @@ public class PPU {
 		
 		hex_color = getColourFromPaletteRam(bg_palette_info, bg_pattern_info); // Il colore tratto; servirà a indirizzare NESPalette
 		Integer intTemp = Byte.toUnsignedInt(hex_color);
-		//String stringTemp = Integer.toHexString(intTemp);
+		String stringTemp = Integer.toHexString(intTemp);
 		/*System.out.println("Colore palette: "+stringTemp);
 		System.out.println("Colore in esadecimale: "+ NESPalette.get(hex_color));*/
 		
-		
-		//return new Pixel(cycles,scanline,stringTemp,NESPalette.get(hex_color));
-		return null;
+		//System.out.println("Colore palette: "+hex_color);
+		return new Pixel(cycles,scanline,stringTemp,NESPalette.get(hex_color));
 	}
 	
 	
 	Byte getColourFromPaletteRam(Byte Palette, Byte Pixel) {
-		//return PPURead((char) (0x3F00 + (Palette << 2) + Pixel));
-		return (byte)0x2c; // STUB
+		return PPURead((char) (0x3F00 + (Palette << 2) + Pixel));
+		//return (byte)0x2c; // STUB
 	}
 	
 	public Integer getScanline() {
