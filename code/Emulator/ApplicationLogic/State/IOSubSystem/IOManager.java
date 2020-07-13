@@ -26,7 +26,7 @@ public class IOManager {
 		PPUData = 0x00;
 		
 		CpuBus = Bus.getInstance();	
-		PictureProcessingUnit = PPU.getInstance();
+		PictureProcessingUnit = PPU.getInstance(); 
 	}
 
 	//Punto di ingresso globale all'istanza
@@ -69,7 +69,7 @@ public class IOManager {
 				data = (byte)((PPUStatus & 0xE0) | (PPUData & 0x1F));
 				
 				// Bisogna resettare il bit del vertical_blank
-				PPUStatus = ByteManager.setBit(7, 0, PPUStatus);
+				PPUStatus = ByteManager.setBit(7, 0, PPUStatus); 
 				
 				// Resetta l'address_latch nella ppu
 				PictureProcessingUnit.setAddress_latch(0);
@@ -82,7 +82,7 @@ public class IOManager {
 			case 0x0005: // Scroll
 				//Not Readable
 				break;
-			case 0x0006:
+			case 0x0006: //PPU Address
 				//Not Readable
 				break;
 			case 0x0007: // PPU Data
@@ -142,7 +142,6 @@ public class IOManager {
 			switch (address)
 			{
 			case 0x0000: // Control
-				
 				PPUControl = data;
 				
 				tram_addr = PictureProcessingUnit.getTram_addr();
@@ -203,7 +202,7 @@ public class IOManager {
 				if (PictureProcessingUnit.getAddress_latch() == 0)
 				{			
 					tram_addr = PictureProcessingUnit.getTram_addr();
-					tram_addr = (char)((char)((data & 0x3F) << 8) | (tram_addr & 0x00FF));
+					tram_addr = (char)((char)((char)(data & 0x3F) << 8) | (tram_addr & 0x00FF));
 					PictureProcessingUnit.setTram_addr(tram_addr);
 					PictureProcessingUnit.setAddress_latch(1);
 				}

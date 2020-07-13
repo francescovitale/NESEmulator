@@ -29,7 +29,7 @@ public class PPUBus {
 		}
 		return PPUBus;
 	}
-	
+	 
 	public Byte PPURead(char addr)
 	{
 		Byte data = 0x00;

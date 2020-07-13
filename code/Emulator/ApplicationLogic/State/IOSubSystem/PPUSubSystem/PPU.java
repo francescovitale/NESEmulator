@@ -185,7 +185,7 @@ public class PPU {
 		
 		
 	}
-	
+	 
 	public Byte PPURead(char addr)
 	{
 		/* La lettura verso la PPU può portare a leggere verso la pattern memory, la VRAM, oppure la palette memory */
@@ -218,6 +218,7 @@ public class PPU {
 					// Bisogna impostare una richiesta di interruzione. E' necessaria la chiamata alla CPU.
 					OU = OperativeUnit.getInstance();
 					OU.setNMIRequest(true);
+					//OU.Execute("NMI");
 				}
 			}
 		}

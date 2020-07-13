@@ -74,7 +74,7 @@ public class Cartridge {
 		
 		return 0;
 	}
-
+ 
 	//DA MODIFICARE
 	public boolean loadData(ArrayList<Byte> Programma) {
 		//Prendo la ROM della cartuccia inserita

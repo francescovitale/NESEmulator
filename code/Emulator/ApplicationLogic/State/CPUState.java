@@ -44,6 +44,7 @@ public class CPUState {
 		PC = OU.getPC_register();
 		SR = OU.getStatus_register();
 		
+		//DEBUG
 		/*System.out.println("STATO DEL PROCESSORE"); 
 		System.out.println("PC: " + Integer.toHexString(PC));
 		System.out.println("A: " + Integer.toHexString(A));

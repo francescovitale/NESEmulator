@@ -18,7 +18,7 @@ public class ControlUnitInterrupt extends ControlUnitState {
 
 	@Override
 	public void execCycle() {
-		System.out.println("we");
+		//System.out.println("we");
 		Boolean NMIRequest_temp;
 		Boolean IRQRequest_temp;
 		StateFacade Stf = new StateFacade();

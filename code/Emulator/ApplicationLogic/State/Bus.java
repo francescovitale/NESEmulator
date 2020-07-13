@@ -17,7 +17,7 @@ public class Bus {
 		Ram = Memory.getInstance();
 		//Collegamento con la Cartridge
 		Crtg = Cartridge.getInstance();
-		
+		 
 		//IOM = IOManager.getInstance();
 	}
 
@@ -35,7 +35,7 @@ public class Bus {
 	}
 
 	
-	
+	 
 	
 	public Byte read(char Address) {
 		Byte data = null;
@@ -43,22 +43,41 @@ public class Bus {
 		
 		if (Crtg.Read(Address))
 		{
+
 			data = Crtg.getData();
-		        // The cartridge "sees all" and has the facility to veto
-		        // the propagation of the bus transaction if it requires.
-		        // This allows the cartridge to map any address to some
-		        // other data, including the facility to divert transactions
-		        // with other physical devices. The NES does not do this
-		        // but I figured it might be quite a flexible way of adding
-		        // "custom" hardware to the NES in the future!
+
+			/*System.out.println("Add read C: " + Integer.toHexString(Address));
+			System.out.println("Data read C: " + Integer.toHexString(data));
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 		}
 		//Se l'address è compreso tra 0x0000 e 0x1FFF voglio leggere dalla RAM
 		else if( (Address >= 0x0000) &&  (Address <= 0x1FFF)) {
 			data= Ram.read((char)(Address & 0x07FF));		//Faccio il mirroring della RAM (& 0x07FF)
+			/*System.out.println("Add read M: " + Integer.toHexString(Address));
+			System.out.println("Data read M: " + Integer.toHexString(data));
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 		}
 		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio leggere dalla PPU
 		else {
 			data = IOM.read((char)(Address),false);	//Faccio il mirroring della PPU (& 0x0007)
+			/*System.out.println("Add read M: " + Integer.toHexString(Address));
+			System.out.println("Data read M: " + Integer.toHexString(data));
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 		}
 		/*else {
 			data= Ram.read((char)(Address & 0x07FF));	//DEBUG
@@ -70,16 +89,39 @@ public class Bus {
 
 	public void write(char Address, Byte Data) {
 		//Se l'address è compreso tra 0x0000 e 0x1FFF voglio scrivere in RAM
-		Byte data = 0x00;
-		if (Crtg.Write(Address, data))
+		if (Crtg.Write(Address, Data))
 		{
+			/*System.out.println("Add C: " + Integer.toHexString(Address));
+			System.out.println("Data C: " + Integer.toHexString(Data));
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 			// Cartridge Address Range
 		}
 		else if( (Address >= 0x0000) &&  (Address <= 0x1FFF)) {
+			/*System.out.println("Add M: " + Integer.toHexString(Address));
+			System.out.println("Data M: " + Integer.toHexString(Data));
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 			Ram.write((char)(Address & 0x07FF), Data);  //Faccio il mirroring della RAM (& 0x07FF)
 		}
 		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio scrivere sulla PPU
 		else{
+			/*System.out.println("Add P: " + Integer.toHexString(Address));
+			System.out.println("Data P: " + Integer.toHexString(Data));
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 			IOM.write((char)(Address), Data);	//Faccio il mirroring della PPU (& 0x0007)
 		}
 		/*else {
@@ -89,7 +131,7 @@ public class Bus {
 		//Ram.write((char)(Address), Data);
 	}
 
-
+ 
 	public void reset(){}	//Da implementare
 	
 	public void clock(){} 	//Da implementare

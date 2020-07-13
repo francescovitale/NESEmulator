@@ -30,11 +30,7 @@ public class Mapper_000 extends Mapper{
 		//     0x8000 -> 0xFFFF: Map    0x0000 -> 0x7FFF	
 		if (addr >= 0x8000 && addr <= 0xFFFF)
 		{
-			if(nPRGBanks > 1)
-				mapped_addr = (char)(addr & (0x7FFF));
-			else
-				mapped_addr = (char)(addr & (0x3FFF));
-			
+			mapped_addr = (char)(addr & (nPRGBanks > 1 ? 0x7FFF : 0x3FFF));
 			return true;
 		}
 		return false;

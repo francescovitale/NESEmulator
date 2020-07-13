@@ -11,7 +11,8 @@ public class ControlUnit {
  	private Boolean bool_opcode;										//verifica sul ciclo aggiuntivo
  	private Boolean bool_addr;											//verifica sul ciclo aggiuntivo
  	private volatile static ControlUnit ControlUnit = null;				//Singleton
- 		
+ 	// DEBUG
+ 	public static Integer CYC=-1;
 	
 	protected ControlUnit() {
 		InstructionRegister = 0x0;
@@ -38,8 +39,8 @@ public class ControlUnit {
 	};
 	
 	public void execCycle() {
-		while(InstructionRegister != 0xF)
-		{
+		//while(InstructionRegister != 0xF)
+		while(true){
 			State.execCycle();
 		}
 	}

@@ -1,6 +1,7 @@
 package Emulator.ApplicationLogic.Interpreter;
 
 import Emulator.ApplicationLogic.State.*;
+import Emulator.TechnicalServices.FileSystemAccess.FileSystemManager;
 
 public class ControlUnitExecute extends ControlUnitState {
 
@@ -19,7 +20,7 @@ public class ControlUnitExecute extends ControlUnitState {
 		CU.changeState(NewState);
 	};
 
-	public void execCycle() {
+	public void execCycle() { 
 		Boolean NMIRequest_temp;
 		Boolean IRQRequest_temp;
 		
@@ -27,7 +28,7 @@ public class ControlUnitExecute extends ControlUnitState {
 		CU.setBool_opcode(SF.Execute(CU.getCurrentInstruction().opcode));						//Eseguo l'operazione dell'istruzione corrente
 		
 		/*DEBUG*/
-		System.out.println(CU.getCurrentInstruction().opcode);
+		//System.out.println(CU.getCurrentInstruction().opcode);
 		
 		if(CU.getBool_addr() & CU.getBool_opcode())												//Se entrambi i bool sono veri
 			CU.increaseCycles();																//Va aggiunto un ciclo per l'istruzione corrente
@@ -39,12 +40,16 @@ public class ControlUnitExecute extends ControlUnitState {
 		
 		if(NMIRequest_temp == true || IRQRequest_temp == true) {
 			/*DEBUG*/
-			System.out.println("Servo la richiesta di interruzione");
+			//System.out.println("Servo la richiesta di interruzione");
 			SF.Execute("NMI");
 			changeState(CU, ControlUnitState.getInstance("Interrupt"));
 		}
 		else
 			changeState(CU, ControlUnitState.getInstance("Fetch"));
+		
+	
+		
+		
 	}
 
 }

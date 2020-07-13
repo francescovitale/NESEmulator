@@ -73,8 +73,8 @@ public class StateFacade {
 	public Boolean clock() {
 		ClockManager CM = ClockManager.getInstance();
 		return CM.clock();
-		
 	}
+	
 	public Boolean getIRQRequest() {
 		return OU.getIRQRequest();
 	}

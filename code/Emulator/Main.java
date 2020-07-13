@@ -2,19 +2,21 @@ package Emulator;
 
 
 import Emulator.Control.Controller;
+import Emulator.TechnicalServices.FileSystemAccess.FileSystemManager;
 
 public class Main {
 	public static void main(String args[]) {
-		/*
+		
 		Controller C = new Controller();
 		String Nome = "GIOCO";
 
-		C.executeProgram("MarioBros", 0, "C:\\Users\\Daniele\\Desktop\\NESEmulator-ppu\\Programmi\\GIOCO2.ines");
+		C.executeProgram("MarioBros", 0, "C:\\Users\\aceep\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\nestest.ines");
+		
+		FileSystemManager FSM = FileSystemManager.getInstance();
+		FSM.deleteFile("C:\\Users\\aceep\\eclipse-workspace\\NES\\src\\Emulator\\Log\\log.txt");
+		
 		//C.DumpCartridge();
 		//C.DumpMemory();
-		 */
-		Byte a = 0x05;
-		char b = (char)((char)(Byte.toUnsignedInt((byte)(a<<1)) | 0x01));
-		System.out.println(Integer.toHexString(b));
+		
 	}
 }

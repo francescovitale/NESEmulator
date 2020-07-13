@@ -7,6 +7,7 @@ public class ClockManager {
 
 	Integer ElapsedClockTicks;
 	
+	
  	private volatile static ClockManager CM = null;				//Singleton
  	private PPU P;
  	
@@ -26,13 +27,12 @@ public class ClockManager {
  		}
  		return CM;
  	}
- 	
+ 	 
  	public Boolean clock() {
 
  		P.clock();
  		if(ElapsedClockTicks % 3 == 0)
  		{
- 			
  			ElapsedClockTicks++;
  			return true;
  		}

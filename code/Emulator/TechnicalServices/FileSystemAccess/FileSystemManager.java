@@ -1,6 +1,7 @@
 package Emulator.TechnicalServices.FileSystemAccess;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -229,7 +230,26 @@ public class FileSystemManager {
 		}
 		return ReturnedStringArrayList;
 	}
-	private void setPath(String SelectedPath) {
+	public void setPath(String SelectedPath) {
 		Path = SelectedPath;
+	}
+	
+	public void writeLogData(String Log) {
+		try {
+			FileOutputStream FOS = new FileOutputStream(Path,true);
+			FOS.write(Log.getBytes("UTF-8"));
+			FOS.close();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+	
+	public void deleteFile(String Path) {
+		File F = new File(Path);
+		if(F.delete())
+			System.out.println("file eliminato");
+		else
+			System.out.println("bucchi");
 	}
 }

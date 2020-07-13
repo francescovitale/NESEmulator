@@ -22,4 +22,4 @@ public class ControlUnitReset extends ControlUnitState{
 		SF.reset();
 		changeState(CU, ControlUnitState.getInstance("Fetch"));
 	}
-}
+} 
