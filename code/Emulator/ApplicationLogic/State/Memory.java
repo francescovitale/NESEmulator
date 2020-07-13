@@ -108,9 +108,9 @@ public class Memory {
 
 	
 	//GETTER
-		public ArrayList<Byte> getWord() {
-			return Word;
-		}
+	public ArrayList<Byte> getWord() {
+		return Word;
+	}
 	
 	//FUNZIONI DI UTILITA'
 	

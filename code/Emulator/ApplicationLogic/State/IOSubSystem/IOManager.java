@@ -66,11 +66,11 @@ public class IOManager {
 			case 0x0002: // Status
 				// Leggere dallo status register ha una funzione di reset; solo i tre bit
 				// più significativi contengono informazioni,
-				data = (byte)((PPUStatus & 0xE0) | (PPUData & 0x1F));
+				data = (byte)((byte)((int)PPUStatus & 0xE0) | ((int)PPUData & 0x1F));
 				
 				// Bisogna resettare il bit del vertical_blank
 				PPUStatus = ByteManager.setBit(7, 0, PPUStatus); 
-				
+
 				// Resetta l'address_latch nella ppu
 				PictureProcessingUnit.setAddress_latch(0);
 
@@ -89,7 +89,6 @@ public class IOManager {
 
 				//Le letture dalla Nametable, ovvero la VRAM; sono rallentate di un ciclo di clock,
 				//dunque il registro PPUData conterrà le informazioni del dato della precedente richiesta
-				
 				data = PPUData;
 				vram_addr = PictureProcessingUnit.getVram_addr();
 				
@@ -219,7 +218,7 @@ public class IOManager {
 				break;
 			case 0x0007: // PPU Data
 				vram_addr = PictureProcessingUnit.getVram_addr();
-				PictureProcessingUnit.PPUWrite(PictureProcessingUnit.getVram_addr(), data);
+				PictureProcessingUnit.PPUWrite(vram_addr, data);
 				// Tutte le scritture sulla PPU incrementano il nametable, e tale incremento dipende da quanto specificato nel registro control
 				// se il l'increment mode è su vertical (ovvero bit alto), l'incremento è di 32, ovvero si deve andare alla riga successiva,
 				// altrimenti è necessario incrementare solo di un bit, e quindi di 1.

@@ -69,7 +69,7 @@ public class PPU {
 		NESPalette = new ArrayList<String>();
 		for(int i = 0; i <= (int)0x003F; i++)
 			NESPalette.add("");
-		NESPalette.set(0x00, "#545454");
+		NESPalette.set(0x00,"#545454");
 		NESPalette.set(0x01,"#001e74");
 		NESPalette.set(0x02,"#081090");
 		NESPalette.set(0x03,"#300088");
@@ -199,7 +199,7 @@ public class PPU {
 	}
 
 	public void clock() {
-		if(scanline >= -1 && scanline <= 239) {
+		if(scanline >= -1 && scanline < 240) {
 			PPUR.Render(scanline, cycles);
 		}
 			
@@ -263,7 +263,6 @@ public class PPU {
             } // Potrebbe dipendere dalla velocità relativa... Concorrenza? Si, ma problemi di velocità se il thread in polling viene
             // sincronizzato..
         }
-		
 		cycles++;
 		if(cycles >= 341) {
 			cycles = 0;
@@ -289,8 +288,7 @@ public class PPU {
 		if (render_background == 1)
 		{
 			/* bit_mux consentira' di estrarre solamente il singolo pixel da renderizzare */
-			char bit_mux = (char)(0x8000 >> fine_x);
-
+			char bit_mux = (char)(0x8000 >> (int)fine_x);
 			Byte p0_pattern_info; // LSB
 			Byte p1_pattern_info; // MSB
 			boolean temp = (bg_shifter_pattern_lo & bit_mux) > 0;
@@ -336,16 +334,15 @@ public class PPU {
 		hex_color = getColourFromPaletteRam(bg_palette_info, bg_pattern_info); // Il colore tratto; servirà a indirizzare NESPalette
 		Integer intTemp = Byte.toUnsignedInt(hex_color);
 		String stringTemp = Integer.toHexString(intTemp);
-		/*System.out.println("Colore palette: "+stringTemp);
-		System.out.println("Colore in esadecimale: "+ NESPalette.get(hex_color));*/
-		
+		//System.out.println("Colore palette: "+stringTemp);
+		//System.out.println("Colore in esadecimale: "+ NESPalette.get(hex_color));
 		//System.out.println("Colore palette: "+hex_color);
 		return new Pixel(cycles,scanline,stringTemp,NESPalette.get(hex_color));
 	}
 	
 	
 	Byte getColourFromPaletteRam(Byte Palette, Byte Pixel) {
-		return PPURead((char) (0x3F00 + (Palette << 2) + Pixel));
+		return PPURead((char)(0x3F00 + ((Byte.toUnsignedInt(Palette) << 2) + Byte.toUnsignedInt(Pixel))));
 		//return (byte)0x2c; // STUB
 	}
 	

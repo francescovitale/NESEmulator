@@ -82,7 +82,7 @@ public class PPUBus {
 			Byte mask = IOManager.getInstance().getPPUMask();
 			// È necessario estrarre il bit grayscale dal mask register
 			int grayscale = ByteManager.extractBit(0,mask);
-			if(grayscale == 0) 
+			if(grayscale == 1) 
 				data = (byte)(Palette.read(addr) & 0x30);
 			else 
 				data = (byte)(Palette.read(addr) & 0x3F);
