@@ -205,7 +205,7 @@ public class PPU {
 			
 		if(scanline == 240) {}
 			
-		if(scanline >= 241 && scanline <= 261) {
+		if(scanline >= 241 && scanline < 261) {
 			if(scanline == 241 && cycles == 1) {
 				Byte status = IOM.getPPUStatus();
 				status = ByteManager.setBit(7,1,status);

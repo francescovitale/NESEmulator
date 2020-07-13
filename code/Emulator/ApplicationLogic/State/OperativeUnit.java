@@ -332,7 +332,8 @@ public class OperativeUnit {
 	
 	//Fetch dell'opcode 
 	public Byte fetch() {
-		fetched = BusOU.read(addr_abs);
+		if(ControlUnit.getInstance().getCurrentInstruction().addressing_mode != "IMP")
+			fetched = BusOU.read(addr_abs);
 		
 		//System.out.println("addr_abs: " + Integer.toHexString(addr_abs));
 		return BusOU.read(PC_register);							//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
@@ -600,7 +601,7 @@ public class OperativeUnit {
 	//Zero Page
 	private Boolean ZP0() {
 		//Leggo l'offset del program counter nella pagina 0
-		addr_abs = (char)BusOU.read(PC_register).byteValue();		//Vado a leggere il contenuto in memoria nella locazione indicata dal PC
+		addr_abs = (char)Byte.toUnsignedInt(BusOU.read(PC_register));		//Vado a leggere il contenuto in memoria nella locazione indicata dal PC
 		PC_register++;												//Incremento il PC
 		addr_abs &= 0x00FF;											//L'Indirizzo a cui dovrò leggere è nella pagina 0
 		return false;
@@ -747,8 +748,8 @@ public class OperativeUnit {
 		Integer PC = (int)PC_register;
 		PC++;
 		
-		Integer lo = Byte.toUnsignedInt(BusOU.read((char)( (t + Byte.toUnsignedInt(Y_register)) & 0x00FF )));			//Leggo il primo byte in pagina 0 sommando x al valore t preso in memoria
-		Integer hi = Byte.toUnsignedInt(BusOU.read((char)( (t + Byte.toUnsignedInt(Y_register) + 1) & 0x00FF )));		//Leggo il secondo byte in pagina 0 sommando x e 1 al valore t preso in memoria
+		Integer lo = Byte.toUnsignedInt(BusOU.read((char)( t  & 0x00FF )));			//Leggo il primo byte in pagina 0 sommando x al valore t preso in memoria
+		Integer hi = Byte.toUnsignedInt(BusOU.read((char)( (t  + 1) & 0x00FF )));		//Leggo il secondo byte in pagina 0 sommando x e 1 al valore t preso in memoria
 
 		addr_abs = (char)((hi << 8) | lo);
 		
@@ -1328,10 +1329,11 @@ public class OperativeUnit {
 		Instruction CurrentInstruction= ControlUnit.getInstance().getCurrentInstruction();
 		Instruction NoOp1= MicroRom[28];
 		Instruction NoOp2= MicroRom[60];
-		Instruction NoOp3= MicroRom[92];;
-		Instruction NoOp4= MicroRom[220];;
-		Instruction NoOp5= MicroRom[252];;
-		
+		Instruction NoOp3= MicroRom[92];
+		Instruction NoOp4= MicroRom[220];
+		Instruction NoOp5= MicroRom[252];
+		Instruction NoOp6 = MicroRom[137];
+
 		if ( CurrentInstruction == NoOp1 ||CurrentInstruction== NoOp2 ||CurrentInstruction== NoOp3 ||CurrentInstruction== NoOp4 ||CurrentInstruction== NoOp5 )
 			return true;
 		else 
@@ -1411,12 +1413,19 @@ public class OperativeUnit {
 	private boolean PLP() {
 		
 		Integer SP = Byte.toUnsignedInt(Stack_pointer);
+		Integer SR = Byte.toUnsignedInt(Status_register);
 		
+		//System.out.println("SP : " + Integer.toBinaryString(SP));
+		//System.out.println("Status : " + Integer.toBinaryString(SR));
 		SP++;
-		Status_register= BusOU.read((char) (0x0100 + SP)).byteValue();
+		SR= Byte.toUnsignedInt(BusOU.read((char) (0x0100 + SP)));
 		setFlag("U", true);
 		
+		//System.out.println("SP : " + Integer.toBinaryString(SP));
+		//System.out.println("Status : " + Integer.toBinaryString(SR));
+		
 		Stack_pointer = (byte)(int)SP;
+		Status_register = (byte)(int)SR;
 		
 		return false;
 	}
@@ -1767,10 +1776,8 @@ public class OperativeUnit {
 		A_register = 0x00;
 		X_register = 0x00;
 		Y_register = 0x00;
-		Byte U = 0x00;
-		if(getFlag("U"))
-			U = 0x01;
-		Status_register = (byte)(0x00 | (U << 5));	
+
+		Status_register = (byte)(0x24);	
 		Stack_pointer= (byte) 0x00FD;	
 		fetched = 0x00;
 		addr_abs = 0x0000;
@@ -1869,14 +1876,6 @@ public class OperativeUnit {
 	// form location 0xFFFA.
 	private void nmi()
 	{
-		
-		System.out.println("NMI RICHIAMATA");
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		// Push the program counter to the stack. It's 16-bits dont
 		// forget so that takes two pushes
 		BusOU.write((char)(0x0100 + Stack_pointer), (byte)((PC_register >> 8) & 0x00FF));

@@ -20,6 +20,10 @@ public class ControlUnitFetch extends ControlUnitState {
 	};
 	
 	public void execCycle() {
+		//Variabili per la gestione delle interrupt
+		Boolean NMIRequest_temp;
+		Boolean IRQRequest_temp;
+		
 		CU = ControlUnit.getInstance();
 		//Aggiorno lo stato da far visualizzare
 		SF.refreshState();
@@ -31,8 +35,19 @@ public class ControlUnitFetch extends ControlUnitState {
 			CPUTurn = SF.clock();
 			
 			if(CPUTurn == true) {
-				stop = clock();
+				stop = clock();	
+			}
+			
+			if(stop == false) {
+				NMIRequest_temp = SF.getNMIRequest();
+				IRQRequest_temp = SF.getIRQRequest();
 				
+				if(NMIRequest_temp == true || IRQRequest_temp == true) {
+					/*DEBUG*/
+					//System.out.println("Servo la richiesta di interruzione");
+					//SF.Execute("NMI");
+					changeState(CU, ControlUnitState.getInstance("Interrupt"));
+				}
 			}
 		}
 		//if(CU.getInstructionRegister().byteValue() == (byte)0xFF)								//Condizione di terminazione
@@ -40,8 +55,8 @@ public class ControlUnitFetch extends ControlUnitState {
 	//	else {	
 		
 			/* DEBUG */
-			/*FileSystemManager FSM = FileSystemManager.getInstance();
-			FSM.setPath("C:\\Users\\aceep\\eclipse-workspace\\NES\\src\\Emulator\\Log\\log.txt");
+			FileSystemManager FSM = FileSystemManager.getInstance();
+			FSM.setPath("C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\Log\\log.txt");
 			OperativeUnit OU = OperativeUnit.getInstance();
 			
 			Integer PC = (int)OU.getPC_register();
@@ -51,10 +66,15 @@ public class ControlUnitFetch extends ControlUnitState {
 			Integer SP = Byte.toUnsignedInt(OU.getStack_pointer());
 			Integer SR = Byte.toUnsignedInt(OU.getStatus_register());
 			
-			FSM.writeLogData(Integer.toHexString(PC)+ " " + " A: "+ Integer.toHexString(A) + " X: "+ Integer.toHexString(X) + " Y: "+ Integer.toHexString(Y) + 
+			Byte opfetched = SF.fetch().byteValue();
+			/*
+			FSM.writeLogData(Integer.toHexString(Byte.toUnsignedInt(opfetched)) + " "+Integer.toHexString(PC)+ " " + " A: "+ Integer.toHexString(A) + " X: "+ Integer.toHexString(X) + " Y: "+ Integer.toHexString(Y) + 
 			" SP: "+ Integer.toHexString(SP) + " " + "SR: " + Integer.toHexString(SR) + " ");
 			
-			CU.setInstructionRegister(SF.fetch().byteValue());				//Fetcho l'istruzione e la salvo nell'IR
+			//DEBUG
+			*/
+
+			CU.setInstructionRegister(opfetched);				//Fetcho l'istruzione e la salvo nell'IR
 			SF.increasePC();
 			/*DEBUG*/
 			//System.out.println(Byte.toUnsignedInt(OU.getInstance().fetch()));									//Stampa DEBUG del codice operativo

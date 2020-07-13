@@ -355,7 +355,7 @@ public class EmulatorBoundary extends JFrame {
 			protected Void doInBackground() throws Exception {
 				
 			//Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), Configuration.getPath());
-			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\aceep\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\Mario.ines");
+			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\DonkeyKong.ines");
 			
 			
 			return null;

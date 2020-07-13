@@ -29,6 +29,7 @@ public class ControlUnitExecute extends ControlUnitState {
 		
 		/*DEBUG*/
 		//System.out.println(CU.getCurrentInstruction().opcode);
+
 		
 		if(CU.getBool_addr() & CU.getBool_opcode())												//Se entrambi i bool sono veri
 			CU.increaseCycles();																//Va aggiunto un ciclo per l'istruzione corrente
@@ -41,7 +42,7 @@ public class ControlUnitExecute extends ControlUnitState {
 		if(NMIRequest_temp == true || IRQRequest_temp == true) {
 			/*DEBUG*/
 			//System.out.println("Servo la richiesta di interruzione");
-			SF.Execute("NMI");
+			//SF.Execute("NMI");
 			changeState(CU, ControlUnitState.getInstance("Interrupt"));
 		}
 		else
