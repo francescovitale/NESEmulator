@@ -34,7 +34,7 @@ public class Bus {
 		return BUS;
 	}
 
-	
+	 
 	 
 	
 	public Byte read(char Address) {
@@ -45,7 +45,8 @@ public class Bus {
 		{
 
 			data = Crtg.getData();
-
+			
+			//DEBUG
 			/*System.out.println("Add read C: " + Integer.toHexString(Address));
 			System.out.println("Data read C: " + Integer.toHexString(data));
 			try {
@@ -54,10 +55,13 @@ public class Bus {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}*/
+			
 		}
 		//Se l'address è compreso tra 0x0000 e 0x1FFF voglio leggere dalla RAM
 		else if( (Address >= 0x0000) &&  (Address <= 0x1FFF)) {
 			data= Ram.read((char)(Address & 0x07FF));		//Faccio il mirroring della RAM (& 0x07FF)
+			
+			//DEBUG
 			/*System.out.println("Add read M: " + Integer.toHexString(Address));
 			System.out.println("Data read M: " + Integer.toHexString(data));
 			try {
@@ -66,10 +70,13 @@ public class Bus {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}*/
+			
 		}
 		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio leggere dalla PPU
 		else {
 			data = IOM.read((char)(Address),false);	//Faccio il mirroring della PPU (& 0x0007)
+			
+			//DEBUG
 			/*System.out.println("Add read M: " + Integer.toHexString(Address));
 			System.out.println("Data read M: " + Integer.toHexString(data));
 			try {
@@ -78,12 +85,12 @@ public class Bus {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}*/
+			
 		}
-		/*else {
-			data= Ram.read((char)(Address & 0x07FF));	//DEBUG
-		}*/
+
 		/*DEBUG*/
 		//data= Ram.read((char)(Address));
+		
 		return data;
 	}
 
@@ -91,6 +98,7 @@ public class Bus {
 		//Se l'address è compreso tra 0x0000 e 0x1FFF voglio scrivere in RAM
 		if (Crtg.Write(Address, Data))
 		{
+			//DEBUG
 			/*System.out.println("Add C: " + Integer.toHexString(Address));
 			System.out.println("Data C: " + Integer.toHexString(Data));
 			try {
@@ -100,8 +108,11 @@ public class Bus {
 				e.printStackTrace();
 			}*/
 			// Cartridge Address Range
+			
 		}
 		else if( (Address >= 0x0000) &&  (Address <= 0x1FFF)) {
+			
+			//DEBUG
 			/*System.out.println("Add M: " + Integer.toHexString(Address));
 			System.out.println("Data M: " + Integer.toHexString(Data));
 			try {
@@ -110,10 +121,13 @@ public class Bus {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}*/
+			
 			Ram.write((char)(Address & 0x07FF), Data);  //Faccio il mirroring della RAM (& 0x07FF)
 		}
 		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio scrivere sulla PPU
 		else{
+			
+			//DEBUG
 			/*System.out.println("Add P: " + Integer.toHexString(Address));
 			System.out.println("Data P: " + Integer.toHexString(Data));
 			try {
@@ -122,17 +136,12 @@ public class Bus {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}*/
+			
 			IOM.write((char)(Address), Data);	//Faccio il mirroring della PPU (& 0x0007)
 		}
-		/*else {
-			Ram.write((char)(Address & 0x07FF), Data);  //DEBUG
-		}*/
+
 		/*DEBUG*/
 		//Ram.write((char)(Address), Data);
 	}
 
- 
-	public void reset(){}	//Da implementare
-	
-	public void clock(){} 	//Da implementare
 }

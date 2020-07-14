@@ -120,9 +120,9 @@ public class Cartridge {
 			indice = 512 * 8;
 		}
 		else {
-			indice = 16;	//Da verificare
+			indice = 16;	
 		}
-		
+		 
 		// Determino il Mapper ID
 		nMapperID = ((mapper2 >> 4) << 4) | (mapper1 >> 4);
 		mirror = (mapper1 & 0x01)!=0 ? MIRROR.VERTICAL : MIRROR.HORIZONTAL;

@@ -58,7 +58,7 @@ public class PPURenderer {
 				vram = (char)(vram & 0xFFE0);  									    //vram.coarse_x = 0
 				int nametable_x = ByteManager.extractCharBit(NAMETABLE_X, vram);	//prendo nametable_x
 				nametable_x = ((nametable_x == 0) ? 1 : 0);							//Inverto nametable_x
-				vram = ByteManager.setCharBit(NAMETABLE_X, nametable_x, vram);				//reinserisco nametable_x
+				vram = ByteManager.setCharBit(NAMETABLE_X, nametable_x, vram);		//reinserisco nametable_x
 			}
 			else {
 				coarse_x++;															//Incremento coarse_x
@@ -97,7 +97,7 @@ public class PPURenderer {
 					vram = (char)(vram & 0xFC1F);										//coarse_y = 0
 					int nametable_y = ByteManager.extractCharBit(NAMETABLE_Y, vram);	//prendo nametable_y
 					nametable_y = ((nametable_y == 0) ? 1 : 0);							//Inverto nametable_y
-					vram = ByteManager.setCharBit(NAMETABLE_Y, nametable_y, vram);				//reinserisco nametable_y
+					vram = ByteManager.setCharBit(NAMETABLE_Y, nametable_y, vram);		//reinserisco nametable_y
 					
 				}
 				else if(coarse_y == 31) {
@@ -127,7 +127,7 @@ public class PPURenderer {
 			char tram = P.getTram_addr();											//Prelevo tram_addr
 			
 			int nametable_x = ByteManager.extractCharBit(NAMETABLE_X, tram);		//prendo nametable_x da tram
-			vram = ByteManager.setCharBit(NAMETABLE_X, nametable_x, vram);					//Inserisco nametable_x in vram
+			vram = ByteManager.setCharBit(NAMETABLE_X, nametable_x, vram);			//Inserisco nametable_x in vram
 			
 			char coarse_x = (char)(tram & 0x001F);									//prelevo coarse_x dalla tram
 			vram = (char)((vram & 0xFFE0) | coarse_x);								//Inserisco il nuovo coarse_x in vram
@@ -172,18 +172,18 @@ public class PPURenderer {
 		Byte bg_next_tile_lsb = P.getBg_next_tile_lsb();
 		Byte bg_next_tile_msb = P.getBg_next_tile_msb();
 		//Modifico i valori		
-		P.setBg_shifter_pattern_lo((char)((bg_shifter_pattern_lo & 0xFF00) | bg_next_tile_lsb));
-		P.setBg_shifter_pattern_hi((char)((bg_shifter_pattern_hi & 0xFF00) | bg_next_tile_msb));
+		P.setBg_shifter_pattern_lo((char)((bg_shifter_pattern_lo & 0xFF00) | (char)(bg_next_tile_lsb & 0x00FF)));
+		P.setBg_shifter_pattern_hi((char)((bg_shifter_pattern_hi & 0xFF00) | (char)(bg_next_tile_msb & 0x00FF)));
 		
 		//Prelevo i registri utili 
 		char bg_shifter_attrib_lo = P.getBg_shifter_attrib_lo();
 		char bg_shifter_attrib_hi = P.getBg_shifter_attrib_hi();
 		Byte bg_next_tile_attr = P.getBg_next_tile_attr();
 		//Modifico i valori		
-		P.setBg_shifter_attrib_lo((char) ((bg_shifter_attrib_lo & 0xFF00) | ((bg_next_tile_attr & 0x01) != 0 ? 0xFF : 0x00)));
-		P.setBg_shifter_attrib_hi((char) ((bg_shifter_attrib_hi & 0xFF00) | ((bg_next_tile_attr & 0x10) != 0 ? 0xFF : 0x00)));
+		P.setBg_shifter_attrib_lo((char) ((bg_shifter_attrib_lo & 0xFF00) | ((bg_next_tile_attr & 0x01) != 0 ? 0x00FF : 0x0000)));
+		P.setBg_shifter_attrib_hi((char) ((bg_shifter_attrib_hi & 0xFF00) | ((bg_next_tile_attr & 0x10) != 0 ? 0x00FF : 0x0000)));
 	}
-	
+	 
 	public void UpdateShifters() {
 		//Collego all'IOManager e alla PPU
 		IOM = IOManager.getInstance();
@@ -250,15 +250,15 @@ public class PPURenderer {
 				char coarse_y = (char)((vram & 0x03E0) >> 5);								//Prelevo coarse_y 
 				char coarse_x = (char)(vram & 0x001F);										//Prelevo coarse_x
 				
-				byte bg_next_tile_attrib = P.PPURead((char) (0x23C0 | ((char)(nametable_y) << 11)	//Fetch del prossimo background tile attribute
-																	| ((char)(nametable_x) << 10) 
-																	| ((coarse_y >> 2) << 3)
-																	| (coarse_x >> 2))); 
+				byte bg_next_tile_attrib = P.PPURead((char) (0x23C0 | ((nametable_y) << 11)	//Fetch del prossimo background tile attribute
+																	| ((nametable_x) << 10) 
+																	| (((int)coarse_y >> 2) << 3)
+																	| ((int)coarse_x >> 2))); 
 				
 				if ((coarse_y & 0x02) != 0)
-					bg_next_tile_attrib = (byte)((char)bg_next_tile_attrib >> 4);
+					bg_next_tile_attrib = (byte)(Byte.toUnsignedInt(bg_next_tile_attrib) >> 4);
 				if ((coarse_x & 0x02) != 0) 
-					bg_next_tile_attrib = (byte)((char)bg_next_tile_attrib >> 2);
+					bg_next_tile_attrib = (byte)(Byte.toUnsignedInt(bg_next_tile_attrib) >> 2);
 				
 				bg_next_tile_attrib &= 0x03;
 				
@@ -272,8 +272,8 @@ public class PPURenderer {
 				char fine_y = (char)((vram & 0x7000) >> 12);									//Prelev fine_y 
 				
 				Byte bg_next_tile_lsb = P.PPURead((char)((pattern_background << 12) 			// Fetch del prossimo background tile LSB bit plane dalla pattern memory
-	                       						+ ((char)(ppu_bg_next_tile_id << 4)) 
-	                       						+ (fine_y) + 0));
+	                       						+ (Byte.toUnsignedInt(ppu_bg_next_tile_id) << 4)
+	                       						+ ((int)fine_y) + 0));
 				
 				P.setBg_next_tile_lsb(bg_next_tile_lsb);										//Lo inserisco nella PPU
 				break;
@@ -285,8 +285,8 @@ public class PPURenderer {
 				char fine_y = (char)((vram & 0x7000) >> 12);									//Prelev fine_y 
 				
 				Byte bg_next_tile_msb = P.PPURead((char)((pattern_background << 12) 			// Fetch del prossimo background tile MSB bit plane dalla pattern memory
-												+ ((char)(ppu_bg_next_tile_id << 4)) 
-												+ (fine_y) + 8));
+												+ (Byte.toUnsignedInt(ppu_bg_next_tile_id) << 4) 
+												+ (int)(fine_y) + 8));
 				
 				P.setBg_next_tile_msb(bg_next_tile_msb);										//Lo inserisco nella PPU
 				break;

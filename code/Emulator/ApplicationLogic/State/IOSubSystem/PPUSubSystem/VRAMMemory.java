@@ -16,7 +16,7 @@ public class VRAMMemory {
 		for(int i = 0; i < (int)0x400; i++)
 			NameTable2.add((byte)0x00);
 	};
-	
+	 
 	//Punto di ingresso globale all'istanza
 	public static VRAMMemory getInstance(){
 		if(VRAMMemory==null) {

@@ -168,7 +168,6 @@ public class IOManager {
 				if(PictureProcessingUnit.getAddress_latch() == 0) {
 					
 					// nello scroll legister, se siamo abilitati a farlo, gestiamo i valori di fine e coarse x
-					
 					temp_fine_x = PictureProcessingUnit.getFine_x();
 					temp_fine_x = (byte)(data & 0x07);
 					
@@ -201,7 +200,7 @@ public class IOManager {
 				if (PictureProcessingUnit.getAddress_latch() == 0)
 				{			
 					tram_addr = PictureProcessingUnit.getTram_addr();
-					tram_addr = (char)((char)((char)(data & 0x3F) << 8) | (tram_addr & 0x00FF));
+					tram_addr = (char)( ((int)(data & 0x3F) << 8) | (int)(tram_addr & 0x00FF) );
 					PictureProcessingUnit.setTram_addr(tram_addr);
 					PictureProcessingUnit.setAddress_latch(1);
 				}
@@ -230,7 +229,6 @@ public class IOManager {
 				{
 					vram_addr += 1;
 				}
-				
 				PictureProcessingUnit.setVram_addr(vram_addr);
 				
 				break;

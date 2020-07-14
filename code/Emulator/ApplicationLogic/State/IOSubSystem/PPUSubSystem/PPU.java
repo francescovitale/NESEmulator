@@ -218,7 +218,6 @@ public class PPU {
 					// Bisogna impostare una richiesta di interruzione. E' necessaria la chiamata alla CPU.
 					OU = OperativeUnit.getInstance();
 					OU.setNMIRequest(true);
-					//OU.Execute("NMI");
 				}
 			}
 		}
@@ -233,6 +232,7 @@ public class PPU {
             {
             	temp.setX_coord(temp.getX_coord()-1);
                 returnedPixels.add(temp);
+                //DEBUG
                 //System.out.println("Coord:" + returnedPixels.get(returnedPixels.size()-1).getX_coord() + " " + returnedPixels.get(returnedPixels.size()-1).getY_coord());
                 
             }
@@ -241,6 +241,7 @@ public class PPU {
                 temp.setX_coord(temp.getX_coord()-1);
                 returnedPixels.add(temp);
                 PState.refreshPPUState(returnedPixels);
+                //DEBUG
                 //System.out.println("Coord:" + returnedPixels.get(returnedPixels.size()-1).getX_coord() + " " + returnedPixels.get(returnedPixels.size()-1).getY_coord());
                 returnedPixels.clear();
             }
@@ -275,7 +276,7 @@ public class PPU {
 	public char getVram_addr() {
 		return vram_addr;
 	}
-	
+	 
 	private Pixel extractPixel() {
 		IOM = IOManager.getInstance();
 		Byte bg_pattern_info = 0x00;  
@@ -296,16 +297,23 @@ public class PPU {
 				p0_pattern_info = 0x01;
 			else
 				p0_pattern_info = 0x00;
+			
+			//DEBUG
 			//System.out.println("p0_pattern_info: "+p0_pattern_info);
+			
 			temp = (bg_shifter_pattern_hi & bit_mux) > 0;
 			if(temp == true)
 				p1_pattern_info = 0x01;
 			else
 				p1_pattern_info = 0x00;
+			
+			//DEBUG
 			//System.out.println("p1_pattern_info: "+p1_pattern_info);
 
 			// Combine to form pixel index
 			bg_pattern_info = (byte) ((p1_pattern_info << 1) | p0_pattern_info);
+			
+			//DEBUG
 			//System.out.println("bg_pattern_info: "+bg_pattern_info);
 			
 
@@ -316,33 +324,45 @@ public class PPU {
 				p0_palette_info = 0x01;
 			else
 				p0_palette_info = 0x00;
+			
+			//DEBUG
 			//System.out.println("p0_palette_info: "+p0_palette_info);
+			
 			temp = (bg_shifter_attrib_hi & bit_mux) > 0;
 			if(temp == true)
 				p1_palette_info = 0x01;
 			else
 				p1_palette_info = 0x00;
-			//System.out.println("p1_palette_info: "+p1_palette_info);
-			bg_palette_info = (byte) ((p1_palette_info << 1) | p0_palette_info);
-			/*System.out.println("bg_palette_info: "+bg_palette_info);
 			
+			//DEBUG
+			//System.out.println("p1_palette_info: "+p1_palette_info);
+			
+			bg_palette_info = (byte) ((p1_palette_info << 1) | p0_palette_info);
+			
+			//DEBUG
+			/*System.out.println("bg_palette_info: "+bg_palette_info);
 			System.out.println("bg_palette_info << 2: "+ (bg_palette_info << 2));
 			System.out.println("(bg_palette_info << 2)+bg_pattern_info: "+((bg_palette_info << 2)+bg_pattern_info));
 			System.out.println("0x3F00 + (bg_palette_info << 2) + bg_pattern_info: "+ (0x3F00+(bg_palette_info << 2)+bg_pattern_info));*/
 		}
 		
-		hex_color = getColourFromPaletteRam(bg_palette_info, bg_pattern_info); // Il colore tratto; servirà a indirizzare NESPalette
+		hex_color = getColourFromPaletteRam(bg_palette_info, bg_pattern_info); // Il colore tratto servirà a indirizzare NESPalette
 		Integer intTemp = Byte.toUnsignedInt(hex_color);
 		String stringTemp = Integer.toHexString(intTemp);
+		
+		//DEBUG
 		//System.out.println("Colore palette: "+stringTemp);
 		//System.out.println("Colore in esadecimale: "+ NESPalette.get(hex_color));
 		//System.out.println("Colore palette: "+hex_color);
+		
 		return new Pixel(cycles,scanline,stringTemp,NESPalette.get(hex_color));
 	}
 	
 	
 	Byte getColourFromPaletteRam(Byte Palette, Byte Pixel) {
 		return PPURead((char)(0x3F00 + ((Byte.toUnsignedInt(Palette) << 2) + Byte.toUnsignedInt(Pixel))));
+		
+		//DEBUG
 		//return (byte)0x2c; // STUB
 	}
 	

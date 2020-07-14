@@ -77,7 +77,6 @@ public class PPUBus {
 			if (addr == 0x0014) addr = 0x0004;
 			if (addr == 0x0018) addr = 0x0008;
 			if (addr == 0x001C) addr = 0x000C;
-			//data = (byte)(Palette.read(addr) );
 			// Chiamata di comodo verso IOManager
 			Byte mask = IOManager.getInstance().getPPUMask();
 			// È necessario estrarre il bit grayscale dal mask register
@@ -124,7 +123,7 @@ public class PPUBus {
 					VRAM.write(addr &= 0x03FF, data, 2);
 			}
 			else if (Cart.mirror.equals(MIRROR.HORIZONTAL))
-			{
+			{ 
 				// Horizontal
 				if (addr >= 0x0000 && addr <= 0x03FF)
 					VRAM.write(addr &= 0x03FF, data, 1);
