@@ -7,7 +7,7 @@ public class Bus {
 
 	Memory Ram;										//Collegamento con RAM
 	Cartridge Crtg;									//Collegamento con il Cartridge
-	IOManager IOM;
+	IOManager IOM;									//Collegamento con il manager dell' IO
 	private volatile static Bus BUS = null;			//Singleton
 
 	//Costruttore privato
@@ -17,8 +17,6 @@ public class Bus {
 		Ram = Memory.getInstance();
 		//Collegamento con la Cartridge
 		Crtg = Cartridge.getInstance();
-		 
-		//IOM = IOManager.getInstance();
 	}
 
 	//Punto di ingresso globale all'istanza
@@ -41,6 +39,7 @@ public class Bus {
 		Byte data = null;
 		IOM = IOManager.getInstance();
 		
+		//Provo a leggere dalla Cartridge come prima cosa
 		if (Crtg.Read(Address))
 		{
 
@@ -72,7 +71,7 @@ public class Bus {
 			}*/
 			
 		}
-		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio leggere dalla PPU
+		//Se l'address è compreso tra 0x2000 e 0xFFFF voglio leggere da un dispositivo di IO
 		else {
 			data = IOM.read((char)(Address),false);	//Faccio il mirroring della PPU (& 0x0007)
 			
@@ -95,7 +94,7 @@ public class Bus {
 	}
 
 	public void write(char Address, Byte Data) {
-		//Se l'address è compreso tra 0x0000 e 0x1FFF voglio scrivere in RAM
+		//Provo a scrivere nella Cartridge come prima cosa
 		if (Crtg.Write(Address, Data))
 		{
 			//DEBUG
@@ -110,6 +109,7 @@ public class Bus {
 			// Cartridge Address Range
 			
 		}
+		//Se l'address è compreso tra 0x0000 e 0x1FFF voglio scrivere in RAM
 		else if( (Address >= 0x0000) &&  (Address <= 0x1FFF)) {
 			
 			//DEBUG
@@ -124,7 +124,7 @@ public class Bus {
 			
 			Ram.write((char)(Address & 0x07FF), Data);  //Faccio il mirroring della RAM (& 0x07FF)
 		}
-		//Se l'address è compreso tra 0x2000 e 0x3FFF voglio scrivere sulla PPU
+		//Se l'address è compreso tra 0x2000 e 0xFFFF voglio scrivere su dispositivo di IO
 		else{
 			
 			//DEBUG

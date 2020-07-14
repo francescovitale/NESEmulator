@@ -71,9 +71,8 @@ public class EmulatorFacade {
 	}
 
 	
-	//Recupero lo stato attuale dell'architettura
-	/*public State getState() {
-		
-	}*/
+	public void setkeys(Byte keys) {
+		SF.setkeys(keys);
+	}
 
 }

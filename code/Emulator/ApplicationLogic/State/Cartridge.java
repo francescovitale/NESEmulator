@@ -18,9 +18,6 @@ public class Cartridge {
 	//La memoria è divisa in program e character entrambi di grandezza che dipende dalla specifica Cartridge
 	private ArrayList<Byte> vPRGMemory;				//Program
 	private ArrayList<Byte> vCHRMemory;				//Character
-	private ArrayList<Byte> ROM;					//ROM completa
-	
-	private PPUBus PBus;
 	
 	private Mapper pMapper;
 	
@@ -40,13 +37,11 @@ public class Cartridge {
 	private Cartridge() {
 		vPRGMemory = new ArrayList<Byte>();
 		vCHRMemory = new ArrayList<Byte>();
-		ROM = new ArrayList<Byte>();
 		nMapperID = 0;
 		nPRGBanks = 0;
 		nCHRBanks = 0;
 		mirror = MIRROR.HORIZONTAL;
 		bImageValid = false;
-		//PBus = PPUBus.getInstance();
 	}
 
 	//Punto di ingresso globale all'istanza
@@ -78,7 +73,7 @@ public class Cartridge {
 	//DA MODIFICARE
 	public boolean loadData(ArrayList<Byte> Programma) {
 		//Prendo la ROM della cartuccia inserita
-		ROM = new ArrayList<Byte>(Programma);
+		ArrayList<Byte> ROM = new ArrayList<Byte>(Programma);
 		
 		// iNES Format Header
 		char[] name = new char[2];
@@ -166,7 +161,6 @@ public class Cartridge {
 			case 0: 
 				pMapper = Mapper.getInstance("Mapper_000"); 
 				pMapper.setAttributes(nPRGBanks, nCHRBanks);
-				//System.out.println("\n" + pMapper.getClass().getName());
 				break;
 		}
 		
@@ -177,7 +171,7 @@ public class Cartridge {
 		
 	}
 	
-	//Per Connettere la Cartridge sul BUS principale
+	//Lettura della CPU sui banchi PROGRAM
 	public boolean Read(char addr)
 	{
 		char mapped_addr = 0x0000;
@@ -192,7 +186,7 @@ public class Cartridge {
 		
 	}
 
-	//Per Connettere la Cartridge sul BUS principale
+	//Scrittura della PPU sui banchi PROGRAM
 	public boolean Write(char addr, Byte data)
 	{
 		Character mapped_addr = 0x0000;
@@ -206,7 +200,7 @@ public class Cartridge {
 			return false;
 	}
 
-	//Per Connettere la Cartridge sul BUS della PPU
+	//Lettura della PPU sui banchi CHARACTER
 	public boolean ppuRead(char addr)
 	{
 		Character mapped_addr = 0x0000;
@@ -220,7 +214,7 @@ public class Cartridge {
 			return false;
 	}
 
-	//Per Connettere la Cartridge sul BUS della PPU
+	//Scrittura della PPU sui banchi CHARACTER
 	public boolean ppuWrite(char addr, Byte data)
 	{
 		Character mapped_addr = 0x0000;
@@ -243,9 +237,6 @@ public class Cartridge {
 
 	public void dumpCartridge() {
 		
-		for(int i = 0; i < ROM.size(); i++) {
-			System.out.print(Integer.toHexString(ROM.get(i)) + " ");
-		}
 		System.out.println("\n");
 		for(int i = 0; i < vPRGMemory.size(); i++) {
 			System.out.print(vPRGMemory.get(i) + " ");

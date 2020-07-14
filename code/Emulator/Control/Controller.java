@@ -66,4 +66,7 @@ public class Controller {
 		return Emu;
 	}
 
+	public void setkeys(Byte keys) {
+		Emu.setkeys(keys);
+	}
 }

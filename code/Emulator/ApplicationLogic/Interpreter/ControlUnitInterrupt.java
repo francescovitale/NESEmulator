@@ -18,12 +18,11 @@ public class ControlUnitInterrupt extends ControlUnitState {
 
 	@Override
 	public void execCycle() {
-		//System.out.println("we");
 		Boolean NMIRequest_temp;
 		Boolean IRQRequest_temp;
 		StateFacade Stf = new StateFacade();
-		
 		NMIRequest_temp = Stf.getNMIRequest();
+		//Verifico se c'è una richiesta di interruzione non mascherabile
 		if(NMIRequest_temp == true)
 		{
 			Stf.setNMIRequest(false);
@@ -32,6 +31,7 @@ public class ControlUnitInterrupt extends ControlUnitState {
 		}
 		else {
 			IRQRequest_temp = Stf.getIRQRequest();
+			//Verifico se c'è una richiesta di interruzione 
 			if(IRQRequest_temp == true) {
 				Stf.setIRQRequest(false);
 				Stf.Execute("IRQ");

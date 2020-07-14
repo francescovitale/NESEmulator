@@ -36,20 +36,17 @@ public class ControlUnitExecute extends ControlUnitState {
 		
 		SF.setFlag("U", true);
 		
+		//Una volta finita l'istruzione della CPU controllo se è stata richiesta un interruzione 
 		NMIRequest_temp = SF.getNMIRequest();
 		IRQRequest_temp = SF.getIRQRequest();
 		
 		if(NMIRequest_temp == true || IRQRequest_temp == true) {
 			/*DEBUG*/
 			//System.out.println("Servo la richiesta di interruzione");
-			//SF.Execute("NMI");
 			changeState(CU, ControlUnitState.getInstance("Interrupt"));
 		}
 		else
 			changeState(CU, ControlUnitState.getInstance("Fetch"));
-		
-	
-		
 		
 	}
 

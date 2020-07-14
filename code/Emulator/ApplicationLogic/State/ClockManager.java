@@ -29,8 +29,11 @@ public class ClockManager {
  	}
  	 
  	public Boolean clock() {
-
+ 		
+ 		//Clock della PPU
  		P.clock();
+ 		
+ 		//Se sono passati tre clock, toccherà alla CPU
  		if(ElapsedClockTicks % 3 == 0)
  		{
  			ElapsedClockTicks++;

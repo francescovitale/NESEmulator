@@ -28,16 +28,20 @@ public class ControlUnitFetch extends ControlUnitState {
 		//Aggiorno lo stato da far visualizzare
 		SF.refreshState();
 		SF.setFlag("U", true);
-		//Decremento i cicli finché non arrivo a 0
+		
 		boolean stop=false;
-		boolean CPUTurn; 
-		while (stop == false) {																	
+		boolean CPUTurn;
+		//Finché la CPU continua ad avere cicli 
+		while (stop == false) {					
+			//Clock della PPU e verifico se sono passati 3 clock della PPU
 			CPUTurn = SF.clock();
 			
+			//Se sono passati tre clock ne faccio passare uno della CPU
 			if(CPUTurn == true) {
 				stop = clock();	
 			}
 			
+			//Se la CPU non ha eseguito bisogna verificare comunque se si è verificata una richiesta di interrupt
 			if(stop == false) {
 				NMIRequest_temp = SF.getNMIRequest();
 				IRQRequest_temp = SF.getIRQRequest();
@@ -45,14 +49,15 @@ public class ControlUnitFetch extends ControlUnitState {
 				if(NMIRequest_temp == true || IRQRequest_temp == true) {
 					/*DEBUG*/
 					//System.out.println("Servo la richiesta di interruzione");
-					//SF.Execute("NMI");
 					changeState(CU, ControlUnitState.getInstance("Interrupt"));
 				}
 			}
 		}
-		//if(CU.getInstructionRegister().byteValue() == (byte)0xFF)								//Condizione di terminazione
+		//DEBUG	/
+		//Possibile Condizione di terminazione
+		//if(CU.getInstructionRegister().byteValue() == (byte)0xFF)								
 			//CU.setInstructionRegister((byte)0xF);
-	//	else {	
+		//else {	
 		
 			/* DEBUG */
 			FileSystemManager FSM = FileSystemManager.getInstance();
@@ -68,14 +73,14 @@ public class ControlUnitFetch extends ControlUnitState {
 			
 			Byte opfetched = SF.fetch().byteValue();
 			/*
+			//DEBUG					** SCRITTURA LOG DI ESECUZIONE **
 			FSM.writeLogData(Integer.toHexString(Byte.toUnsignedInt(opfetched)) + " "+Integer.toHexString(PC)+ " " + " A: "+ Integer.toHexString(A) + " X: "+ Integer.toHexString(X) + " Y: "+ Integer.toHexString(Y) + 
 			" SP: "+ Integer.toHexString(SP) + " " + "SR: " + Integer.toHexString(SR) + " ");
-			
-			//DEBUG
 			*/
 
 			CU.setInstructionRegister(opfetched);				//Fetcho l'istruzione e la salvo nell'IR
-			SF.increasePC();
+			SF.increasePC();									//Incremento il PC
+			
 			/*DEBUG*/
 			//System.out.println(Byte.toUnsignedInt(OU.getInstance().fetch()));									//Stampa DEBUG del codice operativo
 			//ControlUnit.getInstance().setInstructionRegister((byte)0xD);

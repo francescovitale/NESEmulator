@@ -49,25 +49,25 @@ public class PPUBus {
 				
 				// Vertical
 				if (addr >= 0x0000 && addr <= 0x03FF)
-					data = VRAM.read(addr &= 0x03FF, 1);
+					data = VRAM.read((char)(addr & 0x03FF), 1);
 				if (addr >= 0x0400 && addr <= 0x07FF)
-					data = VRAM.read(addr &= 0x03FF, 2);
+					data = VRAM.read((char)(addr & 0x03FF), 2);
 				if (addr >= 0x0800 && addr <= 0x0BFF)
-					data = VRAM.read(addr &= 0x03FF,1);
+					data = VRAM.read((char)(addr & 0x03FF),1);
 				if (addr >= 0x0C00 && addr <= 0x0FFF)
-					data = VRAM.read(addr &= 0x03FF,2);
+					data = VRAM.read((char)(addr & 0x03FF),2);
 			}
 			else if (Cart.mirror.equals(MIRROR.HORIZONTAL))
 			{
 				// Horizontal
 				if (addr >= 0x0000 && addr <= 0x03FF)
-					data = VRAM.read(addr &= 0x03FF, 1);
+					data = VRAM.read((char)(addr & 0x03FF), 1);
 				if (addr >= 0x0400 && addr <= 0x07FF)
-					data = VRAM.read(addr &= 0x03FF,1);
+					data = VRAM.read((char)(addr & 0x03FF),1);
 				if (addr >= 0x0800 && addr <= 0x0BFF)
-					data = VRAM.read(addr &= 0x03FF,2);
+					data = VRAM.read((char)(addr & 0x03FF),2);
 				if (addr >= 0x0C00 && addr <= 0x0FFF)
-					data = VRAM.read(addr &= 0x03FF,2);
+					data = VRAM.read((char)(addr & 0x03FF),2);
 			}
 		}
 		else if (addr >= 0x3F00 && addr <= 0x3FFF)
@@ -104,7 +104,6 @@ public class PPUBus {
 		{
 			
 		}
-		
 		else if (addr >= 0x2000 && addr <= 0x3EFF)
 		{
 			addr &= 0x0FFF;
@@ -114,25 +113,25 @@ public class PPUBus {
 				
 				// Vertical
 				if (addr >= 0x0000 && addr <= 0x03FF)
-					VRAM.write(addr &= 0x03FF, data, 1);
+					VRAM.write((char)(addr & 0x03FF), data, 1);
 				if (addr >= 0x0400 && addr <= 0x07FF)
-					VRAM.write(addr &= 0x03FF, data, 2);
+					VRAM.write((char)(addr & 0x03FF), data, 2);
 				if (addr >= 0x0800 && addr <= 0x0BFF)
-					VRAM.write(addr &= 0x03FF, data, 1);
+					VRAM.write((char)(addr & 0x03FF), data, 1);
 				if (addr >= 0x0C00 && addr <= 0x0FFF)
-					VRAM.write(addr &= 0x03FF, data, 2);
+					VRAM.write((char)(addr & 0x03FF), data, 2);
 			}
 			else if (Cart.mirror.equals(MIRROR.HORIZONTAL))
 			{ 
 				// Horizontal
 				if (addr >= 0x0000 && addr <= 0x03FF)
-					VRAM.write(addr &= 0x03FF, data, 1);
+					VRAM.write((char)(addr & 0x03FF), data, 1);
 				if (addr >= 0x0400 && addr <= 0x07FF)
-					VRAM.write(addr &= 0x03FF, data, 1);
+					VRAM.write((char)(addr & 0x03FF), data, 1);
 				if (addr >= 0x0800 && addr <= 0x0BFF)
-					VRAM.write(addr &= 0x03FF, data, 2);
+					VRAM.write((char)(addr & 0x03FF), data, 2);
 				if (addr >= 0x0C00 && addr <= 0x0FFF)
-					VRAM.write(addr &= 0x03FF, data, 2);
+					VRAM.write((char)(addr & 0x03FF), data, 2);
 			}
 		}
 		else if (addr >= 0x3F00 && addr <= 0x3FFF)

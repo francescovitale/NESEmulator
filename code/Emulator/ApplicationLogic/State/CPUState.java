@@ -3,9 +3,9 @@ package Emulator.ApplicationLogic.State;
 public class CPUState {
 	//Attributi
 	private volatile static CPUState CPUState = null;			//Singleton
-	private Byte A;
-	private Byte X;
-	private Byte Y;
+	private Byte A;		//registro ACCUMULATORE
+	private Byte X;		//X REGISTER
+	private Byte Y;		//Y REGISTER
 	private Byte SP;	//STACK POINTER
 	private char PC;	//PROGRAM COUNTER
 	private Byte SR;	//STATUS REGISTER

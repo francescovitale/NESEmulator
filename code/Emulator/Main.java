@@ -18,9 +18,10 @@ public class Main {
 		
 		//C.DumpCartridge();
 		//C.DumpMemory();
-		int a = (byte)0xFF;
-		a= a+1;
-		System.out.println(a);
+		Byte data = (byte)0x80;
+		System.out.println(Integer.toBinaryString(data));
+		data = (byte)((data >> 3) & 0x1F);	
+		System.out.println(Integer.toBinaryString(data));
 		
 		
 	}

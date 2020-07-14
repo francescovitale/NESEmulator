@@ -11,6 +11,10 @@ import Emulator.ApplicationLogic.State.IOSubSystem.IOManager;
 
 
 public class PPU {
+	//MACRO
+	private static final int VERTICAL_BLANK = 7;
+	private static final int ENABLE_NMI = 7;
+	private static final int RENDER_BACKGROUND = 3;
 	
 	private ArrayList<String> NESPalette;
 	private ArrayList<Pixel> returnedPixels;
@@ -200,19 +204,24 @@ public class PPU {
 
 	public void clock() {
 		if(scanline >= -1 && scanline < 240) {
+			//Vertical blank period - Render dello schermo
 			PPUR.Render(scanline, cycles);
 		}
 			
-		if(scanline == 240) {}
+		if(scanline == 240) {
+			// Post Render Scanline, non bisogna fare nulla
+		}
 			
 		if(scanline >= 241 && scanline < 261) {
+			//Superato lo schermo
 			if(scanline == 241 && cycles == 1) {
+				//Setto ad 1 il vertical blank
 				Byte status = IOM.getPPUStatus();
-				status = ByteManager.setBit(7,1,status);
+				status = ByteManager.setBit(VERTICAL_BLANK,1,status);
 				IOM.setPPUStatus(status);
 				
 				Byte control = IOM.getPPUControl();
-				int enable_nmi = ByteManager.extractBit(7,control);
+				int enable_nmi = ByteManager.extractBit(ENABLE_NMI,control);
 				OperativeUnit OU;
 				if(enable_nmi == 1) {
 					// Bisogna impostare una richiesta di interruzione. E' necessaria la chiamata alla CPU.
@@ -221,11 +230,9 @@ public class PPU {
 				}
 			}
 		}
-			
+		
+		//Estraggo il pixel da stampare a schermo 
 		Pixel temp = extractPixel();
-		/*Random random = new Random();
-		int value = random.nextInt();
-		if(value % 2 == 0) temp.setRgb_info("#000000");*/
 		
 		if(scanline == 0) {
             if(cycles % 3 != 0)
@@ -279,12 +286,12 @@ public class PPU {
 	 
 	private Pixel extractPixel() {
 		IOM = IOManager.getInstance();
-		Byte bg_pattern_info = 0x00;  
-		Byte bg_palette_info = 0x00; 
-		Byte hex_color;
+		Byte bg_pattern_info = 0x00; //2-BIT per il pixel da renderizzare
+		Byte bg_palette_info = 0x00; //3-BIT per il colore della palette
+		Byte hex_color = 0x00;
 		
 		Byte mask = IOM.getPPUMask();
-		int render_background = ByteManager.extractBit(3,mask);
+		int render_background = ByteManager.extractBit(RENDER_BACKGROUND,mask);
 		
 		if (render_background == 1)
 		{
@@ -311,7 +318,7 @@ public class PPU {
 			//System.out.println("p1_pattern_info: "+p1_pattern_info);
 
 			// Combine to form pixel index
-			bg_pattern_info = (byte) ((p1_pattern_info << 1) | p0_pattern_info);
+			bg_pattern_info = (byte) ((Byte.toUnsignedInt(p1_pattern_info) << 1) | Byte.toUnsignedInt(p0_pattern_info));
 			
 			//DEBUG
 			//System.out.println("bg_pattern_info: "+bg_pattern_info);
@@ -337,7 +344,7 @@ public class PPU {
 			//DEBUG
 			//System.out.println("p1_palette_info: "+p1_palette_info);
 			
-			bg_palette_info = (byte) ((p1_palette_info << 1) | p0_palette_info);
+			bg_palette_info = (byte) ((Byte.toUnsignedInt(p1_palette_info)<< 1) | Byte.toUnsignedInt(p0_palette_info));
 			
 			//DEBUG
 			/*System.out.println("bg_palette_info: "+bg_palette_info);

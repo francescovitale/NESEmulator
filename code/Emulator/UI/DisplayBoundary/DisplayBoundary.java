@@ -24,6 +24,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class DisplayBoundary extends JFrame {
 
@@ -34,6 +36,8 @@ public class DisplayBoundary extends JFrame {
 	private JPanel contentPane;
 	public Screen NESDisplay;
 	private UIConfiguration Configuration;
+	private Controller controller;
+	private Byte keys;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -121,6 +125,7 @@ public class DisplayBoundary extends JFrame {
 		CPUFrame = new CPUFrame();
 		PPUFrame = new PPUFrame();
 		MemFrame = new MemoryFrame();
+		controller = new Controller();
 		
 	}
 
@@ -157,6 +162,7 @@ public class DisplayBoundary extends JFrame {
 	
 	public void UpdateDisplayScreen(ReturnedState instance) {
 		NESDisplay.RenderScreen(instance);
+
 	}
 
 	private void UpdateCPUState(ReturnedState instance) {
@@ -167,6 +173,60 @@ public class DisplayBoundary extends JFrame {
 		getCPUFrame().RegPCLabel.setText("Reg PC : " + Integer.toHexString(instance.getCS().getPC()));
 		getCPUFrame().RegSRLabel.setText("Reg SR : " + instance.getCS().getSR());
 		
+	}
+	
+	public void getKey() {
+		this.setFocusable(true);
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch(e.getKeyCode()) {
+				case 88 : 
+					keys = (byte)0x80;
+					//System.out.println("X");
+					break;
+				case 90 : 
+					keys = (byte)0x40;
+					//System.out.println("Z");
+					break;
+				case 65 : 
+					keys = (byte)0x20;
+					//System.out.println("A");
+					break;
+				case 83 : 
+					keys = (byte)0x10;
+					//System.out.println("S");
+					break;
+				case 38 : 
+					keys = (byte)0x08;
+					//System.out.println("UP");
+					break;
+				case 40 : 
+					keys = (byte)0x04;
+					//System.out.println("DOWN");
+					break;
+				case 37 : 
+					keys = (byte)0x02;
+					//System.out.println("LEFT");
+					break;
+				case 39 : 
+					keys = (byte)0x01;
+					//System.out.println("RIGHT");
+					break;
+				default:
+					keys = (byte)0x00;
+					break;
+				}
+				
+				controller.setkeys(keys);	
+			}	
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				controller.setkeys((byte)0x00);	
+			}	
+		});
 	}
 	
 	public void UpdateMemState(ReturnedState instance) {

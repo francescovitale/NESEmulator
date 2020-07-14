@@ -28,6 +28,8 @@ import javax.swing.ListSelectionModel;
 
 import Emulator.Control.*;
 import Emulator.UI.DisplayBoundary.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class EmulatorBoundary extends JFrame {
 
@@ -68,7 +70,7 @@ public class EmulatorBoundary extends JFrame {
 
 	
 	public EmulatorBoundary() {
-		
+
 		initComponents();
 		initList();
 		initMenu();
@@ -321,6 +323,8 @@ public class EmulatorBoundary extends JFrame {
 			@Override
 			protected Void doInBackground() throws Exception {
 				int i = 0;
+				int j = 0;
+				
 				while(i == 0) {
 					/*synchronized(Controller.getEmulatorFacade().getSF().getState().getInstance()) {
 						while(Controller.getState() == false) {
@@ -335,8 +339,11 @@ public class EmulatorBoundary extends JFrame {
 						Controller.getState();
 						Display.UpdateDisplayScreen(Controller.getReturnedState());
 						publish((Controller.getReturnedState()));
-
-
+						
+						while(j < 2) {
+							j++;
+							Display.getKey();	
+						}
 				}
 				return null;
 			}

@@ -3,6 +3,7 @@ package Emulator.ApplicationLogic.State;
 import java.util.ArrayList;
 
 import Emulator.ApplicationLogic.Program;
+import Emulator.ApplicationLogic.State.IOSubSystem.Joypad;
 import Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem.PPU;
 
 public class StateFacade {
@@ -16,7 +17,7 @@ public class StateFacade {
 		P = PPU.getInstance();
 		OU = OperativeUnit.getInstance();	//Recupero l'istanza dell'unità operativa
 		Crtg = Cartridge.getInstance();		//Recupero l'istanza della Cartridge
-		S = State.getInstance();				//Recupero l'istenza di State
+		S = State.getInstance();			//Recupero l'istenza di State
 	}
 	
 	//Inizializzo il programma in memoria
@@ -90,5 +91,9 @@ public class StateFacade {
 	
 	public void setFlag(String bit, boolean value) {
 		OU.setFlag(bit, value);
+	}
+	
+	public void setkeys(Byte keys) {
+		Joypad.getInstance().setController(keys);	
 	}
 }
