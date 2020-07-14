@@ -5,13 +5,7 @@ import Emulator.ApplicationLogic.Interpreter.ControlUnit;
 import Emulator.TechnicalServices.FileSystemAccess.FileSystemManager;
 
 public class OperativeUnit {
-		/*public static void main(String args[]) {
-		
-			OperativeUnit.getInstance().addressingMode("prova");
-			
-		}*/
-
-	private volatile static OperativeUnit UO = null;//Singleton
+	private volatile static OperativeUnit UO = null;				//Singleton
 	private static final Instruction[] MicroRom = new Instruction[256];
 	private Bus BusOU;
 	
@@ -41,7 +35,7 @@ public class OperativeUnit {
 	private OperativeUnit() {
 		
 		//DEBUG
-		FSM.setPath("C:\\Users\\aceep\\eclipse-workspace\\NES\\src\\Emulator\\Log\\log.txt");
+		FSM.setPath("C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\Log\\log.txt");
 		
 		//Collegamento con il Bus
 		BusOU = Bus.getInstance();
@@ -331,12 +325,16 @@ public class OperativeUnit {
 	}
 	
 	//Fetch dell'opcode 
-	public Byte fetch() {
+	public Byte fetch_pc() {
+		//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
+		return BusOU.read(PC_register);
+	}
+	
+	private Byte fetch() {
+		//Leggo tramite BUS il valore nell'indirizzo indicato dalll'inidirizzo assoluto
 		if(ControlUnit.getInstance().getCurrentInstruction().addressing_mode != "IMP")
 			fetched = BusOU.read(addr_abs);
-		
-		//System.out.println("addr_abs: " + Integer.toHexString(addr_abs));
-		return BusOU.read(PC_register);							//Leggo tramite BUS il valore nell'indirizzo indicato dal PC
+		return fetched;
 	}
 
 	//Scelta modo di indirizzamento
@@ -602,8 +600,8 @@ public class OperativeUnit {
 	private Boolean ZP0() {
 		//Leggo l'offset del program counter nella pagina 0
 		addr_abs = (char)Byte.toUnsignedInt(BusOU.read(PC_register));		//Vado a leggere il contenuto in memoria nella locazione indicata dal PC
-		PC_register++;												//Incremento il PC
-		addr_abs &= 0x00FF;											//L'Indirizzo a cui dovrò leggere è nella pagina 0
+		PC_register++;														//Incremento il PC
+		addr_abs &= 0x00FF;													//L'Indirizzo a cui dovrò leggere è nella pagina 0
 		return false;
 	}	
 	
@@ -611,63 +609,52 @@ public class OperativeUnit {
 	private Boolean ZPX() {
 		//Leggo l'offset del program counter + x nella pagina 0
 		addr_abs = (char)(Byte.toUnsignedInt(BusOU.read((char)(PC_register)).byteValue()) + Byte.toUnsignedInt(X_register));   //Vado a leggere il contenuto in memoria nella locazione PC+X
-		PC_register++;															    						//Incremento il PC
-		addr_abs &= 0x00FF;																					//L'Indirizzo a cui dovrò leggere è nella pagina 0
-		return false;
+		PC_register++;															    											//Incremento il PC
+		addr_abs &= 0x00FF;																										//L'Indirizzo a cui dovrò leggere è nella pagina 0
+		return false;	
 	}	
 	
 	//Zero Page with Y Offset
 	private Boolean ZPY() {
 		//Leggo l'offset del program counter +y nella pagina 0
-		addr_abs = (char)(Byte.toUnsignedInt(BusOU.read((char)(PC_register)).byteValue()) + Byte.toUnsignedInt(Y_register)); //Vado a leggere il contenuto in memoria nella locazione PC+Y
-		PC_register++;															 					      //Incremento il PC
-		addr_abs &= 0x00FF;															  					  //L'Indirizzo a cui dovrò leggere è nella pagina 0
+		addr_abs = (char)(Byte.toUnsignedInt(BusOU.read((char)(PC_register)).byteValue()) + Byte.toUnsignedInt(Y_register));  //Vado a leggere il contenuto in memoria nella locazione PC+Y
+		PC_register++;															 					   						  //Incremento il PC
+		addr_abs &= 0x00FF;															  										  //L'Indirizzo a cui dovrò leggere è nella pagina 0
 				
 		return false;
 	}	
 
 	//Relative
 	private Boolean REL() {
-		addr_rel = (char)BusOU.read(PC_register).byteValue();						//Leggo il primo byte in memoria	
+		addr_rel = (char)BusOU.read(PC_register).byteValue();							//Leggo il primo byte in memoria	
 		PC_register++;
-		if ((addr_rel & 0x0080) != 0)															//Se il valore del byte supera 0x80 
+		if ((addr_rel & 0x0080) != 0)													//Se il valore del byte supera 0x80 
 			addr_rel |= 0xFF00;															//Diventa negativo così da far rimanere il valore tra -128 e 127
 		return false;
 	}
 	
 	//Absolute 
 	private Boolean ABS() {
-		/*char lo = (char)BusOU.read(PC_register).byteValue();						//Leggo il primo byte in memoria	
+		Integer lo = Byte.toUnsignedInt(BusOU.read(PC_register));			//Leggo il primo byte in memoria	
 		PC_register++;														//Incremento il PC
-		char hi = (char)BusOU.read(PC_register).byteValue();						//Leggo il secondo byte in memoria
-		PC_register++;														//Incremento il PC
-		
-		System.out.println("ABS : " + Integer.toHexString((char)(hi << 8)) + " " + Integer.toHexString(lo));
-		addr_abs = (char)((hi << 8) | (lo & 0x00FF));									//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
-		System.out.println("ABS : " + Integer.toHexString(addr_abs));*/
-		
-		Integer lo = Byte.toUnsignedInt(BusOU.read(PC_register));	//Leggo il primo byte in memoria	
-		PC_register++;														//Incremento il PC
-		Integer hi = Byte.toUnsignedInt(BusOU.read(PC_register));						//Leggo il secondo byte in memoria
+		Integer hi = Byte.toUnsignedInt(BusOU.read(PC_register));			//Leggo il secondo byte in memoria
 		PC_register++;														//Incremento il PC
 		
-		//System.out.println("ABS : " + Integer.toHexString((char)(hi << 8)) + " " + Integer.toHexString(lo));
 		addr_abs = (char)((hi << 8) | lo );									//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
-		//System.out.println("ABS : " + Integer.toHexString(addr_abs));
 		return false;
 	}	
 	
 	//Absolute with X Offset
 	private Boolean ABX() {
-		Integer lo = Byte.toUnsignedInt(BusOU.read(PC_register));							//Leggo il primo byte in memoria	
+		Integer lo = Byte.toUnsignedInt(BusOU.read(PC_register));				//Leggo il primo byte in memoria	
 		PC_register++;															//Incremento il PC
-		Integer hi = Byte.toUnsignedInt(BusOU.read(PC_register));						//Leggo il secondo byte in memoria
+		Integer hi = Byte.toUnsignedInt(BusOU.read(PC_register));				//Leggo il secondo byte in memoria
 		PC_register++;															//Incremento il PC
 	
 		addr_abs = (char)((hi << 8) | lo);										//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
 		addr_abs += Byte.toUnsignedInt(X_register);								//Sommo il contenuto del registro x all'indirizzo
 
-		if ((addr_abs & 0xFF00) != (char)(hi << 8))									//Se ho cambiato pagina allora ci metterò più tempo ad eseguire l'istruzione
+		if ((addr_abs & 0xFF00) != (char)(hi << 8))								//Se ho cambiato pagina allora ci metterò più tempo ad eseguire l'istruzione
 			return true;
 		else
 			return false;
@@ -675,15 +662,15 @@ public class OperativeUnit {
 	
 	//Absolute with Y Offset
 	private Boolean ABY() {
-		Integer lo = Byte.toUnsignedInt(BusOU.read(PC_register));					//Leggo il primo byte in memoria	
+		Integer lo = Byte.toUnsignedInt(BusOU.read(PC_register));				//Leggo il primo byte in memoria	
 		PC_register++;															//Incremento il PC
-		Integer hi = Byte.toUnsignedInt(BusOU.read(PC_register));						//Leggo il secondo byte in memoria
+		Integer hi = Byte.toUnsignedInt(BusOU.read(PC_register));				//Leggo il secondo byte in memoria
 		PC_register++;															//Incremento il PC
 	
 		addr_abs = (char)((hi << 8) | lo);										//L'indirizzo assoluto è composto dal primo e dal secondo byte letti
 		addr_abs += Byte.toUnsignedInt(Y_register);								//Sommo il contenuto del registro y all'indirizzo
 
-		if ((addr_abs & 0xFF00) != (char)(hi << 8))									//Se ho cambiato pagina allora ci metterò più tempo ad eseguire l'istruzione
+		if ((addr_abs & 0xFF00) != (char)(hi << 8))								//Se ho cambiato pagina allora ci metterò più tempo ad eseguire l'istruzione
 			return true;
 		else
 			return false;
@@ -695,12 +682,12 @@ public class OperativeUnit {
 		Integer PC = (int)PC_register;
 		
 		Integer ptr_lo = Byte.toUnsignedInt(BusOU.read((char)(int)PC));				//Leggo il primo byte in memoria	
-		PC++;											//Incremento il PC
+		PC++;																		//Incremento il PC
 		Integer ptr_hi = Byte.toUnsignedInt(BusOU.read((char)(int)PC));				//Leggo il secondo byte in memoria
-		PC++;													//Incremento il PC
+		PC++;																		//Incremento il PC
 
 
-		Integer ptr = (ptr_hi << 8) | ptr_lo;								//Costruisco un puntatore per andare a prendere il vero e proprio indirizzo
+		Integer ptr = (ptr_hi << 8) | ptr_lo;									//Costruisco un puntatore per andare a prendere il vero e proprio indirizzo
 
 		if (ptr_lo == 0x00FF) 													// Simula un bug hardware (Se il +1 causa un cambiamento di pagina in realtà la pagina non viene cambiata)
 		{
@@ -748,7 +735,7 @@ public class OperativeUnit {
 		Integer PC = (int)PC_register;
 		PC++;
 		
-		Integer lo = Byte.toUnsignedInt(BusOU.read((char)( t  & 0x00FF )));			//Leggo il primo byte in pagina 0 sommando x al valore t preso in memoria
+		Integer lo = Byte.toUnsignedInt(BusOU.read((char)( t  & 0x00FF )));				//Leggo il primo byte in pagina 0 sommando x al valore t preso in memoria
 		Integer hi = Byte.toUnsignedInt(BusOU.read((char)( (t  + 1) & 0x00FF )));		//Leggo il secondo byte in pagina 0 sommando x e 1 al valore t preso in memoria
 
 		addr_abs = (char)((hi << 8) | lo);
@@ -851,10 +838,10 @@ public class OperativeUnit {
 		fetch();
 		 
 		char temp = (char)((char)fetched.byteValue() & 0x00FF); 		   	//Shifta a sinistra il valore fetchato
-		temp = (char)(temp << 1);					//Shifta a sinistra il valore fetchato
-		setFlag("C", (temp & 0xFF00) > 0); 			//se tale shift rende un valore maggiore di 256, allora alza il carry flag
-		setFlag("Z", (temp & 0x00FF) == 0x0000); 		//se lo shift porta i primi 8 bit ad essere nulli, alza il flag zero
-		setFlag("N", 0x0000 != (temp & 0x0080)); 		//se lo shift porta ad avere il bit alto alla posizione 8, abilita il flag Negative
+		temp = (char)(temp << 1);											//Shifta a sinistra il valore fetchato
+		setFlag("C", (temp & 0xFF00) > 0); 									//se tale shift rende un valore maggiore di 256, allora alza il carry flag
+		setFlag("Z", (temp & 0x00FF) == 0x0000); 							//se lo shift porta i primi 8 bit ad essere nulli, alza il flag zero
+		setFlag("N", 0x0000 != (temp & 0x0080)); 							//se lo shift porta ad avere il bit alto alla posizione 8, abilita il flag Negative
 		
 		if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP") //se l'address mode è implied, scrivi in A, altrimenti in memoria
 			A_register = (byte)(temp & 0x00FF);
@@ -925,7 +912,7 @@ public class OperativeUnit {
 		
 		fetch();
 		char temp = (char) (A_register & fetched); 	// AND tra valore fetchato d il registro A
-		setFlag("Z", (temp & 0x00FF) == 0x0000); 		//se la AND porta i primi 8 bit ad essere nulli, alza il flag zero
+		setFlag("Z", (temp & 0x00FF) == 0x0000); 	//se la AND porta i primi 8 bit ad essere nulli, alza il flag zero
 		setFlag("N", (fetched & (1<<7))!=0);		// se il settimo bit di Fetched è 1 alza il flag N
 		setFlag("V", (fetched & (1<<6))!=0);		// se il sesto bit di Fetched è 1 alza il flag V
 		
@@ -1769,15 +1756,13 @@ public class OperativeUnit {
 		
 		//Salvo il valore prelevato come Program Counter
 		PC_register = (char)((hi << 8) | lo);
-		//PC_register = 0xC000;
-		//System.out.println("CIAONE : " + Integer.toHexString(PC_register));
 		
 		// Resetto i registri interni e i registri di utilità
 		A_register = 0x00;
 		X_register = 0x00;
 		Y_register = 0x00;
 
-		Status_register = (byte)(0x24);	
+		Status_register = (byte)(0x20);	
 		Stack_pointer= (byte) 0x00FD;	
 		fetched = 0x00;
 		addr_abs = 0x0000;
@@ -1817,7 +1802,7 @@ public class OperativeUnit {
 		return Status_register;
 	}
 	
-	//DA CONTROLLARE E VERIFICARE DOVE METTERE
+	//GESTIONE DELLE INTERRUZIONI
 	// Interrupt requests are a complex operation and only happen if the
 	// "disable interrupt" flag is 0. IRQs can happen at any time, but
 	// you dont want them to be destructive to the operation of the running 
@@ -1833,40 +1818,32 @@ public class OperativeUnit {
 	// set to the program counter.
 	private void irq()
 	{
-		System.out.println("IRQ RICHIAMATA");
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		// If interrupts are allowed
 		if (getFlag("I") == false)
 		{
 			// Push the program counter to the stack. It's 16-bits dont
 			// forget so that takes two pushes
-			BusOU.write((char)(0x0100 + Stack_pointer), (byte)((PC_register >> 8) & 0x00FF));
+			BusOU.write((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer)), (byte)((PC_register >> 8) & 0x00FF));
 			Stack_pointer--;
-			BusOU.write((char)(0x0100 + Stack_pointer), (byte)(PC_register & 0x00FF));
+			BusOU.write((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer)), (byte)(PC_register & 0x00FF));
 			Stack_pointer--;
 
 			// Then Push the status register to the stack
 			setFlag("B", false);
 			setFlag("U", true);
 			setFlag("I", true);
-			BusOU.write((char)(0x0100 + Stack_pointer), Status_register);
+			BusOU.write((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer)), Status_register);
 			Stack_pointer--;
 
 			// Read new program counter location from fixed address
 			addr_abs = 0xFFFE;
-			byte lo = BusOU.read(addr_abs).byteValue();
-			byte hi = BusOU.read((char)(addr_abs+1)).byteValue();
+			Integer lo = Byte.toUnsignedInt(BusOU.read(addr_abs));
+			Integer hi = Byte.toUnsignedInt(BusOU.read((char)(addr_abs+1)));
 			PC_register = (char)((hi << 8) | lo);
 			
 			// IRQs take time
-			Integer temp_cycle = ControlUnit.getInstance().getCycles();
-			ControlUnit.getInstance().setCycles(7 + temp_cycle);
+			//Integer temp_cycle = ControlUnit.getInstance().getCycles();
+			ControlUnit.getInstance().setCycles(7); // + temp_cycle);
 		}
 	}
 
@@ -1878,27 +1855,27 @@ public class OperativeUnit {
 	{
 		// Push the program counter to the stack. It's 16-bits dont
 		// forget so that takes two pushes
-		BusOU.write((char)(0x0100 + Stack_pointer), (byte)((PC_register >> 8) & 0x00FF));
+		BusOU.write((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer)), (byte)((PC_register >> 8) & 0x00FF));
 		Stack_pointer--;
-		BusOU.write((char)(0x0100 + Stack_pointer), (byte)(PC_register & 0x00FF));
+		BusOU.write((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer)), (byte)(PC_register & 0x00FF));
 		Stack_pointer--;
 
 		// Then Push the status register to the stack
 		setFlag("B", false);
 		setFlag("U", true);
 		setFlag("I", true);
-		BusOU.write((char)(0x0100 + Stack_pointer), Status_register);
+		BusOU.write((char)(0x0100 + Byte.toUnsignedInt(Stack_pointer)), Status_register);
 		Stack_pointer--;
 
 		// Read new program counter location from fixed address
 		addr_abs = 0xFFFA;
-		byte lo = BusOU.read(addr_abs).byteValue();
-		byte hi = BusOU.read((char)(addr_abs+1)).byteValue();
+		Integer lo = Byte.toUnsignedInt(BusOU.read(addr_abs));
+		Integer hi = Byte.toUnsignedInt(BusOU.read((char)(addr_abs+1)));
 		PC_register = (char)((hi << 8) | lo);
 					
 		// IRQs take time
-		Integer temp_cycle = ControlUnit.getInstance().getCycles();
-		ControlUnit.getInstance().setCycles(8 + temp_cycle);
+		//Integer temp_cycle = ControlUnit.getInstance().getCycles();
+		ControlUnit.getInstance().setCycles(8); // + temp_cycle);
 	}
 
 	public Boolean getIRQRequest() {

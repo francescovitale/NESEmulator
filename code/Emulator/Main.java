@@ -18,8 +18,10 @@ public class Main {
 		
 		//C.DumpCartridge();
 		//C.DumpMemory();
-		Byte bg_next_tile_attrib = 0x04;
-		bg_next_tile_attrib = (byte)(Byte.toUnsignedInt(bg_next_tile_attrib) >> 2);
-		System.out.println(Integer.toBinaryString(bg_next_tile_attrib));
+		int a = (byte)0xFF;
+		a= a+1;
+		System.out.println(a);
+		
+		
 	}
 }

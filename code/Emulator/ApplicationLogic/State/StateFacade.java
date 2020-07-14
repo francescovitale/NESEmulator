@@ -31,7 +31,7 @@ public class StateFacade {
 	
 	//Fetch dell'opcode 
 	public Byte fetch() {
-		return OU.fetch();
+		return OU.fetch_pc();
 	}
 	
 	//Incrementa il PC
