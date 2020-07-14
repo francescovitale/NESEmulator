@@ -1070,7 +1070,7 @@ public class OperativeUnit {
 		fetch();
 		
 		char temp= (char)(Byte.toUnsignedInt(A_register)- Byte.toUnsignedInt(fetched));
-		setFlag("C", A_register>= fetched);
+		setFlag("C", Byte.toUnsignedInt(A_register) >= Byte.toUnsignedInt(fetched));
 		setFlag("Z", (temp & 0x00FF) == 0x0000);
 		setFlag("N", 0 != (temp & 0x0080));
 		
@@ -1084,8 +1084,8 @@ public class OperativeUnit {
 		
 		fetch();
 		
-		char temp= (char)(Byte.toUnsignedInt(X_register)- Byte.toUnsignedInt(fetched));
-		setFlag("C", X_register>= fetched);
+		char temp= (char)(Byte.toUnsignedInt(X_register) - Byte.toUnsignedInt(fetched));
+		setFlag("C", Byte.toUnsignedInt(X_register) >= Byte.toUnsignedInt(fetched));
 		setFlag("Z", (temp & 0x00FF) == 0x0000);
 		setFlag("N", 0 != (temp & 0x0080));
 		
@@ -1102,7 +1102,7 @@ public class OperativeUnit {
 		fetch();
 		
 		char temp= (char)(Byte.toUnsignedInt(Y_register)- Byte.toUnsignedInt(fetched));
-		setFlag("C", Y_register>= fetched);
+		setFlag("C", Byte.toUnsignedInt(Y_register) >= Byte.toUnsignedInt(fetched));
 		setFlag("Z", (temp & 0x00FF) == 0x0000);
 		setFlag("N", 0 != (temp & 0x0080));
 		
@@ -1275,7 +1275,7 @@ public class OperativeUnit {
 		return true;
 		
 		
-	}
+	} 
 	
 	
 	//Load The Y Register
@@ -1296,14 +1296,13 @@ public class OperativeUnit {
 	private boolean LSR() {
 		
 		fetch();
-		setFlag("C", 0 !=(fetched & 0x0001) );
-		char temp= (char)(fetched>>1);
-		setFlag("Z", (temp & 0x00FF) == 0x0000);
-		setFlag("N", 0 != (temp & 0x0080));
+		setFlag("C", 0 !=(fetched & 0x01) );
+		Integer temp= (Byte.toUnsignedInt(fetched) >> 1);
+		setFlag("Z", (temp & 0x00FF) == 0);
+		setFlag("N", (temp & 0x0080) != 0);
 		
 		if (ControlUnit.getInstance().getCurrentInstruction().addressing_mode == "IMP")
-			A_register= (byte)(temp & 0x00FF);
-		
+			A_register = (byte)(temp & 0x00FF);
 		else 
 			BusOU.write(addr_abs, (byte)(temp & 0x00FF));
 		
@@ -1446,14 +1445,14 @@ public class OperativeUnit {
     private boolean ROR() {
        
         fetch();
-        char C;
+        Integer C;
        
         if(getFlag("C"))
-            C=0x0001;
+            C=1;
         else
-            C=0x0000;
+            C=0;
        
-        char temp= (char)((char)(fetched<<1) | (char)(C<<7)); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
+        char temp= (char)((C<<7) | (fetched>>1)); // conversione da byte in intero per avere il valore unsigned, la AND con 0xff serve a tagliare le cifre aggiunte con il cast
         setFlag("C", 0 != (fetched & 0x01));
         setFlag("Z", 0x0000 == (temp & 0x00FF));
         setFlag("N", 0x0000 != (temp & 0x0080));

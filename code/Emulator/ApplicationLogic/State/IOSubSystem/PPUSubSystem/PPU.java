@@ -68,7 +68,7 @@ public class PPU {
 		initializeNESPalette();
 		returnedPixels = new ArrayList<Pixel>();
 	};
-	
+	 
 	private void initializeNESPalette() {
 		NESPalette = new ArrayList<String>();
 		for(int i = 0; i <= (int)0x003F; i++)

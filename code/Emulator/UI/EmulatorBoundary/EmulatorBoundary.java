@@ -347,7 +347,7 @@ public class EmulatorBoundary extends JFrame {
 				}
 				return null;
 			}
-
+ 
 			@Override
 			protected void process(List<ReturnedState> chunks) {
 					Display.UpdateDisplayBoundary(Controller.getReturnedState());
@@ -356,13 +356,14 @@ public class EmulatorBoundary extends JFrame {
 		};
 	}
 	
+	
 	public void CreateApplicationLogic() {
 		    Logic = new SwingWorker<Void,Void>(){
 			@Override
 			protected Void doInBackground() throws Exception {
 				
 			//Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), Configuration.getPath());
-			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\nestest.ines");
+			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\Duck Hunt (World).ines");
 			
 			
 			return null;
