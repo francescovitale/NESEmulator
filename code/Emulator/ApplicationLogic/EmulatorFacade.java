@@ -99,11 +99,16 @@ public class EmulatorFacade {
 		
 	}
 	
-	public void InsertProgram(String SelectedPath) {
+	public void InsertProgram(String SelectedPath, String ROMName, Integer ID) {
 		
 		Tsf= new TechnicalServicesFacade();
+		if(ROMName.isEmpty() && ID == -1)
+			Tsf.InsertProgram(SelectedPath, "");
+		else {
+			Programs = new ArrayList<Program>(Tsf.loadProgramData(""));
+			Tsf.InsertProgram(SelectedPath, Programs.get(selectProgram(ROMName,ID)).getROMData());
+		}
 		
-		Tsf.InsertProgram(SelectedPath);
 		
 	}
 	
