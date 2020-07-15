@@ -28,7 +28,7 @@ public class ControlUnitExecute extends ControlUnitState {
 		CU.setBool_opcode(SF.Execute(CU.getCurrentInstruction().opcode));						//Eseguo l'operazione dell'istruzione corrente
 		
 		/*DEBUG*/
-		//System.out.println(CU.getCurrentInstruction().opcode);
+		System.out.println(CU.getCurrentInstruction().opcode);
 
 		
 		if(CU.getBool_addr() & CU.getBool_opcode())												//Se entrambi i bool sono veri
