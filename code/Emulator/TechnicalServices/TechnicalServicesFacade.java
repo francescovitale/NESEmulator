@@ -24,12 +24,17 @@ public class TechnicalServicesFacade {
 	}
 	
 
-	public void InsertProgram(String SelectedPath) {
-		
-		LP= new AccessProgramFS();
-		Program P= new Program(LP.loadProgram(SelectedPath).get(0));
-		LP= new AccessProgramDB();
-		LP.InsertProgram(P.getROMData(), SelectedPath);
+	public void InsertProgram(String SelectedPath, String ROMData) {
+		if(ROMData.isEmpty()) {
+			LP= new AccessProgramFS();
+			Program P= new Program(LP.loadProgram(SelectedPath).get(0));
+			LP= new AccessProgramDB();
+			LP.InsertProgram(P.getROMData(), SelectedPath);
+		}
+		else {
+			LP = new AccessProgramFS();
+			LP.InsertProgram(ROMData,SelectedPath);
+		}
 		
 		
 	}

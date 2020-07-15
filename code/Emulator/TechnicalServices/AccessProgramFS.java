@@ -25,6 +25,8 @@ public class AccessProgramFS extends AccessProgram{
 	
 
 	public void InsertProgram(String ROMData, String SelectedPath) {
+		Fsm = FileSystemManager.getInstance();
+		Fsm.writeProgram(ROMData,SelectedPath);
 	}
 	
 	public void DeleteProgram(Program P) {

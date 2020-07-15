@@ -49,6 +49,16 @@ public class FileSystemManager {
 		
 	}
 	
+	public void writeProgram(String ROMData, String SelectedPath) {
+		setPath(SelectedPath);
+		ArrayList<String> RD = new ArrayList<String>();
+		for(int i=0; i<ROMData.length()-1; i=i+2) {
+			RD.add(ROMData.substring(i, i+2));
+		}
+		writeStringData(RD);
+		
+	}
+	
 	public static FileSystemManager getInstance(){
 
 		if(FileSystemManager==null) {
