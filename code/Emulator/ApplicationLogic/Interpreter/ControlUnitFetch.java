@@ -23,7 +23,7 @@ public class ControlUnitFetch extends ControlUnitState {
 		//Variabili per la gestione delle interrupt
 		Boolean NMIRequest_temp;
 		Boolean IRQRequest_temp;
-		
+		 
 		CU = ControlUnit.getInstance();
 		//Aggiorno lo stato da far visualizzare
 		SF.refreshState();
