@@ -1,6 +1,8 @@
 package Emulator.ApplicationLogic.State;
 
 import Emulator.ApplicationLogic.Interpreter.ControlUnit;
+import Emulator.ApplicationLogic.State.IOSubSystem.DMA;
+import Emulator.ApplicationLogic.State.IOSubSystem.IOManager;
 import Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem.PPU;
 
 public class ClockManager {
@@ -9,11 +11,11 @@ public class ClockManager {
 	
 	
  	private volatile static ClockManager CM = null;				//Singleton
- 	private PPU P;
+ 	private IOManager IO;
  	
  	private ClockManager() {
  		ElapsedClockTicks = 0;
- 		P = PPU.getInstance();
+ 		IO = IOManager.getInstance();
  	}
  	
  	//Punto di ingresso globale all'istanza
@@ -27,17 +29,26 @@ public class ClockManager {
  		}
  		return CM;
  	}
- 	 
+ 	  
  	public Boolean clock() {
  		
  		//Clock della PPU
- 		P.clock();
+ 		IO.PPUclock();
  		
- 		//Se sono passati tre clock, toccherà alla CPU
+ 		//Se sono passati tre clock, toccherà alla CPU, a meno che non bisogni usare il DMA
  		if(ElapsedClockTicks % 3 == 0)
  		{
- 			ElapsedClockTicks++;
- 			return true;
+ 			if(IO.getDma_transfer()) {
+ 				//Eseguo il Trasferimento tramite DMA
+ 				IO.DMAclock(ElapsedClockTicks);
+ 				ElapsedClockTicks++;
+ 				return false;
+ 			}
+ 			else {
+ 				//Faccio eseguire la CPU
+ 				ElapsedClockTicks++;
+ 				return true;
+ 			}
  		}
  		else {
  			ElapsedClockTicks++;

@@ -41,34 +41,48 @@ public class PPU {
 	
  	private IOManager IOM;
  	private PPURenderer PPUR;
+ 	private OAM Oam;
+ 	
+ 	private Byte OAMaddr;
  	
 	protected PPU() {
 		
 		
 		PPUR = PPURenderer.getInstance();
+		Oam = OAM.getInstance();
 		
+		//Loopy registers
 	 	vram_addr = 0x0000;
 	 	tram_addr = 0x0000;
+	 	//shifter register per il rendering
 	 	bg_shifter_pattern_lo = 0x0000;
 		bg_shifter_pattern_hi = 0x0000;
 		bg_shifter_attrib_lo = 0x0000;
 		bg_shifter_attrib_hi = 0x0000;
 		
+		//scrolling fluido
 	 	fine_x = 0x00;
 	 	
+	 	//Dati dei singoli Tile
 		bg_next_tile_id = 0x00;
 	 	bg_next_tile_attr = 0x00;
 	 	bg_next_tile_lsb = 0x00;
 	 	bg_next_tile_msb = 0x00;
 	 	
+	 	//Varibile di comodo
 	 	address_latch = 0;
-		scanline = 0;
+	 	
+		//Posizione nello schermo
+	 	scanline = 0;
 		cycles = 0;
+		
+		//Indirizzo OAM
+		OAMaddr = 0x00;
 		
 		initializeNESPalette();
 		returnedPixels = new ArrayList<Pixel>();
 	};
-	 
+	  
 	private void initializeNESPalette() {
 		NESPalette = new ArrayList<String>();
 		for(int i = 0; i <= (int)0x003F; i++)
@@ -266,7 +280,7 @@ public class PPU {
                 temp.setX_coord(temp.getX_coord()-1);
                 returnedPixels.add(temp);
                 PState.refreshPPUState(returnedPixels);
-               
+                
                 returnedPixels.clear();
             } // Potrebbe dipendere dalla velocità relativa... Concorrenza? Si, ma problemi di velocità se il thread in polling viene
             // sincronizzato..
@@ -296,7 +310,7 @@ public class PPU {
 		if (render_background == 1)
 		{
 			/* bit_mux consentira' di estrarre solamente il singolo pixel da renderizzare */
-			char bit_mux = (char)(0x8000 >> (int)fine_x);
+			char bit_mux = (char)(0x8000 >> Byte.toUnsignedInt(fine_x));
 			Byte p0_pattern_info; // LSB
 			Byte p1_pattern_info; // MSB
 			boolean temp = (bg_shifter_pattern_lo & bit_mux) > 0;
@@ -372,6 +386,25 @@ public class PPU {
 		//DEBUG
 		//return (byte)0x2c; // STUB
 	}
+	
+	//GESTIONE OAM 
+	public Byte readOAM(char addr) {
+		return Oam.read(addr);
+	}
+	
+	public void writeOAM(char addr, Byte data) {
+		Oam.write(addr,data);
+	}
+	
+	public Byte getOAMaddr() {
+		return OAMaddr;
+	}
+
+	public void setOAMaddr(Byte oAMaddr) {
+		OAMaddr = oAMaddr;
+	}
+	
+	//GETTER AND SETTER 
 	
 	public Integer getScanline() {
 		return scanline;

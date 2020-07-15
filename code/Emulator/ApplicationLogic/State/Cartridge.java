@@ -110,7 +110,7 @@ public class Cartridge {
 			ind0++;
 		}
 		
-		if ((mapper1 & 0x04) != 0x00) {
+		if ((Byte.toUnsignedInt(mapper1) & 0x04) != 0x00) {
 			//Vado avanti di 512 byte
 			indice = 512 * 8;
 		}
@@ -119,8 +119,8 @@ public class Cartridge {
 		}
 		 
 		// Determino il Mapper ID
-		nMapperID = ((mapper2 >> 4) << 4) | (mapper1 >> 4);
-		mirror = (mapper1 & 0x01)!=0 ? MIRROR.VERTICAL : MIRROR.HORIZONTAL;
+		nMapperID = ((Byte.toUnsignedInt(mapper2) >> 4) << 4) | (Byte.toUnsignedInt(mapper1) >> 4);
+		mirror = (Byte.toUnsignedInt(mapper1) & 0x01)!=0 ? MIRROR.VERTICAL : MIRROR.HORIZONTAL;
 		
 		// "Discover" del File Format
 		Byte nFileType = 1;
@@ -133,7 +133,7 @@ public class Cartridge {
 		if (nFileType == 1)
 		{
 			//Prelevo dalla ROM tutti i banks "program"
-			nPRGBanks = (int)prg_rom_chunks;
+			nPRGBanks = Byte.toUnsignedInt(prg_rom_chunks);
 			vPRGMemory.ensureCapacity(nPRGBanks * 16384);
 			ind0 = 0;
 			while (ind0 < nPRGBanks * 16384 && (indice<ROM.size())) {
@@ -142,7 +142,7 @@ public class Cartridge {
 				ind0++;
 			}
 			//Prelevo dalla ROM tutti i banks "character"
-			nCHRBanks = (int)chr_rom_chunks;
+			nCHRBanks = Byte.toUnsignedInt(chr_rom_chunks);
 			vCHRMemory.ensureCapacity(nCHRBanks * 8192);
 			ind0 = 0;
 			while (ind0 < nCHRBanks * 8192 && (indice<ROM.size())) {

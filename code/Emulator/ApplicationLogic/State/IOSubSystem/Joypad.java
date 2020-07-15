@@ -27,12 +27,12 @@ public class Joypad {
 	public Byte getController() {
 		return controller;
 	}
-
+ 
 	public void setController(Byte controller) {
 		//System.out.println("Controller: " + Integer.toBinaryString(controller));
 		this.controller = controller;
 	}
-
+ 
 	public Byte getController_state() {
 		
 		return controller_state;

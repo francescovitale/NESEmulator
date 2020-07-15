@@ -2,6 +2,7 @@ package Emulator.ApplicationLogic.State.IOSubSystem;
 
 import Emulator.ApplicationLogic.ByteManager;
 import Emulator.ApplicationLogic.State.Bus;
+import Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem.OAM;
 import Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem.PPU;
 
 public class IOManager {
@@ -25,7 +26,8 @@ public class IOManager {
 	private Bus CpuBus;
 	private PPU PictureProcessingUnit;
 	private Joypad Pad;
-	
+	private DMA Dma;
+	 
 	private IOManager() {
 		
 		PPUStatus = 0x00;
@@ -36,6 +38,7 @@ public class IOManager {
 		
 		CpuBus = Bus.getInstance();	
 		PictureProcessingUnit = PPU.getInstance(); 
+		Dma = DMA.getInstance();
 	}
 
 	//Punto di ingresso globale all'istanza
@@ -87,6 +90,8 @@ public class IOManager {
 			case 0x0003: // OAM Address
 				break;
 			case 0x0004: // OAM Data
+				Byte OAMaddr = PictureProcessingUnit.getOAMaddr();
+				data = PictureProcessingUnit.readOAM((char)Byte.toUnsignedInt(OAMaddr));
 				break;
 			case 0x0005: // Scroll
 				//Not Readable
@@ -138,7 +143,7 @@ public class IOManager {
 		return data;
 		
 	}
-	
+	 
 	public void write(char address, Byte data) {
 		
 		//SPAZIO DI INDIRIZZAMENTO PER LA PERIFERICA PICTURE PROCESSING UNITtry 
@@ -176,8 +181,11 @@ public class IOManager {
 			case 0x0002: // Status
 				break;
 			case 0x0003: // OAM Address
+				PictureProcessingUnit.setOAMaddr(data);
 				break;
 			case 0x0004: // OAM Data
+				Byte OAMaddr = PictureProcessingUnit.getOAMaddr();
+				PictureProcessingUnit.writeOAM((char)Byte.toUnsignedInt(OAMaddr), data);
 				break;
 			case 0x0005: // Scroll
 				
@@ -249,13 +257,35 @@ public class IOManager {
 				break;
 			}
 		}
+		else if (address == 0x4014)
+		{
+			// Una scrittura a questo indirizzo inizializza il DMA 
+			Dma.setDma_page(data);
+			Dma.setDma_addr((byte)0x00);
+			Dma.setDma_transfer(true);						
+		}
 		else if(address == 0x4016) {
 			Pad = Joypad.getInstance();
 		
 			Pad.setController_state(Pad.getController());
 		}
 	}
+	
+	//PPU CLOCK
+	public void PPUclock() {
+		PictureProcessingUnit.clock();
+	}
 
+	//DMA CLOCK
+	public void DMAclock(Integer ElapsedClockTicks) {
+		Dma.clock(ElapsedClockTicks);
+	}
+	
+	public Boolean getDma_transfer() {
+		return Dma.getDma_transfer();
+	}
+	
+	//GETTER AND SETTER
 	public Byte getPPUStatus() {
 		return PPUStatus;
 	}
