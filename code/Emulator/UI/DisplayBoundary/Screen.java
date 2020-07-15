@@ -22,7 +22,7 @@ public class Screen extends JPanel {
 	
 	public Screen() {
 		
-		resize = 3;
+		resize = 2;
 		setBackground(Color.DARK_GRAY);
 		setBounds(173, 11, width*resize, height*resize);
 		current_x = 0;

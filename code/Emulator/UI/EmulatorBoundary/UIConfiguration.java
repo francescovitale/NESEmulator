@@ -9,14 +9,12 @@ public class UIConfiguration {
 	private String ProgramName;
 	private String Path;
 	private Integer ProgramID;
-	private Integer ResizeScreen;
 	
 	private UIConfiguration(){
 		Mode = false;
 		ProgramName = "";
 		Path = "";
 		ProgramID = -1;
-		ResizeScreen = 1;
 	}
 	
 	public static UIConfiguration getIstance() {
@@ -61,15 +59,6 @@ public class UIConfiguration {
 	public void setProgramID(Integer programID) {
 		ProgramID = programID;
 	}
-
-	public Integer getResizeScreen() {
-		return ResizeScreen;
-	}
-
-	public void setResizeScreen(Integer resizeScreen) {
-		ResizeScreen = resizeScreen;
-	}
-	
 	
 	
 }
