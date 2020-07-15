@@ -37,6 +37,7 @@ public class EmulatorBoundary extends JFrame {
 	private UIConfiguration Configuration;
 	private SwingWorker<Void,Void> Logic;
 	private SwingWorker<Void,ReturnedState> Polling;
+	private SwingWorker<Void,Void> UserInput;
 	private DisplayBoundary Display;
 	
 	private JPanel contentPane;
@@ -194,8 +195,11 @@ public class EmulatorBoundary extends JFrame {
 					Configuration.setProgramName(FileName);
 					Configuration.setPath(Path);
 					Configuration.setMode(Mode);
+					Configuration.setProgramID(-1);
 					
-					Controller.executeProgram(FileName,-1,Path);
+					AvviaProgramma();
+					
+					//Controller.executeProgram(FileName,-1,Path);
 				}
 			}
 		});
@@ -313,9 +317,11 @@ public class EmulatorBoundary extends JFrame {
 		
 		CreateApplicationLogic();
 		CreatePollingEntity();
+		CreateUserInput();
 		
 		Logic.execute();
 		Polling.execute();
+		UserInput.execute();
 	}
 	
 	public void CreatePollingEntity() {
@@ -325,12 +331,13 @@ public class EmulatorBoundary extends JFrame {
 				int i = 0;
 				int j = 0;
 				
+				
 				while(i == 0) {
 					/*synchronized(Controller.getEmulatorFacade().getSF().getState().getInstance()) {
 						while(Controller.getState() == false) {
 							//System.out.println("C) Mi blocco su " + Controller.getEmulatorFacade().getSF().getState().getIstance().toString());
 							Controller.getEmulatorFacade().getSF().getState().getInstance().wait();
-						}
+				 		}
 						//System.out.println("C) Mi sblocco su " + Controller.getEmulatorFacade().getSF().getState().getIstance().toString());
 						publish((Controller.getReturnedState()));
 						Controller.getEmulatorFacade().getSF().getState().getInstance().notify();
@@ -340,10 +347,10 @@ public class EmulatorBoundary extends JFrame {
 						Display.UpdateDisplayScreen(Controller.getReturnedState());
 						publish((Controller.getReturnedState()));
 						
-						while(j < 2) {
+						/*while(j < 2) {
 							j++;
 							Display.getKey();	
-						}
+						}*/
 				}
 				return null;
 			}
@@ -356,16 +363,27 @@ public class EmulatorBoundary extends JFrame {
 		};
 	}
 	
-	
+	public void CreateUserInput() {
+		UserInput = new SwingWorker<Void,Void>(){
+		@Override
+		protected Void doInBackground() throws Exception {
+			Display.getKey();	
+
+		return null;
+
+		}
+					
+	};
+}
+
 	public void CreateApplicationLogic() {
 		    Logic = new SwingWorker<Void,Void>(){
 			@Override
 			protected Void doInBackground() throws Exception {
 				
-			//Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), Configuration.getPath());
-			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\Duck Hunt (World).ines");
-			
-			
+			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), Configuration.getPath());
+			//Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\nestest.ines");
+
 			return null;
 
 			}
