@@ -45,5 +45,46 @@ public class ProgramDAO {
 	
 	
 	
+	public void InsertProgram ( Program PR) {
+		
+		openSession();
+		DBSession.beginTransaction();
+		
+		PR.setID(null);
+
+		
+		DBSession.save(PR);
+		
+		DBSession.getTransaction().commit();
+		closeSession();
+		
+		
+		
+	}
+	
+	
+	public void DeleteProgram(Program P) {
+		
+		openSession();
+		DBSession.beginTransaction();
+		
+		DBSession.delete(P);
+		
+		DBSession.getTransaction().commit();
+		closeSession();
+		
+	}
+	
+	public void UpdateProgram(Program P) {
+		
+		openSession();
+		DBSession.beginTransaction();
+		
+		DBSession.saveOrUpdate(P);
+		
+		DBSession.getTransaction().commit();
+		closeSession();
+		
+	}
 
 }

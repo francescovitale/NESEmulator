@@ -11,7 +11,7 @@ public class Main {
 		String Nome = "GIOCO";
 
 		
-		//C.executeProgram("MarioBros", 0, "C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\DonkeyKong.ines");
+		C.UpdateProgram("Pippo","MarioBros", 3  );
 	
 		/*FileSystemManager FSM = FileSystemManager.getInstance();
 		FSM.deleteFile("C:\\Users\\aceep\\eclipse-workspace\\NES\\src\\Emulator\\Log\\log.txt");*/

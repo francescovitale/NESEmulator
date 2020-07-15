@@ -39,7 +39,7 @@ public class EmulatorFacade {
 	//Inizializzo il programma in memoria
 	public Boolean initProgram(String ROMName, Integer ID, String SelectedPath) {
 		Tsf = new TechnicalServicesFacade();
-		Programs = new ArrayList<Program>(Tsf.loadCartridgeData(SelectedPath));
+		Programs = new ArrayList<Program>(Tsf.loadProgramData(SelectedPath));
 		int index;
 		
 		if(SelectedPath.isEmpty()) {
@@ -48,8 +48,11 @@ public class EmulatorFacade {
 		}
 		else {
 			return SF.loadData(Programs.get(0).getParsedROMData());
-		}
 			
+		}
+		
+		/*System.out.println(Programs.get(0).getROMData());
+		return true;	*/
 	}
 
 	//Aziono il ciclo del processore
@@ -75,4 +78,47 @@ public class EmulatorFacade {
 		SF.setkeys(keys);
 	}
 
+	
+
+	public ArrayList<Program> getProgramList() {
+		
+		Tsf= new TechnicalServicesFacade();
+		
+		return Tsf.loadProgramData("");
+	}
+	
+	
+	
+	public void DeleteProgram(Integer ID, String ROMName) {
+		
+
+		Tsf= new TechnicalServicesFacade();
+		Programs= new ArrayList<Program>(Tsf.loadProgramData(""));
+		Tsf.DeleteProgram(Programs.get(selectProgram(ROMName, ID)));
+		
+		
+	}
+	
+	public void InsertProgram(String SelectedPath) {
+		
+		Tsf= new TechnicalServicesFacade();
+		
+		Tsf.InsertProgram(SelectedPath);
+		
+	}
+	
+	
+	public void UpdateProgram(String ROMName, String OLDName, Integer ID) {
+		
+		Program P;
+		Tsf= new TechnicalServicesFacade();
+		Programs= new ArrayList<Program>(Tsf.loadProgramData(""));
+		P= new Program(Programs.get(selectProgram(OLDName, ID)));
+		P.setName(ROMName);
+		Tsf.UpdateProgram(P);
+		
+	
+		
+	}
+	
 }

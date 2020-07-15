@@ -1,15 +1,23 @@
 package Emulator.Control;
+import java.util.ArrayList;
+
 import Emulator.ApplicationLogic.EmulatorFacade;
+import Emulator.ApplicationLogic.Program;
 import Emulator.ApplicationLogic.State.*;
 
 public class Controller {
 	
 	private EmulatorFacade Emu;
 	private ReturnedState State;
+	private ArrayList<ReturnedProgram> RP;
+	
 	
 	public Controller(){
 		Emu = new EmulatorFacade();
 		State = ReturnedState.getIstance();
+		
+		RP= new ArrayList<ReturnedProgram>();
+		
 	}
 	
 	public void executeProgram(String Nome, Integer ID, String Path) {
@@ -69,4 +77,42 @@ public class Controller {
 	public void setkeys(Byte keys) {
 		Emu.setkeys(keys);
 	}
+	
+	
+	public ArrayList<ReturnedProgram> getProgramList (){
+		
+		ArrayList<Program> P= new ArrayList<Program>(Emu.getProgramList());
+		
+		for (int i=0; i< P.size(); i++) {
+			
+			RP.add(new ReturnedProgram(P.get(i).getID(), P.get(i).getName()));
+			System.out.println(" Sono il programma: " + RP.get(i).getID() + RP.get(i).getName());
+			
+		}
+
+		return RP;
+	}
+	
+	
+	public void InsertProgram(String SelectedPath) {
+		
+		Emu.InsertProgram(SelectedPath);
+		
+		
+	}
+	
+	public void UpdateProgram(String ROMName, String OLDName, Integer ID) {
+		
+		Emu.UpdateProgram(ROMName, OLDName, ID);
+		
+		
+	}
+	
+	public void DeleteProgram(Integer ID, String ROMName) {
+		
+		Emu.DeleteProgram(ID, ROMName);
+	}
+	
+
+	
 }

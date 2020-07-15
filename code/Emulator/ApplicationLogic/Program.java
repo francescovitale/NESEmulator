@@ -4,17 +4,21 @@ import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
 @Entity
 public class Program {
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Id
 	private Integer ID;
 	@Column
 	private String Name;
 	@Column
 	private String ROMData;
+	
 	public Integer getID() {
 		return ID;
 	}
