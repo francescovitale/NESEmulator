@@ -25,7 +25,7 @@ public class ReturnedPPUState {
 			}
 		}
 		return PPUState;
-	}
+	} 
 
 	public ArrayList<Pixel> getReturnedPixels() {
 		return returnedPixels;

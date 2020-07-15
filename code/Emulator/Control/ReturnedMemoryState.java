@@ -26,5 +26,14 @@ public class ReturnedMemoryState {
 		}
 		return MemoryState;
 	}
+
+	public ArrayList<Byte> getRAM() {
+		return RAM;
+	}
+
+	public void setRAM(ArrayList<Byte> rAM) {
+		RAM = rAM;
+	}
+	
 	
 }

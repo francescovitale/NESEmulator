@@ -1,6 +1,7 @@
 package Emulator.Control;
 
 import Emulator.ApplicationLogic.State.CPUState;
+import Emulator.ApplicationLogic.State.MemoryState;
 import Emulator.ApplicationLogic.State.PPUState;
 
 public class ReturnedState {
@@ -33,7 +34,7 @@ public class ReturnedState {
 		return State;
 	}
 
-	
+	 
 	//Getter AND Setter
 	public Boolean getTaken() {
 		return Taken;
@@ -65,8 +66,8 @@ public class ReturnedState {
 		return MS;
 	}
 
-	public void setMS(ReturnedMemoryState mS) {
-		MS = mS;
+	public void setMS(MemoryState mS) {
+		MS.setRAM(mS.getRAM());
 	}
 
 	public ReturnedPPUState getPS() {
