@@ -94,9 +94,9 @@ public class Controller {
 	}
 	
 	
-	public void InsertProgram(String SelectedPath) {
+	public void InsertProgram(String SelectedPath, String ROMName, Integer ID) {
 		
-		Emu.InsertProgram(SelectedPath);
+		Emu.InsertProgram(SelectedPath, ROMName, ID);
 		
 		
 	}
