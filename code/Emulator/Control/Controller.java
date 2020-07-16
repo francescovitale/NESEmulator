@@ -47,7 +47,7 @@ public class Controller {
 		Boolean T = Emu.getState().getTaken();
 		if(T == true) {
 			State.setCS(Emu.getState().getCS());
-			//State.setMS(Emu.getState().getMS());
+			State.setMS(Emu.getState().getMS());
 			State.setPS(Emu.getState().getPS());
 			resetStateTaken();
 		}
