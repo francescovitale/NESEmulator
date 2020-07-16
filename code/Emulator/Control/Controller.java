@@ -43,12 +43,15 @@ public class Controller {
 	}
 	
 	public Boolean getState() {
-		
+		 
 		Boolean T = Emu.getState().getTaken();
 		if(T == true) {
 			State.setCS(Emu.getState().getCS());
 			State.setMS(Emu.getState().getMS());
 			State.setPS(Emu.getState().getPS());
+			State.setPM(Emu.getState().getPM());
+			State.setVM(Emu.getState().getVM());
+			State.setOS(Emu.getState().getOS());
 			resetStateTaken();
 		}
 		return T;
