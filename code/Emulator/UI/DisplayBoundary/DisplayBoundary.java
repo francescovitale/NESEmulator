@@ -260,7 +260,7 @@ public class DisplayBoundary extends JFrame {
 		String RegA = "Register A : $" + Integer.toHexString(Byte.toUnsignedInt(instance.getCS().getA())) + "\n";
 		String RegSP = "Stack Pointer : $" + Integer.toHexString(Byte.toUnsignedInt(instance.getCS().getSP())) + "\n";
 		String RegPC = "Program Counter : $" + Integer.toHexString(instance.getCS().getPC()) + "\n";
-	
+		
 		RegistersTextPane.setText(Flags + RegSR + RegX + RegY + RegA + RegSP + RegPC);
 		
 		/*getCPUFrame().RegXLabel.setText("Reg X : " + instance.getCS().getX());
@@ -274,6 +274,7 @@ public class DisplayBoundary extends JFrame {
 	 
 	
 	private void UpdateMemState(ReturnedState instance) {
+		/*
 		int addr = 0x0000;
 		int max_addr = 0x1FFF;
 		String Memory = "";
@@ -286,14 +287,81 @@ public class DisplayBoundary extends JFrame {
 			}
 			Memory += "\n";
 			addr += 8;
-			
 		}
+		MEMTextPane.setText(Memory);
+		*/
+		/*
+		//PALETTE
+		int addr = 0x0000;
+		int max_addr = 0x20;
+		String Memory = "";
+		for(int i = 0; i < 26; i++) {
+			Memory += "0x"+String.format("%4s",Integer.toHexString((char)addr)).replace(" ","0") + " : ";
+			for(int j = addr; j < addr + 8; j++) {
+				if(addr < max_addr) Memory += String.format("%2s",Integer.toHexString(Byte.toUnsignedInt(instance.getPM().getPalette().get(j)))).replace(" ","0") +" ";
+				else Memory += "xx" + " ";
+			}
+			Memory += "\n";
+			addr += 8;
+		}
+		MEMTextPane.setText(Memory);
+		*/
 		
+		/*
+		//VRAM
+		int addr = 0x0000;
+		int max_addr = 0x0400;
+		String Memory = "NAMETABLE 1\n";
+		for(int i = 0; i < 12; i++) {
+			Memory += "0x"+String.format("%4s",Integer.toHexString((char)addr)).replace(" ","0") + " : ";
+			for(int j = addr; j < addr + 8; j++) {
+				if(addr < max_addr) Memory += String.format("%2s",Integer.toHexString(Byte.toUnsignedInt(instance.getVM().getNameTable1().get(j)))).replace(" ","0") +" ";
+				else Memory += "xx" + " ";
+			}
+			Memory += "\n";
+			addr += 8;
+		}
+		addr = 0x0000;
+		max_addr = 0x0400;
+		Memory += "NAMETABLE 2\n";
+		for(int i = 0; i < 13; i++) {
+			Memory += "0x"+String.format("%4s",Integer.toHexString((char)addr)).replace(" ","0") + " : ";
+			for(int j = addr; j < addr + 8; j++) {
+				if(addr < max_addr) Memory += String.format("%2s",Integer.toHexString(Byte.toUnsignedInt(instance.getVM().getNameTable2().get(j)))).replace(" ","0") +" ";
+				else Memory += "xx" + " ";
+			}
+			Memory += "\n";
+			addr += 8;
+		}
+		MEMTextPane.setText(Memory);
+		*/
+		int addr = 0x0000;
+		int max_addr = 0x0100;
+		String Memory = "";
+		
+		for(int i = 0; i < 26; i++) {
+			Memory += "0x"+String.format("%4s",Integer.toHexString((char)addr)).replace(" ","0") + " : ";
+			for(int j = addr; j < addr + 8; j++) {
+				if(addr < max_addr) Memory += String.format("%2s",Integer.toHexString(Byte.toUnsignedInt(instance.getOS().getSprites().get(j)))).replace(" ","0") +" ";
+				else Memory += "xx" + " ";
+			}
+			Memory += "\n";
+			addr += 8;
+		}
 		MEMTextPane.setText(Memory);
 	}
 	
 	private void UpdatePPUState(ReturnedState instance) {
+		String Status =  "Status Register  : " + String.format("%8s",Integer.toBinaryString(Byte.toUnsignedInt(instance.getPS().getPPUStatus()))).replace(" ","0") + "\n";
+		String Mask =    "Mask Register    : " + String.format("%8s",Integer.toBinaryString(Byte.toUnsignedInt(instance.getPS().getPPUMask()))).replace(" ","0") + "\n";
+		String Control = "Control Register : " + String.format("%8s",Integer.toBinaryString(Byte.toUnsignedInt(instance.getPS().getPPUControl()))).replace(" ","0") + "\n";
+		String Address = "Address Register : " + String.format("%8s",Integer.toBinaryString(Byte.toUnsignedInt(instance.getPS().getPPUAddress()))).replace(" ","0") + "\n";
+		String Data =    "Data Register    : " + String.format("%8s",Integer.toBinaryString(Byte.toUnsignedInt(instance.getPS().getPPUData()))).replace(" ","0") + "\n";
+		String RegV = "Vram_addr : $" + Integer.toHexString(instance.getPS().getVram_addr()) + "\n";
+		String Scan = "Scanline : " + (instance.getPS().getScanline()) + "\n";
+		String Cycle ="Cycle    : " + (instance.getPS().getCycles()) + "\n";
 		
+		RegistersTextPane.setText(Status + Mask + Control + Address + Data + RegV + Scan + Cycle);
 	}
 	
 	public void getKey() {
