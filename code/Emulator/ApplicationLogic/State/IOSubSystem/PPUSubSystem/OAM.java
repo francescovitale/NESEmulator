@@ -46,5 +46,11 @@ public class OAM {
 		}
 		System.out.print("\n");
 	}
+
+	public ArrayList<Byte> getSprite_bytes() {
+		return Sprite_bytes;
+	}
+	
+	
 }
 

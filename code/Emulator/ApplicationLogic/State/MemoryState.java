@@ -28,7 +28,7 @@ public class MemoryState {
 		}
 		return MemoryState;
 	}
-	
+	 
 	//Aggiorno lo stato della memoria 
 	public void refreshMemoryState() {
 		RAM = Mem.getWord();

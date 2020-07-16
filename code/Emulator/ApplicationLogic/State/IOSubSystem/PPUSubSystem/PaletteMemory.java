@@ -14,7 +14,7 @@ public class PaletteMemory {
 		for(int i = 0; i < (int)0x20; i++)
 			PaletteTable.add((byte)0x00);
 	};
-	
+	 
 	//Punto di ingresso globale all'istanza
 	public static PaletteMemory getInstance(){
 		if(PaletteMemory==null) {
@@ -36,6 +36,10 @@ public class PaletteMemory {
 	public void write(char addr, Byte data)
 	{
 		PaletteTable.set(addr, data);
+	}
+
+	public ArrayList<Byte> getPaletteTable() {
+		return PaletteTable;
 	}
 
 }

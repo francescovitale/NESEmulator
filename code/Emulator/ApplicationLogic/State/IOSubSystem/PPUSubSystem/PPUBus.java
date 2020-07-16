@@ -34,7 +34,7 @@ public class PPUBus {
 	{
 		Byte data = 0x00;
 		addr &= 0x3FFF;
-		
+		 
 		/* Da verificare */
 		if (Cart.ppuRead(addr))
 		{

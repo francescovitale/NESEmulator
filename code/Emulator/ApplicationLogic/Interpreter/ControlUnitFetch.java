@@ -23,16 +23,17 @@ public class ControlUnitFetch extends ControlUnitState {
 		//Variabili per la gestione delle interrupt
 		Boolean NMIRequest_temp;
 		Boolean IRQRequest_temp;
-		 
-		CU = ControlUnit.getInstance();
+		
 		//Aggiorno lo stato da far visualizzare
 		SF.refreshState();
+		
+		CU = ControlUnit.getInstance();
 		SF.setFlag("U", true);
 		
 		boolean stop=false;
 		boolean CPUTurn;
 		//Finché la CPU continua ad avere cicli 
-		while (stop == false) {					
+		while (stop == false) {	
 			//Clock della PPU e verifico se sono passati 3 clock della PPU
 			CPUTurn = SF.clock();
 			

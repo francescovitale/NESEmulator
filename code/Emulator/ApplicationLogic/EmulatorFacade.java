@@ -66,7 +66,6 @@ public class EmulatorFacade {
 
 	public void resetStateTaken() {
 		SF.resetStateTaken();
-		
 	}
 
 	public StateFacade getSF() {

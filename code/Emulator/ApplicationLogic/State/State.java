@@ -10,6 +10,9 @@ public class State {
 	CPUState CS;
 	MemoryState MS;
 	PPUState PS;
+	PaletteMemoryState PM;
+	VramMemoryState VM;
+	OAMState OS;
 	
 	//Costruttore privato
 	private State() {
@@ -17,6 +20,9 @@ public class State {
 		CS = CPUState.getInstance();
 		MS = MemoryState.getInstance();
 		PS = PPUState.getInstance();
+		PM = PaletteMemoryState.getInstance();
+		VM = VramMemoryState.getInstance();
+		OS = OAMState.getInstance();
 	}
 
 	//Punto di ingresso globale all'istanza
@@ -35,7 +41,10 @@ public class State {
 	public void refreshState() {
 		CS.refreshCPUState();
 		MS.refreshMemoryState();
-		
+		PS.refreshPPUStateRegisters();
+		PM.refreshPaletteMemoryState();
+		VM.refreshVRAMMemoryState();
+		OS.refreshOAMState();
 		Taken = true; //Lo stato è stato aggiornato
 	}
 
@@ -51,7 +60,7 @@ public class State {
 	public CPUState getCS() {
 		return CS;
 	}
-
+ 
 	public void setCS(CPUState cS) {
 		CS = cS;
 	}
@@ -70,6 +79,30 @@ public class State {
 
 	public void setPS(PPUState pS) {
 		PS = pS;
+	}
+
+	public PaletteMemoryState getPM() {
+		return PM;
+	}
+
+	public void setPM(PaletteMemoryState pM) {
+		PM = pM;
+	}
+
+	public VramMemoryState getVM() {
+		return VM;
+	}
+
+	public void setVM(VramMemoryState vM) {
+		VM = vM;
+	}
+
+	public OAMState getOS() {
+		return OS;
+	}
+
+	public void setOS(OAMState oS) {
+		OS = oS;
 	}
 
 	

@@ -45,5 +45,24 @@ public class VRAMMemory {
 		else
 			NameTable2.set(addr,data);
 	}
+ 
+	public ArrayList<Byte> getNameTable1() {
+		return NameTable1;
+	}
 
+	public ArrayList<Byte> getNameTable2() {
+		return NameTable2;
+	}
+	
+	//DEBUG
+	public void stampa() {
+		for(int i = 0 ; i <(int)0x400; i++) {
+			System.out.print(Integer.toHexString(NameTable1.get(i)) + " ");
+		}
+		for(int i = 0 ; i <(int)0x400; i++) {
+			System.out.print(Integer.toHexString(NameTable2.get(i)) + " ");
+		}
+	}
+
+	
 }
