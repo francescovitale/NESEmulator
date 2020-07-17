@@ -30,6 +30,11 @@ public class Instruction {
         cycles = i.cycles;
     }
 	
-	
+	public Boolean equals(Instruction i) {
+		if(opcode.equals(i.opcode) && addressing_mode.equals(i.addressing_mode) && cycles == i.cycles) {
+			return true;
+		}
+		return false;
+	}
 }
 

@@ -60,33 +60,32 @@ public class ControlUnitFetch extends ControlUnitState {
 			//CU.setInstructionRegister((byte)0xF);
 		//else {	
 		
-			/* DEBUG */
-			FileSystemManager FSM = FileSystemManager.getInstance();
-			FSM.setPath("C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\Log\\log.txt");
-			OperativeUnit OU = OperativeUnit.getInstance();
-			
-			Integer PC = (int)OU.getPC_register();
-			Integer A = Byte.toUnsignedInt(OU.getA_register());
-			Integer X = Byte.toUnsignedInt(OU.getX_register());
-			Integer Y = Byte.toUnsignedInt(OU.getY_register());
-			Integer SP = Byte.toUnsignedInt(OU.getStack_pointer());
-			Integer SR = Byte.toUnsignedInt(OU.getStatus_register());
-			
-			Byte opfetched = SF.fetch().byteValue();
-			/*
-			//DEBUG					** SCRITTURA LOG DI ESECUZIONE **
-			FSM.writeLogData(Integer.toHexString(Byte.toUnsignedInt(opfetched)) + " "+Integer.toHexString(PC)+ " " + " A: "+ Integer.toHexString(A) + " X: "+ Integer.toHexString(X) + " Y: "+ Integer.toHexString(Y) + 
-			" SP: "+ Integer.toHexString(SP) + " " + "SR: " + Integer.toHexString(SR) + " ");
-			*/
-
-			CU.setInstructionRegister(opfetched);				//Fetcho l'istruzione e la salvo nell'IR
-			SF.increasePC();									//Incremento il PC
-			
-			/*DEBUG*/
-			//System.out.println(Byte.toUnsignedInt(OU.getInstance().fetch()));									//Stampa DEBUG del codice operativo
-			//ControlUnit.getInstance().setInstructionRegister((byte)0xD);
-			
-			changeState(CU, ControlUnitState.getInstance("Decode"));
+		/* DEBUG */
+		FileSystemManager FSM = FileSystemManager.getInstance();
+		FSM.setPath("C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\Log\\log.txt");
+		OperativeUnit OU = OperativeUnit.getInstance();
+		
+		Integer PC = (int)OU.getPC_register();
+		Integer A = Byte.toUnsignedInt(OU.getA_register());
+		Integer X = Byte.toUnsignedInt(OU.getX_register());
+		Integer Y = Byte.toUnsignedInt(OU.getY_register());
+		Integer SP = Byte.toUnsignedInt(OU.getStack_pointer());
+		Integer SR = Byte.toUnsignedInt(OU.getStatus_register());
+		
+		Byte opfetched = SF.fetch().byteValue();
+		/*
+		//DEBUG					** SCRITTURA LOG DI ESECUZIONE **
+		FSM.writeLogData(Integer.toHexString(Byte.toUnsignedInt(opfetched)) + " "+Integer.toHexString(PC)+ " " + " A: "+ Integer.toHexString(A) + " X: "+ Integer.toHexString(X) + " Y: "+ Integer.toHexString(Y) + 
+		" SP: "+ Integer.toHexString(SP) + " " + "SR: " + Integer.toHexString(SR) + " ");
+		*/
+		CU.setInstructionRegister(opfetched);				//Fetcho l'istruzione e la salvo nell'IR
+		SF.increasePC();									//Incremento il PC
+		
+		/*DEBUG*/
+		//System.out.println(Byte.toUnsignedInt(OU.getInstance().fetch()));									//Stampa DEBUG del codice operativo
+		//ControlUnit.getInstance().setInstructionRegister((byte)0xD);
+		
+		changeState(CU, ControlUnitState.getInstance("Decode"));
 		//}	
 			
 			

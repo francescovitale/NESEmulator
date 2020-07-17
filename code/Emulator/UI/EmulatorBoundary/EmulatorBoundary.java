@@ -16,6 +16,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -41,7 +42,7 @@ public class EmulatorBoundary extends JFrame {
 	private DisplayBoundary Display;
 	
 	private JPanel contentPane;
-	private JList ProgramList;
+	private JList<String> ProgramList;
 	private Panel MenuPanel;
 	private Panel SelectProgramPanel;
 	private Panel InsertListPanel;
@@ -49,6 +50,7 @@ public class EmulatorBoundary extends JFrame {
 	private Panel StartProgramPanel;
 	private JLabel ModeLabel;
 	private JFileChooser fileChooser;
+	private ArrayList<ReturnedProgram> LocalList = new ArrayList<ReturnedProgram>();
 	
 	private Boolean Mode;
 	private JLabel IconLabel;
@@ -217,9 +219,16 @@ public class EmulatorBoundary extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int option = fileChooser.showOpenDialog(EmulatorBoundary.this);
 				if(option == JFileChooser.APPROVE_OPTION ) {
-					String FileName = (fileChooser.getSelectedFile().getName());
+					String Name = (fileChooser.getSelectedFile().getName());
 					String Path = (fileChooser.getSelectedFile().getPath());
-					Controller.LocalRepositoryRequest(FileName,0,0,Path);
+					Controller.InsertProgram(Path, "", -1);
+					
+					ReturnedProgram temp = new ReturnedProgram();
+					temp.setName(Name.replace(".ines",""));
+					if(LocalList.size() > 0 ) temp.setID(LocalList.get(LocalList.size()-1).getID() + 1 );
+					else temp.setID(1);
+					LocalList.add(temp);
+					RefreshList();
 				}
 			}
 		});
@@ -239,7 +248,12 @@ public class EmulatorBoundary extends JFrame {
 					String ProgramName = ProgramList.getSelectedValue().toString().substring(5,ProgramList.getSelectedValue().toString().length());
 					Integer ID = Integer.parseInt(ProgramList.getSelectedValue().toString().substring(0, 2));
 					
-					Controller.LocalRepositoryRequest(ProgramName,ID,1,"");
+					Controller.DeleteProgram(ID, ProgramName);
+					ReturnedProgram temp = new ReturnedProgram();
+					temp.setName(ProgramName);
+					temp.setID(ID);
+					LocalList.remove(ProgramList.getSelectedIndex());
+					RefreshList();
 				}
 			}
 		});
@@ -269,6 +283,22 @@ public class EmulatorBoundary extends JFrame {
 		
 	}
 
+	protected void RefreshList() {
+		ProgramList.setModel(new AbstractListModel() {
+			ArrayList<ReturnedProgram> value = new ArrayList<ReturnedProgram>(LocalList);
+			public int getSize() {
+				return value.size();
+			}
+			public Object getElementAt(int index) {
+				if(value.get(index).getID() < 10)
+					return "0"+value.get(index).getID() + " - " + value.get(index).getName();
+				else return value.get(index).getID() + " - " + value.get(index).getName();
+			}
+		});
+		
+	}
+
+
 	private void initComponents() {
 		Controller = new Controller();
 		fileChooser = new JFileChooser();
@@ -284,6 +314,7 @@ public class EmulatorBoundary extends JFrame {
 	}
 
 	public void initList() {
+		LocalList = Controller.getProgramList();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 559, 447);
 		Mode = false; //Utente
@@ -296,15 +327,9 @@ public class EmulatorBoundary extends JFrame {
 		ProgramList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ProgramList.setForeground(Color.WHITE);
 		ProgramList.setFont(new Font("OCR A Extended", Font.BOLD, 18));
-		ProgramList.setModel(new AbstractListModel() {
-			String[] values = new String[] {"01 - Mario Bros.iNES", "02 - Carmine Marra.iNES", "03 - Add6502.iNES"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		
+		RefreshList();
+
 		ProgramList.setBorder(new LineBorder(Color.GRAY, 2));
 		ProgramList.setBackground(Color.DARK_GRAY);
 		ProgramList.setBounds(189, 11, 344, 300);
@@ -382,7 +407,6 @@ public class EmulatorBoundary extends JFrame {
 			protected Void doInBackground() throws Exception {
 				
 			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), Configuration.getPath());
-			//Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), "C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\nestest.ines");
 
 			return null;
 

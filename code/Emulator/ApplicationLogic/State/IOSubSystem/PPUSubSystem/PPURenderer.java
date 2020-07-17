@@ -1,5 +1,7 @@
 package Emulator.ApplicationLogic.State.IOSubSystem.PPUSubSystem;
 
+import java.util.ArrayList;
+
 import Emulator.ApplicationLogic.ByteManager;
 import Emulator.ApplicationLogic.State.ClockManager;
 import Emulator.ApplicationLogic.State.IOSubSystem.IOManager;
@@ -14,6 +16,15 @@ public class PPURenderer {
 	private static final int NAMETABLE_Y = 11;
 	private static final int VERTICAL_BLANK = 7;
 	private static final int PATTERN_BACKGROUND = 4;
+	private static final int PATTERN_SPRITE = 3;
+	private static final int SPRITE_SIZE = 5;
+	private static final int SPRITE_OVERFLOW = 5;
+	
+	//MACRO foreground
+	private static final int Y = 0;
+	private static final int ID = 1;
+	private static final int ATTRIBUTE = 2;
+	private static final int X = 3;
 	
 	private volatile static PPURenderer PPURenderer = null;
 	
@@ -209,6 +220,24 @@ public class PPURenderer {
 			bg_shifter_attrib_hi <<= 1;												//shifto
 			P.setBg_shifter_attrib_hi(bg_shifter_attrib_hi);						//Sostiruisco
 		}
+		
+		//Foreground
+		int render_sprites = ByteManager.extractBit(RENDER_SPRITES, mask);
+		if (render_sprites==1 && P.getCycles() >= 1 && P.getCycles() < 258)
+		{
+			for (int i = 0; i < P.getSprite_count(); i+=4)
+			{
+				if (Byte.toUnsignedInt(P.getSpriteScanline().get(i + X)) > 0)
+				{
+					P.decrease_sprite_scanline_x(i);
+				}
+				else
+				{
+					P.shift_sprite_shifters(i/4);
+				}
+			}
+		}
+		
 	}
 	
 	public void Render(Integer Scanline, Integer Cycle) {
@@ -229,6 +258,7 @@ public class PPURenderer {
 			Byte status = IOM.getPPUStatus();
 			status = ByteManager.setBit(VERTICAL_BLANK, 0, status);
 			IOM.setPPUStatus(status);
+			P.clearSprite();
 		}
 		
 		if ((cycle >= 2 && cycle < 258) || (cycle >= 321 && cycle < 338)){
@@ -321,7 +351,186 @@ public class PPURenderer {
 			// End of vertical blank period so reset the Y address ready for rendering
 			TransferAddressY();
 		}
+		
+		// Foreground Rendering ========================================================
+	
+		if (cycle == 257 && scanline >= 0)
+		{
+			// Pulisco la sprite memory
+			ArrayList <Byte> spriteScanline = new ArrayList<>(P.getSpriteScanline());							//SpriteScanline locale
+			ArrayList <Byte> sprite_shifter_pattern_lo = new ArrayList<>(P.getSprite_shifter_pattern_lo());		//sprite_shifter_pattern_lo locale
+			ArrayList <Byte> sprite_shifter_pattern_hi = new ArrayList<>(P.getSprite_shifter_pattern_hi());		//sprite_shifter_pattern_hi locale
+			
+			//Pulisco tutte le informazioni
+			for(int i = 0; i < 32; i++) {
+				spriteScanline.set(i,(byte)0xFF);									//il valore 0xFF indica che tutti gli sprites sono fuori dallo schermo
+			}
+			for(int i = 0; i < 8; i++) {
+				sprite_shifter_pattern_lo.set(i,(byte)0x00);
+				sprite_shifter_pattern_hi.set(i,(byte)0x00);
+			}
+			
+			P.setSprite_count(0);
+
+			//Indice utilizzato per verificare nell'OAM se vi sono Sprite da visualizzare
+			char nOAMEntry = 0x0000;
+
+			//Nuovo set di sprites, lo Sprite zero potrebbe non esistere quindi va pulito
+			P.setbSpriteZeroHitPossible(false);
+			
+			while ((int)nOAMEntry < 256 && P.getSprite_count() < 36)
+			{
+				// Note the conversion to signed numbers here
+				int diff = (scanline - Byte.toUnsignedInt((P.readOAM((char)(nOAMEntry + Y))))); //DA CONTROLLARE SE UNSIGNED
+
+				// Se la differenza è positiva ed è minore di 8 o 16 a seconda della modalità allora lo sprite è visibile
+				Integer spritesize = ByteManager.extractBit(SPRITE_SIZE, IOM.getPPUControl());			//Estraggo il bit spritesize dal registro control
+				if (diff >= 0 && diff < (spritesize==1 ? 16 : 8))
+				{
+					// lo Sprite è visible, quindi copio l'attribute nello Sprite scanline. (Se non ne ho già presi altri 8)
+					if (P.getSprite_count() < 32)
+					{
+						// se è lo sprite zero
+						if (nOAMEntry == 0)
+						{
+							P.setbSpriteZeroHitPossible(true);
+						}
+						spriteScanline.set(P.getSprite_count() + Y, P.readOAM((char)(nOAMEntry + Y)));
+						spriteScanline.set(P.getSprite_count() + ID, P.readOAM((char)(nOAMEntry + ID)));
+						spriteScanline.set(P.getSprite_count() + ATTRIBUTE, P.readOAM((char)(nOAMEntry + ATTRIBUTE)));
+						spriteScanline.set(P.getSprite_count() + X, P.readOAM((char)(nOAMEntry + X)));
+						
+						P.setSprite_count(P.getSprite_count() + 4);
+					}				
+				}
+
+				nOAMEntry = (char)((int)nOAMEntry + 4);
+			} // Fine dello sprite evaluation 
+
+			// Set dello sprite overflow flag se ho preso più di 8 sprites
+			int val;
+			if(P.getSprite_count() > 32) {
+				val = 1;
+			}
+			else val = 0;
+			IOM.setPPUStatus(ByteManager.setBit(SPRITE_OVERFLOW, val, IOM.getPPUStatus()));
+			
+			P.setSpriteScanline(spriteScanline);
+			P.setSprite_shifter_pattern_lo(sprite_shifter_pattern_lo);
+			P.setSprite_shifter_pattern_hi(sprite_shifter_pattern_hi);
+		}
+
+		if (cycle == 340)
+		{
+			ArrayList <Byte> spriteScanline = new ArrayList<>(P.getSpriteScanline());							//SpriteScanline locale
+			ArrayList <Byte> sprite_shifter_pattern_lo = new ArrayList<>(P.getSprite_shifter_pattern_lo());		//sprite_shifter_pattern_lo locale
+			ArrayList <Byte> sprite_shifter_pattern_hi = new ArrayList<>(P.getSprite_shifter_pattern_hi());		//sprite_shifter_pattern_hi locale
+			// Preparo gli shifter register per il foreground
+			for (int i = 0; i < P.getSprite_count(); i+=4)
+			{
+
+				Byte sprite_pattern_bits_lo;
+				Byte sprite_pattern_bits_hi;
+				char sprite_pattern_addr_lo;
+				char sprite_pattern_addr_hi;
+
+				Integer sprite_size = ByteManager.extractBit(SPRITE_SIZE, IOM.getPPUControl());			//Estraggo il bit spritesize dal registro control
+				if (sprite_size == 0)
+				{
+					// 8x8 Sprite Mode 
+					
+					if ((Byte.toUnsignedInt(spriteScanline.get(i + ATTRIBUTE)) & 0x80) == 0)
+					{
+						//Lo Sprite non è specchiato verticalmente  
+						sprite_pattern_addr_lo = (char) ((ByteManager.extractBit(PATTERN_SPRITE, IOM.getPPUControl()) << 12  ) 	 // Quale Pattern Table? 0KB o 4KB offset
+														| (Byte.toUnsignedInt(spriteScanline.get(i + ID))   << 4   ) 			 // Quale Cella? Tile ID * 16 (16 bytes per tile)
+														| (scanline - Byte.toUnsignedInt(spriteScanline.get(i + Y)))); 			 // Quale riga in cell? (0->7)
+														
+					}
+					else
+					{
+						// Lo Sprite è specchiato verticalmente
+						sprite_pattern_addr_lo = (char) ((ByteManager.extractBit(PATTERN_SPRITE, IOM.getPPUControl()) << 12  ) 	 // Quale Pattern Table? 0KB o 4KB offset
+														| (Byte.toUnsignedInt(spriteScanline.get(i + ID))   << 4   ) 			 // Quale Cella? Tile ID * 16 (16 bytes per tile)
+														| (7 - (scanline - Byte.toUnsignedInt(spriteScanline.get(i + Y))))); 	 // Quale riga in cell? (7->0)
+					}
+
+				}
+				else
+				{
+					// 8x16 Sprite Mode 
+					if ((Byte.toUnsignedInt(spriteScanline.get(i + ATTRIBUTE)) & 0x80) == 0)
+					{
+						//Lo Sprite non è specchiato verticalmente
+						if (scanline - Byte.toUnsignedInt(spriteScanline.get(i + Y)) < 8)
+						{
+							// Reading Top half Tile
+							sprite_pattern_addr_lo =(char)( ( (Byte.toUnsignedInt(spriteScanline.get(i + ID)) & 0x01) << 12  )        // Quale Pattern Table? 0KB or 4KB offset
+															| ( (Byte.toUnsignedInt(spriteScanline.get(i + ID)) & 0xFE) << 4 )        // Quale Cell? Tile ID * 16 (16 bytes per tile)
+															| ((scanline - Byte.toUnsignedInt(spriteScanline.get(i + Y))) & 0x07 ) ); // Quale riga in cell? (0->7)
+						}
+						else
+						{
+							// Reading Bottom Half Tile
+							sprite_pattern_addr_lo =(char)( ( (Byte.toUnsignedInt(spriteScanline.get(i + ID)) & 0x01) << 12  )       	  // Quale Pattern Table? 0KB or 4KB offset
+															| (((Byte.toUnsignedInt(spriteScanline.get(i + ID)) & 0xFE)+ 1) << 4 )        // Quale Cell? Tile ID * 16 (16 bytes per tile)
+															| ((scanline - Byte.toUnsignedInt(spriteScanline.get(i + Y))) & 0x07 ) ); 	  // Quale riga in cell? (0->7)
+						}
+					}
+					else
+					{
+						// Lo Sprite è specchiato verticalmente
+						if (scanline - Byte.toUnsignedInt(spriteScanline.get(i + Y)) < 8)
+						{
+							// Reading Top half Tile
+							sprite_pattern_addr_lo =(char)( ( (Byte.toUnsignedInt(spriteScanline.get(i + ID)) & 0x01) << 12  )       	        // Quale Pattern Table? 0KB or 4KB offset
+															| (((Byte.toUnsignedInt(spriteScanline.get(i + ID)) & 0xFE)+ 1) << 4 )              // Quale Cell? Tile ID * 16 (16 bytes per tile)
+															| ((7 - (scanline - Byte.toUnsignedInt(spriteScanline.get(i + Y)))) & 0x07 ) ); 	// Quale riga in cell? (0->7)
+						}
+						else
+						{
+							// Reading Bottom Half Tile
+							sprite_pattern_addr_lo =(char)( ( (Byte.toUnsignedInt(spriteScanline.get(i + ID)) & 0x01) << 12  )       	        // Quale Pattern Table? 0KB or 4KB offset
+															| ((Byte.toUnsignedInt(spriteScanline.get(i + ID)) & 0xFE) << 4 )            		// Quale Cell? Tile ID * 16 (16 bytes per tile)
+															| ((7 - (scanline - Byte.toUnsignedInt(spriteScanline.get(i + Y)))) & 0x07 ) ); 	// Quale riga in cell? (0->7)
+						}
+					}
+				}
+
+				//Hi bit plane equivale al low sommato a 8
+				sprite_pattern_addr_hi = (char) ((int)sprite_pattern_addr_lo + 8);
+
+				//Ora che abbiamo gli indirizzi possiamo leggere gli sprite
+				sprite_pattern_bits_lo = PPURead(sprite_pattern_addr_lo);
+				sprite_pattern_bits_hi = PPURead(sprite_pattern_addr_hi);
+
+				//Se lo sprite è capovolto bisogna capovolgere i Bytes del pattern
+				if ((Byte.toUnsignedInt(spriteScanline.get(i + ATTRIBUTE)) & 0x40) != 0){
+
+					// Capovolgo i Patterns orizzontalmente
+					sprite_pattern_bits_lo = flipbyte(sprite_pattern_bits_lo);
+					sprite_pattern_bits_hi = flipbyte(sprite_pattern_bits_hi);
+				}
+
+				// Carico gli Shift register
+				sprite_shifter_pattern_lo.set(i/4, sprite_pattern_bits_lo);
+				sprite_shifter_pattern_hi.set(i/4, sprite_pattern_bits_hi);
+			}
+			//Riaggiorno i valori in PPU
+			P.setSpriteScanline(spriteScanline);
+			P.setSprite_shifter_pattern_lo(sprite_shifter_pattern_lo);
+			P.setSprite_shifter_pattern_hi(sprite_shifter_pattern_hi);
+		}	
+		
 	}
+	
+	private Byte flipbyte(Byte b)
+	{
+		b = (byte)((Byte.toUnsignedInt((byte)(b & 0xF0)) >> 4) | (Byte.toUnsignedInt((byte)(b & 0x0F)) << 4));
+		b = (byte)((Byte.toUnsignedInt((byte)(b & 0xCC)) >> 2) | (Byte.toUnsignedInt((byte)(b & 0x33)) << 2));
+		b = (byte)((Byte.toUnsignedInt((byte)(b & 0xAA)) >> 1) | (Byte.toUnsignedInt((byte)(b & 0x55)) << 1));
+		return b;
+	};
 	
 	public Byte PPURead(char addr)
 	{

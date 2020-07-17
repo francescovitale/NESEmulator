@@ -15,6 +15,17 @@ public class PPU {
 	private static final int VERTICAL_BLANK = 7;
 	private static final int ENABLE_NMI = 7;
 	private static final int RENDER_BACKGROUND = 3;
+	private static final int RENDER_SPRITES = 4;
+	private static final int RENDER_BACKGROUND_LEFT = 1;
+	private static final int RENDER_SPRITES_LEFT = 2;
+	private static final int SPRITE_ZERO_HIT = 6;
+	private static final int SPRITE_OVERFLOW = 5;
+	
+	//MACRO foreground
+	private static final int Y = 0;
+	private static final int ID = 1;
+	private static final int ATTRIBUTE = 2;
+	private static final int X = 3;
 	
 	private ArrayList<String> NESPalette;
 	private ArrayList<Pixel> returnedPixels;
@@ -24,6 +35,8 @@ public class PPU {
 
  	private char vram_addr;
  	private char tram_addr;
+ 	
+ 	//Background
  	private char bg_shifter_pattern_lo;
 	private char bg_shifter_pattern_hi;
  	private char bg_shifter_attrib_lo;
@@ -34,6 +47,15 @@ public class PPU {
  	private Byte bg_next_tile_attr;
  	private Byte bg_next_tile_lsb;
  	private Byte bg_next_tile_msb;
+ 	
+ 	//Foreground
+	private ArrayList <Byte> spriteScanline;	
+	private Integer sprite_count;
+	private ArrayList <Byte> sprite_shifter_pattern_lo; 
+	private ArrayList <Byte> sprite_shifter_pattern_hi; 
+	// Sprite Zero Collision Flags
+	private Boolean bSpriteZeroHitPossible;
+	private Boolean bSpriteZeroBeingRendered;
  	
  	private Integer address_latch;
  	private Integer scanline;
@@ -54,7 +76,7 @@ public class PPU {
 		//Loopy registers
 	 	vram_addr = 0x0000;
 	 	tram_addr = 0x0000;
-	 	//shifter register per il rendering
+	 	//shifter register per il rendering background
 	 	bg_shifter_pattern_lo = 0x0000;
 		bg_shifter_pattern_hi = 0x0000;
 		bg_shifter_attrib_lo = 0x0000;
@@ -79,10 +101,29 @@ public class PPU {
 		//Indirizzo OAM
 		OAMaddr = 0x00;
 		
+	 	//Foreground
+		spriteScanline = new ArrayList <Byte>();
+		for(int i = 0; i < 32; i++) {
+			//Contiene gli 8 sprite visualizzabili a schermo
+			spriteScanline.add((byte)0xFF);
+		}
+		sprite_count= 0;
+		//shifter register per il rendering foreground
+		sprite_shifter_pattern_lo = new ArrayList <Byte>();
+		sprite_shifter_pattern_hi = new ArrayList <Byte>();
+		for(int i = 0; i < 8; i++) {
+			sprite_shifter_pattern_lo.add((byte)0x00);
+			sprite_shifter_pattern_hi.add((byte)0x00);
+		}
+		// Sprite Zero Collision Flags
+		bSpriteZeroHitPossible = false;
+		bSpriteZeroBeingRendered = false;
+		
 		initializeNESPalette();
 		returnedPixels = new ArrayList<Pixel>();
 	};
 	  
+	
 	private void initializeNESPalette() {
 		NESPalette = new ArrayList<String>();
 		for(int i = 0; i <= (int)0x003F; i++)
@@ -195,6 +236,22 @@ public class PPU {
 		IOM.setPPUMask((byte)0x00);
 		IOM.setPPUControl((byte)0x00);
 		
+		//Foreground
+		for(int i = 0; i < 32; i++) {
+			//Contiene gli 8 sprite visualizzabili a schermo
+			spriteScanline.set(i,(byte)0xFF);
+		}
+		sprite_count= 0;
+		//shifter register per il rendering foreground
+		for(int i = 0; i < 8; i++) {
+			sprite_shifter_pattern_lo.set(i,(byte)0x00);
+			sprite_shifter_pattern_hi.set(i,(byte)0x00);
+		}
+		// Sprite Zero Collision Flags
+		bSpriteZeroHitPossible = false;
+		bSpriteZeroBeingRendered = false;
+		
+		
 		/* Reset dei loopy registers */
 		vram_addr = 0x0000;
 		tram_addr = 0x0000;
@@ -306,7 +363,7 @@ public class PPU {
 		
 		Byte mask = IOM.getPPUMask();
 		int render_background = ByteManager.extractBit(RENDER_BACKGROUND,mask);
-		
+		// Background =============================================================
 		if (render_background == 1)
 		{
 			/* bit_mux consentira' di estrarre solamente il singolo pixel da renderizzare */
@@ -367,7 +424,148 @@ public class PPU {
 			System.out.println("0x3F00 + (bg_palette_info << 2) + bg_pattern_info: "+ (0x3F00+(bg_palette_info << 2)+bg_pattern_info));*/
 		}
 		
-		hex_color = getColourFromPaletteRam(bg_palette_info, bg_pattern_info); // Il colore tratto servirà a indirizzare NESPalette
+
+		// Foreground =============================================================
+		Byte fg_pattern = 0x00;  		 //2-BIT per il pixel da renderizzare
+		Byte fg_palette = 0x00; 	 //3-BIT per il colore della palette
+		Byte fg_priority = 0x00;	 //gestione della Priorità
+		
+		int render_sprites = ByteManager.extractBit(RENDER_SPRITES,mask);
+		if (render_sprites == 1)
+		{
+			bSpriteZeroBeingRendered = false;
+			
+			//debug
+			//System.out.println("Sprite count:" + sprite_count);
+			
+			for (int i = 0; i < sprite_count; i+=4)
+			{
+				// Se lo sprite collide con lo scanline
+				if (Byte.toUnsignedInt(spriteScanline.get(i + X)) == 0) 
+				{
+					Byte fg_pattern_lo;
+					Byte fg_pattern_hi;
+					// Determino il valore dei pixel
+					if((Byte.toUnsignedInt(sprite_shifter_pattern_lo.get(i/4)) & 0x80) != 0) {
+						fg_pattern_lo = 0x01;
+					}
+					else {
+						fg_pattern_lo = 0x00;
+					}
+					
+					if((Byte.toUnsignedInt(sprite_shifter_pattern_hi.get(i/4)) & 0x80) != 0) {
+						fg_pattern_hi = 0x01;
+					}
+					else {
+						fg_pattern_hi = 0x00;
+					}
+					
+					fg_pattern = (byte) ((Byte.toUnsignedInt(fg_pattern_hi)<< 1) | Byte.toUnsignedInt(fg_pattern_lo));
+
+					// Estraggo la palette dai primi 2 bits.
+					fg_palette = (byte) ((Byte.toUnsignedInt(spriteScanline.get(i + ATTRIBUTE)) & 0x03) + 0x04);
+					if((Byte.toUnsignedInt(spriteScanline.get(i + ATTRIBUTE)) & 0x20) == 0) {
+						fg_priority = 0x01;
+					}
+					else {
+						fg_priority = 0x00;
+					}
+					
+
+					// Se il pattern non è trasparente lo renderizziamo 
+					if (fg_pattern != 0)
+					{
+						if (i == 0) // Is this sprite zero?
+						{
+							bSpriteZeroBeingRendered = true;
+						}
+						break;
+					}				
+				}
+			}		
+		}
+
+		// Dobbiamo combinare le informazioni del background con quelle del foreground.
+		Byte pattern = 0x00;    // The FINAL Pattern...
+		Byte palette = 0x00; 	// The FINAL Palette...
+		
+		//DEBUG
+		//System.out.println("bg_pattern: " + Byte.toUnsignedInt(bg_pattern_info) + "fg_pattern: " + Byte.toUnsignedInt(fg_pattern));
+		
+		if (Byte.toUnsignedInt(bg_pattern_info) == 0 && Byte.toUnsignedInt(fg_pattern) == 0)
+		{
+			// The background pixel is transparent
+			// The foreground pixel is transparent
+			// No winner, draw "background" colour
+			pattern = 0x00;
+			palette = 0x00;
+		}
+		else if (Byte.toUnsignedInt(bg_pattern_info) == 0 && Byte.toUnsignedInt(fg_pattern) > 0)
+		{
+			// The background pixel is transparent
+			// The foreground pixel is visible
+			// Foreground wins!
+			pattern = fg_pattern;
+			palette = fg_palette;
+		}
+		else if (Byte.toUnsignedInt(bg_pattern_info) > 0 && Byte.toUnsignedInt(fg_pattern) == 0)
+		{
+			// The background pixel is visible
+			// The foreground pixel is transparent
+			// Background wins!
+			pattern = bg_pattern_info;
+			palette = bg_palette_info;
+		}
+		else if (Byte.toUnsignedInt(bg_pattern_info) > 0 && Byte.toUnsignedInt(fg_pattern) > 0)
+		{
+			// The background pixel is visible
+			// The foreground pixel is visible
+			// Hmmm...
+			if (Byte.toUnsignedInt(fg_priority) == 1)
+			{
+				// Foreground cheats its way to victory!
+				pattern = fg_pattern;
+				palette = fg_palette;
+			}
+			else
+			{
+				// Background is considered more important!
+				pattern = bg_pattern_info;
+				palette = bg_palette_info;
+			}
+
+			// Sprite Zero Hit detection
+			if (bSpriteZeroHitPossible && bSpriteZeroBeingRendered)
+			{
+				// Sprite zero is a collision between foreground and background
+				// so they must both be enabled
+				if ((render_background & render_sprites)==1)
+				{
+					// The left edge of the screen has specific switches to control
+					// its appearance. This is used to smooth inconsistencies when
+					// scrolling (since sprites x coord must be >= 0)
+					int render_background_left = ByteManager.extractBit(RENDER_BACKGROUND_LEFT,mask); 
+					int render_sprites_left = ByteManager.extractBit(RENDER_SPRITES_LEFT,mask); 
+					
+					if ((render_background_left | render_sprites_left) == 0)
+					{
+						if (cycles >= 9 && cycles < 258)
+						{
+							IOM.setPPUStatus(ByteManager.setBit(SPRITE_ZERO_HIT, 1, IOM.getPPUStatus()));
+						}
+					}
+					else
+					{
+						if (cycles >= 1 && cycles < 258)
+						{
+							IOM.setPPUStatus(ByteManager.setBit(SPRITE_ZERO_HIT, 1, IOM.getPPUStatus()));
+						}
+					}
+				}
+			}
+		}
+		
+		hex_color = getColourFromPaletteRam(palette, pattern); // Il colore tratto servirà a indirizzare NESPalette
 		Integer intTemp = Byte.toUnsignedInt(hex_color);
 		String stringTemp = Integer.toHexString(intTemp);
 		
@@ -402,6 +600,27 @@ public class PPU {
 
 	public void setOAMaddr(Byte oAMaddr) {
 		OAMaddr = oAMaddr;
+	}
+	
+	//Foreground
+	public void decrease_sprite_scanline_x(int i) {
+		spriteScanline.set(i + X, (byte)(Byte.toUnsignedInt(spriteScanline.get(i + X)) - 1));
+	}
+	
+	public void shift_sprite_shifters(int i) {
+		Byte value_lo = (byte) (Byte.toUnsignedInt(sprite_shifter_pattern_lo.get(i)) << 1);
+		sprite_shifter_pattern_lo.set(i, value_lo);
+		Byte value_hi = (byte) (Byte.toUnsignedInt(sprite_shifter_pattern_hi.get(i)) << 1);
+		sprite_shifter_pattern_hi.set(i, value_hi);
+	}
+	
+	public void clearSprite() {
+		IOM.setPPUStatus(ByteManager.setBit(SPRITE_OVERFLOW, 0, IOM.getPPUStatus()));
+		IOM.setPPUStatus(ByteManager.setBit(SPRITE_ZERO_HIT, 0, IOM.getPPUStatus()));
+		for(int i = 0; i < 8; i++) {
+			sprite_shifter_pattern_lo.set(i,(byte)0x00);
+			sprite_shifter_pattern_hi.set(i,(byte)0x00);
+		}
 	}
 	
 	//GETTER AND SETTER 
@@ -513,4 +732,53 @@ public class PPU {
 	public void setBg_next_tile_msb(Byte bg_next_tile_msb) {
 		this.bg_next_tile_msb = bg_next_tile_msb;
 	}
+	
+	public ArrayList<Byte> getSpriteScanline() {
+		return spriteScanline;
+	}
+
+	public void setSpriteScanline(ArrayList<Byte> spriteScanline) {
+		this.spriteScanline = spriteScanline;
+	}
+
+	public Integer getSprite_count() {
+		return sprite_count;
+	}
+
+	public void setSprite_count(Integer sprite_count) {
+		this.sprite_count = sprite_count;
+	}
+
+	public ArrayList<Byte> getSprite_shifter_pattern_lo() {
+		return sprite_shifter_pattern_lo;
+	}
+
+	public void setSprite_shifter_pattern_lo(ArrayList<Byte> sprite_shifter_pattern_lo) {
+		this.sprite_shifter_pattern_lo = sprite_shifter_pattern_lo;
+	}
+
+	public ArrayList<Byte> getSprite_shifter_pattern_hi() {
+		return sprite_shifter_pattern_hi;
+	}
+
+	public void setSprite_shifter_pattern_hi(ArrayList<Byte> sprite_shifter_pattern_hi) {
+		this.sprite_shifter_pattern_hi = sprite_shifter_pattern_hi;
+	}
+
+	public Boolean getbSpriteZeroHitPossible() {
+		return bSpriteZeroHitPossible;
+	}
+
+	public void setbSpriteZeroHitPossible(Boolean bSpriteZeroHitPossible) {
+		this.bSpriteZeroHitPossible = bSpriteZeroHitPossible;
+	}
+
+	public Boolean getbSpriteZeroBeingRendered() {
+		return bSpriteZeroBeingRendered;
+	}
+
+	public void setbSpriteZeroBeingRendered(Boolean bSpriteZeroBeingRendered) {
+		this.bSpriteZeroBeingRendered = bSpriteZeroBeingRendered;
+	}
+
 }

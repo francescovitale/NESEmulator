@@ -1320,7 +1320,7 @@ public class OperativeUnit {
 		Instruction NoOp5= MicroRom[252];
 		Instruction NoOp6 = MicroRom[137];
 
-		if ( CurrentInstruction == NoOp1 ||CurrentInstruction== NoOp2 ||CurrentInstruction== NoOp3 ||CurrentInstruction== NoOp4 ||CurrentInstruction== NoOp5 )
+		if ( CurrentInstruction.equals(NoOp1) || CurrentInstruction.equals(NoOp2) || CurrentInstruction.equals(NoOp3) ||CurrentInstruction.equals(NoOp4) ||CurrentInstruction.equals(NoOp5))
 			return true;
 		else 
 			return false;

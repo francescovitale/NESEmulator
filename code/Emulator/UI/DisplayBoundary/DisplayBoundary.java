@@ -31,12 +31,16 @@ import java.awt.event.KeyEvent;
 import javax.swing.border.LineBorder;
 
 import javax.swing.JTextPane;
+import javax.swing.JTextField;
+import java.awt.CardLayout;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class DisplayBoundary extends JFrame {
-
-	private CPUFrame CPUFrame;
-	private MemoryFrame MemFrame;
-	private PPUFrame PPUFrame;
 	
 	private JTextPane RegistersTextPane;
 	private JTextPane MEMTextPane;
@@ -46,6 +50,12 @@ public class DisplayBoundary extends JFrame {
 	private UIConfiguration Configuration;
 	private Controller controller;
 	private Byte keys;
+	private JTextField txtRange;
+	private JComboBox MEMComboBox;
+	private JPanel CPUPanel;
+	private JPanel PPUPanel;
+	
+	private int RegShow = 0;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -77,7 +87,7 @@ public class DisplayBoundary extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//if(Configuration.getMode() == true) //MODE PROGRAMMER
-			setBounds(100, 100, 1193, 768);
+			setBounds(100, 100, 1193, 760);
 		//else setBounds(100, 100, 3*(240 + 21), 3*(252)); //MODE USER
 		
 		contentPane = new JPanel();
@@ -90,27 +100,6 @@ public class DisplayBoundary extends JFrame {
 		NESDisplay = new Screen();
 		NESDisplay.setLocation(0, 0);
 		contentPane.add(NESDisplay);
-		
-		JButton CPUButton = new JButton("CPU");
-		NESDisplay.add(CPUButton);
-		CPUButton.setForeground(Color.RED);
-		CPUButton.setFont(new Font("OCR A Extended", Font.BOLD, 11));
-		CPUButton.setBackground(UIManager.getColor("Button.background"));
-		CPUButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CPUFrame.setVisible(true);
-				
-			}
-		});
-		
-		JButton PPUButton = new JButton("PPU");
-		NESDisplay.add(PPUButton);
-		PPUButton.setFont(new Font("OCR A Extended", Font.BOLD, 11));
-		PPUButton.setForeground(Color.RED);
-		PPUButton.setBackground(UIManager.getColor("Button.background"));
-		
-		JButton MemButton = new JButton("Memory");
-		NESDisplay.add(MemButton);
 		
 		Panel PlayPanel = new Panel();
 		PlayPanel.setBounds(774, 10, 48, 42);
@@ -128,9 +117,17 @@ public class DisplayBoundary extends JFrame {
 		ResetPanel.setBounds(936, 10, 48, 42);
 		contentPane.add(ResetPanel);
 		
-		JPanel CPUPanel = new JPanel();
+		CPUPanel = new JPanel();
+		CPUPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				CPUPanel.setBackground(new Color(100, 149, 237));
+				PPUPanel.setBackground(new Color(0, 0, 128));
+				RegShow = 0;
+			}
+		});
 		CPUPanel.setForeground(new Color(255, 255, 255));
-		CPUPanel.setBackground(new Color(0, 0, 128));
+		CPUPanel.setBackground(new Color(100, 149, 237));
 		CPUPanel.setBounds(774, 58, 102, 42);
 		contentPane.add(CPUPanel);
 		CPUPanel.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
@@ -141,7 +138,15 @@ public class DisplayBoundary extends JFrame {
 		CPULabel.setForeground(new Color(255, 255, 255));
 		CPUPanel.add(CPULabel);
 		
-		JPanel PPUPanel = new JPanel();
+		PPUPanel = new JPanel();
+		PPUPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PPUPanel.setBackground(new Color(100, 149, 237));
+				CPUPanel.setBackground(new Color(0, 0, 128));
+				RegShow = 1;
+			}
+		});
 		PPUPanel.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
 		PPUPanel.setBackground(new Color(0, 0, 128));
 		PPUPanel.setBounds(882, 58, 102, 42);
@@ -174,8 +179,20 @@ public class DisplayBoundary extends JFrame {
 		RegistersPanel.setLayout(null);
 		
 		JPanel MEMSelectorPanel = new JPanel();
-		MEMSelectorPanel.setBounds(774, 251, 318, 24);
+		MEMSelectorPanel.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
+		MEMSelectorPanel.setBackground(new Color(0, 0, 128));
+		MEMSelectorPanel.setBounds(774, 251, 156, 24);
 		contentPane.add(MEMSelectorPanel);
+		MEMSelectorPanel.setLayout(new CardLayout(0, 0));
+		
+		MEMComboBox = new JComboBox();
+		MEMComboBox.setFocusable(false);
+		MEMComboBox.setModel(new DefaultComboBoxModel(new String[] {"RAM", "VRAM", "Palette RAM", "OAM"}));
+		MEMComboBox.setForeground(new Color(255, 255, 255));
+		MEMComboBox.setBorder(null);
+		MEMComboBox.setFont(new Font("OCR A Extended", Font.PLAIN, 11));
+		MEMComboBox.setBackground(new Color(0, 0, 128));
+		MEMSelectorPanel.add(MEMComboBox, "name_58506618704500");
 		
 		JPanel MEMPanel = new JPanel();
 		MEMPanel.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
@@ -198,50 +215,37 @@ public class DisplayBoundary extends JFrame {
 		RegistersTextPane.setBounds(778, 106, 310, 139);
 		contentPane.add(RegistersTextPane);
 		
-		MemButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				MemFrame.setVisible(true);
-			}
-		});
+		JPanel MEMRangePanel = new JPanel();
+		MEMRangePanel.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
+		MEMRangePanel.setBackground(new Color(0, 0, 128));
+		MEMRangePanel.setBounds(932, 251, 156, 24);
+		contentPane.add(MEMRangePanel);
+		MEMRangePanel.setLayout(new CardLayout(0, 0));
+		
+		txtRange = new JTextField();
+		txtRange.setHorizontalAlignment(SwingConstants.CENTER);
+		txtRange.setFont(new Font("OCR A Extended", Font.PLAIN, 13));
+		txtRange.setText("0x0000");
+		txtRange.setBorder(null);
+		txtRange.setForeground(new Color(255, 255, 255));
+		txtRange.setBackground(new Color(0, 0, 128));
+		MEMRangePanel.add(txtRange, "name_58465746839300");
+		txtRange.setColumns(10);
 			
 	}
 
 	private void initComponents() {
-		CPUFrame = new CPUFrame();
-		PPUFrame = new PPUFrame();
-		MemFrame = new MemoryFrame();
 		controller = new Controller();
 		
 	}
 
-	public CPUFrame getCPUFrame() {
-		return CPUFrame;
-	}
-
-	public void setCPUFrame(CPUFrame cPUFrame) {
-		CPUFrame = cPUFrame;
-	}
-
-	public MemoryFrame getMemFrame() {
-		return MemFrame;
-	}
-
-	public void setMemFrame(MemoryFrame memFrame) {
-		MemFrame = memFrame;
-	}
-
-	public PPUFrame getPPUFrame() {
-		return PPUFrame;
-	}
-
-	public void setPPUFrame(PPUFrame pPUFrame) {
-		PPUFrame = pPUFrame;
-	}
-
 	public void UpdateDisplayBoundary(ReturnedState instance) {
-		UpdateCPUState(instance);
+		if(RegShow == 0)
+			UpdateCPUState(instance);
+		else if(RegShow == 1)
+			UpdatePPUState(instance);
 		UpdateMemState(instance);
-		UpdatePPUState(instance);
+
 		
 	}
 	
@@ -263,19 +267,12 @@ public class DisplayBoundary extends JFrame {
 		
 		RegistersTextPane.setText(Flags + RegSR + RegX + RegY + RegA + RegSP + RegPC);
 		
-		/*getCPUFrame().RegXLabel.setText("Reg X : " + instance.getCS().getX());
-		getCPUFrame().RegALabel.setText("Reg A : " + instance.getCS().getA());
-		getCPUFrame().RegYLabel.setText("Reg Y : " + instance.getCS().getY());
-		getCPUFrame().RegSSPLabel.setText("Reg SP : " +instance.getCS().getSP());
-		getCPUFrame().RegPCLabel.setText("Reg PC : " + Integer.toHexString(instance.getCS().getPC()));
-		getCPUFrame().RegSRLabel.setText("Reg SR : " + instance.getCS().getSR());*/
-		
 	}
 	 
-	
-	private void UpdateMemState(ReturnedState instance) {
-		/*
-		int addr = 0x0000;
+	private void UpdateRAM(ReturnedState instance)
+	{
+
+		int addr = Integer.decode(txtRange.getText());
 		int max_addr = 0x1FFF;
 		String Memory = "";
 		
@@ -289,27 +286,10 @@ public class DisplayBoundary extends JFrame {
 			addr += 8;
 		}
 		MEMTextPane.setText(Memory);
-		*/
-		/*
-		//PALETTE
-		int addr = 0x0000;
-		int max_addr = 0x20;
-		String Memory = "";
-		for(int i = 0; i < 26; i++) {
-			Memory += "0x"+String.format("%4s",Integer.toHexString((char)addr)).replace(" ","0") + " : ";
-			for(int j = addr; j < addr + 8; j++) {
-				if(addr < max_addr) Memory += String.format("%2s",Integer.toHexString(Byte.toUnsignedInt(instance.getPM().getPalette().get(j)))).replace(" ","0") +" ";
-				else Memory += "xx" + " ";
-			}
-			Memory += "\n";
-			addr += 8;
-		}
-		MEMTextPane.setText(Memory);
-		*/
-		
-		/*
-		//VRAM
-		int addr = 0x0000;
+	}
+	private void UpdateVRAM(ReturnedState instance)
+	{
+		int addr = Integer.decode(txtRange.getText());
 		int max_addr = 0x0400;
 		String Memory = "NAMETABLE 1\n";
 		for(int i = 0; i < 12; i++) {
@@ -321,7 +301,7 @@ public class DisplayBoundary extends JFrame {
 			Memory += "\n";
 			addr += 8;
 		}
-		addr = 0x0000;
+
 		max_addr = 0x0400;
 		Memory += "NAMETABLE 2\n";
 		for(int i = 0; i < 13; i++) {
@@ -334,8 +314,27 @@ public class DisplayBoundary extends JFrame {
 			addr += 8;
 		}
 		MEMTextPane.setText(Memory);
-		*/
-		int addr = 0x0000;
+	}
+	private void UpdatePRAM(ReturnedState instance)
+	{
+		int addr = Integer.decode(txtRange.getText());
+		int max_addr = 0x20;
+		String Memory = "";
+		for(int i = 0; i < 26; i++) {
+			Memory += "0x"+String.format("%4s",Integer.toHexString((char)addr)).replace(" ","0") + " : ";
+			for(int j = addr; j < addr + 8; j++) {
+				if(addr < max_addr) Memory += String.format("%2s",Integer.toHexString(Byte.toUnsignedInt(instance.getPM().getPalette().get(j)))).replace(" ","0") +" ";
+				else Memory += "xx" + " ";
+			}
+			Memory += "\n";
+			addr += 8;
+		}
+		MEMTextPane.setText(Memory);
+		
+	}
+	private void UpdateOAM(ReturnedState instance)
+	{
+		int addr = Integer.decode(txtRange.getText());
 		int max_addr = 0x0100;
 		String Memory = "";
 		
@@ -349,6 +348,17 @@ public class DisplayBoundary extends JFrame {
 			addr += 8;
 		}
 		MEMTextPane.setText(Memory);
+	}
+	private void UpdateMemState(ReturnedState instance) {
+		
+		if(MEMComboBox.getSelectedItem().toString() == "RAM")
+			UpdateRAM(instance);
+		else if(MEMComboBox.getSelectedItem().toString() == "VRAM")
+			UpdateVRAM(instance);
+		else if(MEMComboBox.getSelectedItem().toString() == "OAM")
+			UpdateOAM(instance);
+		else if(MEMComboBox.getSelectedItem().toString() == "Palette RAM")
+			UpdatePRAM(instance);
 	}
 	
 	private void UpdatePPUState(ReturnedState instance) {
@@ -417,5 +427,4 @@ public class DisplayBoundary extends JFrame {
 			}	
 		});
 	}
-	
 }
