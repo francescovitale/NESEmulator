@@ -11,4 +11,8 @@ public class InterpreterFacade {
 		ControlUnit.getInstance().execCycle();
 		return true;
 	}
+	
+	public void setMode(Boolean Mode){
+		ControlUnit.getInstance().setMode(Mode);
+	}
 }

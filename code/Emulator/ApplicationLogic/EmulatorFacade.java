@@ -37,10 +37,11 @@ public class EmulatorFacade {
 	}
 	
 	//Inizializzo il programma in memoria
-	public Boolean initProgram(String ROMName, Integer ID, String SelectedPath) {
+	public Boolean initProgram(String ROMName, Integer ID, String SelectedPath, Boolean Mode) {
 		Tsf = new TechnicalServicesFacade();
 		Programs = new ArrayList<Program>(Tsf.loadProgramData(SelectedPath));
 		int index;
+		IF.setMode(Mode);
 		
 		if(SelectedPath.isEmpty()) {
 			index = selectProgram(ROMName, ID);
@@ -50,7 +51,6 @@ public class EmulatorFacade {
 			return SF.loadData(Programs.get(0).getParsedROMData());
 			
 		}
-		
 		/*System.out.println(Programs.get(0).getROMData());
 		return true;	*/
 	}

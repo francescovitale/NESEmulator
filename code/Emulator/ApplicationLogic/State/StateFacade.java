@@ -96,4 +96,5 @@ public class StateFacade {
 	public void setkeys(Byte keys) {
 		Joypad.getInstance().setController(keys);	
 	}
+	
 }

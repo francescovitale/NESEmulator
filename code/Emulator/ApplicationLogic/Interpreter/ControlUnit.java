@@ -11,11 +11,13 @@ public class ControlUnit {
  	private Boolean bool_opcode;										//verifica sul ciclo aggiuntivo
  	private Boolean bool_addr;											//verifica sul ciclo aggiuntivo
  	private volatile static ControlUnit ControlUnit = null;				//Singleton
+ 	private Boolean Mode; 												//Modalità di esecuzione
  	
  	// DEBUG
  	public static Integer CYC=-1;
 	
 	protected ControlUnit() {
+		Mode = true;
 		InstructionRegister = 0x0;
 		cycles = 0;
 		setBool_opcode(false);
@@ -98,4 +100,13 @@ public class ControlUnit {
 		cycles --;
 	}
 
+	public Boolean getMode() {
+		return Mode;
+	}
+
+	public void setMode(Boolean mode) {
+		Mode = mode;
+	}
+
+	
 }

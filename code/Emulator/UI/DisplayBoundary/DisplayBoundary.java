@@ -86,9 +86,9 @@ public class DisplayBoundary extends JFrame {
 		System.out.println(Configuration.getMode());
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//if(Configuration.getMode() == true) //MODE PROGRAMMER
+		if(Configuration.getMode() == true) //MODE PROGRAMMER
 			setBounds(100, 100, 1193, 760);
-		//else setBounds(100, 100, 3*(240 + 21), 3*(252)); //MODE USER
+		else setBounds(100, 100, 3*(240 + 21), 3*(252)); //MODE USER
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.BLACK);

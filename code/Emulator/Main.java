@@ -20,9 +20,9 @@ public class Main {
 		//C.DumpMemory();
 		//Byte a = 0x10;
 		//Byte b = 
-		//C.InsertProgram("C:\\Users\\aceep\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\nestest.ines","",-1);
+		C.InsertProgram("C:\\Users\\Daniele\\eclipse-workspace\\NES\\src\\Emulator\\programmi di prova\\Donkey kong.txt","DonkeyKong",1);
 		
-		C.executeProgram("nestest",1,"");
+		//C.executeProgram("nestest",1,"");
 		
 		
 		

@@ -20,9 +20,9 @@ public class Controller {
 		
 	}
 	
-	public void executeProgram(String Nome, Integer ID, String Path) {
+	public void executeProgram(String Nome, Integer ID, String Path, Boolean Mode) {
 		
-		Emu.initProgram(Nome, ID, Path);
+		Emu.initProgram(Nome, ID, Path, Mode);
 		//DumpCartridge();
 		Emu.startCycle();
 

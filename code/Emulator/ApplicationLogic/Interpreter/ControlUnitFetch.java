@@ -24,10 +24,12 @@ public class ControlUnitFetch extends ControlUnitState {
 		Boolean NMIRequest_temp;
 		Boolean IRQRequest_temp;
 		
-		//Aggiorno lo stato da far visualizzare
-		SF.refreshState();
-		
 		CU = ControlUnit.getInstance();
+		
+		//Aggiorno lo stato da far visualizzare
+		if(CU.getMode()== true)
+			SF.refreshState();
+		
 		SF.setFlag("U", true);
 		
 		boolean stop=false;

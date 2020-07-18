@@ -77,7 +77,6 @@ public class EmulatorBoundary extends JFrame {
 		initComponents();
 		initList();
 		initMenu();
-
 	}
 	
 	private void initMenu() {
@@ -406,7 +405,7 @@ public class EmulatorBoundary extends JFrame {
 			@Override
 			protected Void doInBackground() throws Exception {
 				
-			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), Configuration.getPath());
+			Controller.executeProgram(Configuration.getProgramName(), Configuration.getProgramID(), Configuration.getPath(), Configuration.getMode());
 
 			return null;
 
