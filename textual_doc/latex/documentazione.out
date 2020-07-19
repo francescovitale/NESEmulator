@@ -1,0 +1,61 @@
+\BOOKMARK [1][-]{section.1}{Descrizione del processo}{}% 1
+\BOOKMARK [1][-]{section.2}{Avvio}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Vision}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Specifiche supplementari}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Glossario \(Stefano\)}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{Specifica dei requisiti}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Attori e Obiettivi}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Use-case model}{section.3}% 8
+\BOOKMARK [3][-]{subsubsection.3.2.1}{EseguiProgramma}{subsection.3.2}% 9
+\BOOKMARK [3][-]{subsubsection.3.2.2}{VisualizzaStatoArchitettura}{subsection.3.2}% 10
+\BOOKMARK [2][-]{subsection.3.3}{Feature list}{section.3}% 11
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Emulazione del Nintendo Entertainment System}{subsection.3.3}% 12
+\BOOKMARK [3][-]{subsubsection.3.3.2}{Gestione dei programmi}{subsection.3.3}% 13
+\BOOKMARK [3][-]{subsubsection.3.3.3}{Interfaccia grafica \(Stefano\)}{subsection.3.3}% 14
+\BOOKMARK [1][-]{section.4}{Analisi dei requisiti}{}% 15
+\BOOKMARK [2][-]{subsection.4.1}{Prima iterazione}{section.4}% 16
+\BOOKMARK [3][-]{subsubsection.4.1.1}{Vista use-case}{subsection.4.1}% 17
+\BOOKMARK [3][-]{subsubsection.4.1.2}{Architettura logica}{subsection.4.1}% 18
+\BOOKMARK [3][-]{subsubsection.4.1.3}{Logica applicativa}{subsection.4.1}% 19
+\BOOKMARK [3][-]{subsubsection.4.1.4}{Cattura degli eventi esterni}{subsection.4.1}% 20
+\BOOKMARK [2][-]{subsection.4.2}{Seconda iterazione}{section.4}% 21
+\BOOKMARK [3][-]{subsubsection.4.2.1}{Premessa}{subsection.4.2}% 22
+\BOOKMARK [3][-]{subsubsection.4.2.2}{Logica applicativa}{subsection.4.2}% 23
+\BOOKMARK [3][-]{subsubsection.4.2.3}{Interfaccia grafica \(Stefano\)}{subsection.4.2}% 24
+\BOOKMARK [3][-]{subsubsection.4.2.4}{Interfacciamento con File System e Database}{subsection.4.2}% 25
+\BOOKMARK [2][-]{subsection.4.3}{Terza iterazione}{section.4}% 26
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Premessa}{subsection.4.3}% 27
+\BOOKMARK [3][-]{subsubsection.4.3.2}{Gestione delle interrupt}{subsection.4.3}% 28
+\BOOKMARK [3][-]{subsubsection.4.3.3}{Gestione della tempificazione}{subsection.4.3}% 29
+\BOOKMARK [3][-]{subsubsection.4.3.4}{Comunicazione con l'I/O}{subsection.4.3}% 30
+\BOOKMARK [3][-]{subsubsection.4.3.5}{PPU}{subsection.4.3}% 31
+\BOOKMARK [3][-]{subsubsection.4.3.6}{Logica applicativa}{subsection.4.3}% 32
+\BOOKMARK [2][-]{subsection.4.4}{Quarta iterazione}{section.4}% 33
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Premessa}{subsection.4.4}% 34
+\BOOKMARK [3][-]{subsubsection.4.4.2}{Gestione della lista dei programmi}{subsection.4.4}% 35
+\BOOKMARK [3][-]{subsubsection.4.4.3}{Interfaccia grafica \(Stefano\)}{subsection.4.4}% 36
+\BOOKMARK [3][-]{subsubsection.4.4.4}{PPU \(foreground\) \(Daniele\)}{subsection.4.4}% 37
+\BOOKMARK [1][-]{section.5}{Design funzionale/non-funzionale}{}% 38
+\BOOKMARK [2][-]{subsection.5.1}{Prima iterazione}{section.5}% 39
+\BOOKMARK [3][-]{subsubsection.5.1.1}{Architettura logica dell'emulatore}{subsection.5.1}% 40
+\BOOKMARK [3][-]{subsubsection.5.1.2}{Raffinamento della dinamica di EseguiProgramma}{subsection.5.1}% 41
+\BOOKMARK [3][-]{subsubsection.5.1.3}{Vista componenti\046connettori}{subsection.5.1}% 42
+\BOOKMARK [2][-]{subsection.5.2}{Seconda iterazione}{section.5}% 43
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Architettura logica dell'emulatore}{subsection.5.2}% 44
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Raffinamento della dinamica di EseguiProgramma}{subsection.5.2}% 45
+\BOOKMARK [3][-]{subsubsection.5.2.3}{Vista componenti\046connettori}{subsection.5.2}% 46
+\BOOKMARK [3][-]{subsubsection.5.2.4}{Interfaccia grafica \(Stefano\)}{subsection.5.2}% 47
+\BOOKMARK [2][-]{subsection.5.3}{Terza iterazione}{section.5}% 48
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Architettura logica dell'emulatore}{subsection.5.3}% 49
+\BOOKMARK [3][-]{subsubsection.5.3.2}{Interfaccia \(Stefano\)}{subsection.5.3}% 50
+\BOOKMARK [2][-]{subsection.5.4}{Quarta iterazione}{section.5}% 51
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Gestione della lista dei programmi}{subsection.5.4}% 52
+\BOOKMARK [3][-]{subsubsection.5.4.2}{Gestione del trasporto dello stato e dei flussi d'esecuzione concorrenti \(Stefano\)}{subsection.5.4}% 53
+\BOOKMARK [3][-]{subsubsection.5.4.3}{Interfaccia grafica \(Stefano\)}{subsection.5.4}% 54
+\BOOKMARK [3][-]{subsubsection.5.4.4}{Rendering del foreground \(Daniele\)}{subsection.5.4}% 55
+\BOOKMARK [1][-]{section.6}{Prospettiva implementativa}{}% 56
+\BOOKMARK [2][-]{subsection.6.1}{Prima iterazione}{section.6}% 57
+\BOOKMARK [3][-]{subsubsection.6.1.1}{Vista di deployment}{subsection.6.1}% 58
+\BOOKMARK [2][-]{subsection.6.2}{Seconda iterazione}{section.6}% 59
+\BOOKMARK [3][-]{subsubsection.6.2.1}{Hibernate e vista di deployment}{subsection.6.2}% 60
+\BOOKMARK [3][-]{subsubsection.6.2.2}{Java swing \(Stefano\)}{subsection.6.2}% 61

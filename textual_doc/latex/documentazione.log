@@ -1,0 +1,1161 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.2.24)  17 JUL 2020 18:04
+entering extended mode
+**./documentazione.tex
+(documentazione.tex
+LaTeX2e <2018-12-01>
+("D:\MiKTeX 2.9\tex/latex/base\article.cls"
+Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
+("D:\MiKTeX 2.9\tex/latex/base\size11.clo"
+File: size11.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("D:\MiKTeX 2.9\tex/latex/amsmath\amsmath.sty"
+Package: amsmath 2018/12/01 v2.17b AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+("D:\MiKTeX 2.9\tex/latex/amsmath\amstext.sty"
+Package: amstext 2000/06/29 v2.01 AMS text
+
+("D:\MiKTeX 2.9\tex/latex/amsmath\amsgen.sty"
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks14
+\ex@=\dimen103
+))
+("D:\MiKTeX 2.9\tex/latex/amsmath\amsbsy.sty"
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen104
+)
+("D:\MiKTeX 2.9\tex/latex/amsmath\amsopn.sty"
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count88
+LaTeX Info: Redefining \frac on input line 223.
+\uproot@=\count89
+\leftroot@=\count90
+LaTeX Info: Redefining \overline on input line 385.
+\classnum@=\count91
+\DOTSCASE@=\count92
+LaTeX Info: Redefining \ldots on input line 482.
+LaTeX Info: Redefining \dots on input line 485.
+LaTeX Info: Redefining \cdots on input line 606.
+\Mathstrutbox@=\box27
+\strutbox@=\box28
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 729.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 730.
+\macc@depth=\count93
+\c@MaxMatrixCols=\count94
+\dotsspace@=\muskip10
+\c@parentequation=\count95
+\dspbrk@lvl=\count96
+\tag@help=\toks15
+\row@=\count97
+\column@=\count98
+\maxfields@=\count99
+\andhelp@=\toks16
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks17
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2844.
+LaTeX Info: Redefining \] on input line 2845.
+)
+("D:\MiKTeX 2.9\tex/latex/mathtools\mathtools.sty"
+Package: mathtools 2018/01/08 v1.21 mathematical typesetting tools
+
+("D:\MiKTeX 2.9\tex/latex/graphics\keyval.sty"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+("D:\MiKTeX 2.9\tex/latex/tools\calc.sty"
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count100
+\calc@Bcount=\count101
+\calc@Adimen=\dimen112
+\calc@Bdimen=\dimen113
+\calc@Askip=\skip46
+\calc@Bskip=\skip47
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count102
+\calc@Cskip=\skip48
+)
+("D:\MiKTeX 2.9\tex/latex/mathtools\mhsetup.sty"
+Package: mhsetup 2017/03/31 v1.3 programming setup (MH)
+)
+LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
+\g_MT_multlinerow_int=\count103
+\l_MT_multwidth_dim=\dimen114
+\origjot=\skip49
+\l_MT_shortvdotswithinadjustabove_dim=\dimen115
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen116
+\l_MT_above_intertext_sep=\dimen117
+\l_MT_below_intertext_sep=\dimen118
+\l_MT_above_shortintertext_sep=\dimen119
+\l_MT_below_shortintertext_sep=\dimen120
+)
+("D:\MiKTeX 2.9\tex/latex/amsfonts\amssymb.sty"
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+("D:\MiKTeX 2.9\tex/latex/amsfonts\amsfonts.sty"
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+("D:\MiKTeX 2.9\tex/latex/hyperref\hyperref.sty"
+Package: hyperref 2018/11/30 v6.88e Hypertext links for LaTeX
+
+("D:\MiKTeX 2.9\tex/generic/oberdiek\hobsub-hyperref.sty"
+Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
+
+
+("D:\MiKTeX 2.9\tex/generic/oberdiek\hobsub-generic.sty"
+Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
+Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+Package: pdftexcmds 2018/09/10 v0.29 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+)
+Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
+Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+Package: xcolor-patch 2016/05/16 xcolor patch
+Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
+Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+)
+("D:\MiKTeX 2.9\tex/generic/ifxetex\ifxetex.sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+("D:\MiKTeX 2.9\tex/latex/oberdiek\auxhook.sty"
+Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+)
+("D:\MiKTeX 2.9\tex/latex/oberdiek\kvoptions.sty"
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+)
+\@linkdim=\dimen121
+\Hy@linkcounter=\count104
+\Hy@pagecounter=\count105
+
+("D:\MiKTeX 2.9\tex/latex/hyperref\pd1enc.def"
+File: pd1enc.def 2018/11/30 v6.88e Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+\Hy@SavedSpaceFactor=\count106
+
+("D:\MiKTeX 2.9\tex/latex/00miktex\hyperref.cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4519.
+Package hyperref Info: Link nesting OFF on input line 4524.
+Package hyperref Info: Hyper index ON on input line 4527.
+Package hyperref Info: Plain pages OFF on input line 4534.
+Package hyperref Info: Backreferencing OFF on input line 4539.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4772.
+\c@Hy@tempcnt=\count107
+
+("D:\MiKTeX 2.9\tex/latex/url\url.sty"
+\Urlmuskip=\muskip11
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5125.
+\XeTeXLinkMargin=\dimen122
+\Fld@menulength=\count108
+\Field@Width=\dimen123
+\Fld@charsize=\dimen124
+Package hyperref Info: Hyper figures OFF on input line 6380.
+Package hyperref Info: Link nesting OFF on input line 6385.
+Package hyperref Info: Hyper index ON on input line 6388.
+Package hyperref Info: backreferencing OFF on input line 6395.
+Package hyperref Info: Link coloring OFF on input line 6400.
+Package hyperref Info: Link coloring with OCG OFF on input line 6405.
+Package hyperref Info: PDF/A mode OFF on input line 6410.
+LaTeX Info: Redefining \ref on input line 6450.
+LaTeX Info: Redefining \pageref on input line 6454.
+\Hy@abspage=\count109
+\c@Item=\count110
+\c@Hfootnote=\count111
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+("D:\MiKTeX 2.9\tex/latex/hyperref\hpdftex.def"
+File: hpdftex.def 2018/11/30 v6.88e Hyperref driver for pdfTeX
+\Fld@listcount=\count112
+\c@bookmark@seq@number=\count113
+
+("D:\MiKTeX 2.9\tex/latex/oberdiek\rerunfilecheck.sty"
+Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip50
+)
+("D:\MiKTeX 2.9\tex/latex/graphics\graphicx.sty"
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+
+("D:\MiKTeX 2.9\tex/latex/graphics\graphics.sty"
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+
+("D:\MiKTeX 2.9\tex/latex/graphics\trig.sty"
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+("D:\MiKTeX 2.9\tex/latex/graphics-cfg\graphics.cfg"
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+
+("D:\MiKTeX 2.9\tex/latex/graphics-def\pdftex.def"
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen125
+\Gin@req@width=\dimen126
+)
+("D:\MiKTeX 2.9\tex/latex/caption\subcaption.sty"
+Package: subcaption 2019/09/01 v1.3a Sub-captions (AR)
+
+("D:\MiKTeX 2.9\tex/latex/caption\caption.sty"
+Package: caption 2019/10/18 v3.4a Customizing captions (AR)
+
+("D:\MiKTeX 2.9\tex/latex/caption\caption3.sty"
+Package: caption3 2019/09/09 v1.8e caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 64.
+\captionmargin=\dimen127
+\captionmargin@=\dimen128
+\captionwidth=\dimen129
+\caption@tempdima=\dimen130
+\caption@indent=\dimen131
+\caption@parindent=\dimen132
+\caption@hangindent=\dimen133
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count114
+\c@continuedfloat=\count115
+Package caption Info: hyperref package is loaded.
+)
+\c@subfigure=\count116
+\c@subtable=\count117
+)
+("D:\MiKTeX 2.9\tex/latex/listings\listings.sty"
+\lst@mode=\count118
+\lst@gtempboxa=\box29
+\lst@token=\toks20
+\lst@length=\count119
+\lst@currlwidth=\dimen134
+\lst@column=\count120
+\lst@pos=\count121
+\lst@lostspace=\dimen135
+\lst@width=\dimen136
+\lst@newlines=\count122
+\lst@lineno=\count123
+\lst@maxwidth=\dimen137
+
+("D:\MiKTeX 2.9\tex/latex/listings\lstmisc.sty"
+File: lstmisc.sty 2019/02/27 1.8b (Carsten Heinz)
+\c@lstnumber=\count124
+\lst@skipnumbers=\count125
+\lst@framebox=\box30
+)
+("D:\MiKTeX 2.9\tex/latex/listings\listings.cfg"
+File: listings.cfg 2019/02/27 1.8b listings configuration
+))
+Package: listings 2019/02/27 1.8b (Carsten Heinz)
+ (documentazione.aux)
+\openout1 = `documentazione.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+\AtBeginShipoutBox=\box31
+Package hyperref Info: Link coloring OFF on input line 16.
+
+("D:\MiKTeX 2.9\tex/latex/hyperref\nameref.sty"
+Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+
+("D:\MiKTeX 2.9\tex/generic/oberdiek\gettitlestring.sty"
+Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+)
+\c@section@level=\count126
+)
+LaTeX Info: Redefining \ref on input line 16.
+LaTeX Info: Redefining \pageref on input line 16.
+LaTeX Info: Redefining \nameref on input line 16.
+ (documentazione.out) (documentazione.out)
+\@outlinefile=\write3
+\openout3 = `documentazione.out'.
+
+ ("D:\MiKTeX 2.9\tex/context/base/mkii\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count127
+\scratchdimen=\dimen138
+\scratchbox=\box32
+\nofMPsegments=\count128
+\nofMParguments=\count129
+\everyMPshowfont=\toks21
+\MPscratchCnt=\count130
+\MPscratchDim=\dimen139
+\MPnumerator=\count131
+\makeMPintoPDFobject=\count132
+\everyMPtoPDFconversion=\toks22
+) ("D:\MiKTeX 2.9\tex/latex/oberdiek\epstopdf-base.sty"
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+("D:\MiKTeX 2.9\tex/latex/oberdiek\grfext.sty"
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+)
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: listings package is loaded.
+Package caption Info: End \AtBeginDocument code.
+\c@lstlisting=\count133
+LaTeX Font Info:    Try loading font information for U+msa on input line 21.
+
+("D:\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 21.
+
+("D:\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Overfull \hbox (35.87798pt too wide) in paragraph at lines 21--21
+ [][] 
+ []
+
+(documentazione.toc [1
+
+{C:/Users/aceep/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
+Overfull \hbox (11.22081pt too wide) in paragraph at lines 70--70
+ [][] [][]\OT1/cmr/m/n/10.95 Gestione del trasporto dello stato e dei flussi d'
+esecuzione 
+ []
+
+)
+\tf@toc=\write4
+\openout4 = `documentazione.toc'.
+
+ [3]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 27.
+ ("D:\MiKTeX 2.9\tex/latex/base\omscmr.fd"
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 27.
+<NES_CONSOLE.jpg, id=328, 1284.8pt x 697.60625pt>
+File: NES_CONSOLE.jpg Graphic file (type jpg)
+<use NES_CONSOLE.jpg>
+Package pdftex.def Info: NES_CONSOLE.jpg  used on input line 52.
+(pdftex.def)             Requested size: 326.21796pt x 175.6572pt.
+ [4
+
+] [5 <./NES_CONSOLE.jpg>]
+[6
+
+]
+Overfull \hbox (18.39842pt too wide) in paragraph at lines 85--86
+[]\OT1/cmr/m/n/10.95 In vista di un ap-proc-cio ag-ile, e quindi in-cre-men-tal
+e ed evo-lu-tivo, \OT1/cmr/bx/it/10.95 manuteni-
+ []
+
+[7
+
+] [8
+
+]
+Overfull \hbox (2.44547pt too wide) in paragraph at lines 128--130
+[]\OT1/cmr/m/n/10.95 ConfiguraEmulazione: L'utente prima dell'esecuzione di un 
+pro-gramma
+ []
+
+
+Overfull \hbox (2.05006pt too wide) in paragraph at lines 128--130
+\OT1/cmr/m/n/10.95 potra clic-care su di un pul-sante per vi-su-al-iz-zare e m
+od-i-fi-care i parametri
+ []
+
+
+Overfull \hbox (25.71428pt too wide) in paragraph at lines 134--136
+[]\OT1/cmr/m/n/10.95 VisualizzaStatoArchitettura: Il pro-gram-ma-tore potra cl
+ic-care sull'immagine
+ []
+
+[9
+
+] [10]
+Overfull \hbox (38.71455pt too wide) in paragraph at lines 140--151
+[][] 
+ []
+
+
+Overfull \hbox (31.50578pt too wide) in paragraph at lines 154--165
+[][] 
+ []
+
+<NES_ARCH.png, id=368, 834.11626pt x 583.17876pt>
+File: NES_ARCH.png Graphic file (type png)
+<use NES_ARCH.png>
+Package pdftex.def Info: NES_ARCH.png  used on input line 174.
+(pdftex.def)             Requested size: 391.46196pt x 271.01514pt.
+
+Overfull \hbox (5.44255pt too wide) in paragraph at lines 172--175
+ []|  [] 
+ []
+
+[11
+
+] [12 <./NES_ARCH.png>]
+<6502.jpg, id=382, 95.1555pt x 34.56915pt>
+File: 6502.jpg Graphic file (type jpg)
+<use 6502.jpg>
+Package pdftex.def Info: 6502.jpg  used on input line 180.
+(pdftex.def)             Requested size: 301.22087pt x 110.43358pt.
+<2C02.jpg, id=383, 1284.8pt x 963.6pt>
+File: 2C02.jpg Graphic file (type jpg)
+<use 2C02.jpg>
+Package pdftex.def Info: 2C02.jpg  used on input line 187.
+(pdftex.def)             Requested size: 276.03058pt x 206.77296pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Overfull \hbox (2.63484pt too wide) in paragraph at lines 190--191
+ []\OT1/cmr/bx/n/10.95 Rendering grafico[] \OT1/cmr/m/n/10.95 In-sieme all'inte
+rpretazione delle istruzioni for-nite dalla
+ []
+
+[13
+
+ <./6502.jpg>] [14 <./2C02.jpg>]
+<MARIO_ROM.jpg, id=398, 505.89pt x 565.1514pt>
+File: MARIO_ROM.jpg Graphic file (type jpg)
+<use MARIO_ROM.jpg>
+Package pdftex.def Info: MARIO_ROM.jpg  used on input line 197.
+(pdftex.def)             Requested size: 175.65924pt x 195.72768pt.
+ [15
+
+ <./MARIO_ROM.jpg>]
+Overfull \hbox (14.06465pt too wide) in paragraph at lines 209--211
+\OT1/cmr/m/n/10.95 Sin da subito e stata posta molta at-ten-zione alla log-ica
+ dell'emulatore all'interno
+ []
+
+[16
+
+]
+<UC_Emulator.png, id=408, 515.67656pt x 322.95656pt>
+File: UC_Emulator.png Graphic file (type png)
+<use UC_Emulator.png>
+Package pdftex.def Info: UC_Emulator.png  used on input line 217.
+(pdftex.def)             Requested size: 276.03766pt x 171.63924pt.
+<CD_NES_Architecture.png, id=409, 551.81157pt x 359.09157pt>
+File: CD_NES_Architecture.png Graphic file (type png)
+<use CD_NES_Architecture.png>
+Package pdftex.def Info: CD_NES_Architecture.png  used on input line 225.
+(pdftex.def)             Requested size: 301.13971pt x 191.7203pt.
+ [17
+
+ <./UC_Emulator.png> <./CD_NES_Architecture.png>]
+<CPU.png, id=416, 583.17876pt x 322.20375pt>
+File: CPU.png Graphic file (type png)
+<use CPU.png>
+Package pdftex.def Info: CPU.png  used on input line 235.
+(pdftex.def)             Requested size: 301.13684pt x 166.62753pt.
+ [18 <./CPU.png>]
+[19]
+<6502_INSTRUCTION_SET.png, id=429, 557.08125pt x 575.90157pt>
+File: 6502_INSTRUCTION_SET.png Graphic file (type png)
+<use 6502_INSTRUCTION_SET.png>
+Package pdftex.def Info: 6502_INSTRUCTION_SET.png  used on input line 264.
+(pdftex.def)             Requested size: 401.50621pt x 401.51144pt.
+
+Overfull \hbox (15.4868pt too wide) in paragraph at lines 262--266
+ []|  [] 
+ []
+
+[20
+
+ <./6502_INSTRUCTION_SET.png>]
+<CD_DomainModel.png, id=435, 734.745pt x 441.90094pt>
+File: CD_DomainModel.png Graphic file (type png)
+<use CD_DomainModel.png>
+Package pdftex.def Info: CD_DomainModel.png  used on input line 271.
+(pdftex.def)             Requested size: 376.4191pt x 225.84523pt.
+
+Overfull \hbox (16.4191pt too wide) in paragraph at lines 271--271
+ [][] 
+ []
+
+[21
+
+ <./CD_DomainModel.png>]
+Overfull \hbox (0.52922pt too wide) in paragraph at lines 302--306
+\OT1/cmr/m/n/10.95 Il map-per e un'entita stret-ta-mente legata alla car-tuc-
+cia, ma con-cettual-
+ []
+
+<CD_Domain_Boundary_Controller.png, id=442, 691.08188pt x 543.53062pt>
+File: CD_Domain_Boundary_Controller.png Graphic file (type png)
+<use CD_Domain_Boundary_Controller.png>
+Package pdftex.def Info: CD_Domain_Boundary_Controller.png  used on input line 
+317.
+(pdftex.def)             Requested size: 421.58041pt x 331.25462pt.
+
+Overfull \hbox (35.561pt too wide) in paragraph at lines 315--317
+ []|  [] 
+ []
+
+[22] [23 <./CD_Domain_Boundary_Controller.png>]
+<SQD_EseguiProgramma.png, id=452, 1108.8928pt x 445.665pt>
+File: SQD_EseguiProgramma.png Graphic file (type png)
+<use SQD_EseguiProgramma.png>
+Package pdftex.def Info: SQD_EseguiProgramma.png  used on input line 325.
+(pdftex.def)             Requested size: 602.24495pt x 241.90677pt.
+
+Overfull \hbox (128.02182pt too wide) in paragraph at lines 323--326
+ []|  [] 
+ []
+
+[24
+
+ <./SQD_EseguiProgramma.png>]
+<CD_DomainModel_1.png, id=458, 797.22844pt x 563.85657pt>
+File: CD_DomainModel_1.png Graphic file (type png)
+<use CD_DomainModel_1.png>
+Package pdftex.def Info: CD_DomainModel_1.png  used on input line 340.
+(pdftex.def)             Requested size: 451.68788pt x 321.20369pt.
+
+Overfull \hbox (45.75163pt too wide) in paragraph at lines 338--340
+ []|  [] 
+ []
+
+[25
+
+] [26 <./CD_DomainModel_1.png>]
+<ROM.jpg, id=469, 451.6875pt x 185.19188pt>
+File: ROM.jpg Graphic file (type jpg)
+<use ROM.jpg>
+Package pdftex.def Info: ROM.jpg  used on input line 368.
+(pdftex.def)             Requested size: 225.85008pt x 93.35019pt.
+ [27 <./ROM.jpg>] [28] [29
+
+]
+<PPUARCH.jpg, id=487, 606.76688pt x 244.66406pt>
+File: PPUARCH.jpg Graphic file (type jpg)
+<use PPUARCH.jpg>
+Package pdftex.def Info: PPUARCH.jpg  used on input line 409.
+(pdftex.def)             Requested size: 401.50433pt x 156.58818pt.
+ [30 <./PPUARCH.jpg>] [31]
+<PATTERNMEM.jpg, id=503, 517.18219pt x 270.25969pt>
+File: PATTERNMEM.jpg Graphic file (type jpg)
+<use PATTERNMEM.jpg>
+Package pdftex.def Info: PATTERNMEM.jpg  used on input line 452.
+(pdftex.def)             Requested size: 351.32411pt x 175.66258pt.
+<TILE_STORING.jpg, id=504, 496.10344pt x 179.16937pt>
+File: TILE_STORING.jpg Graphic file (type jpg)
+<use TILE_STORING.jpg>
+Package pdftex.def Info: TILE_STORING.jpg  used on input line 457.
+(pdftex.def)             Requested size: 323.21283pt x 116.43683pt.
+ [32
+
+ <./PATTERNMEM.jpg> <./TILE_STORING.jpg>]
+<PALETTE_STORING.jpg, id=512, 440.39531pt x 618.05907pt>
+File: PALETTE_STORING.jpg Graphic file (type jpg)
+<use PALETTE_STORING.jpg>
+Package pdftex.def Info: PALETTE_STORING.jpg  used on input line 466.
+(pdftex.def)             Requested size: 276.03934pt x 401.51672pt.
+ [33
+
+ <./PALETTE_STORING.jpg>]
+<NAMETABLE.jpg, id=519, 308.65312pt x 316.18124pt>
+File: NAMETABLE.jpg Graphic file (type jpg)
+<use NAMETABLE.jpg>
+Package pdftex.def Info: NAMETABLE.jpg  used on input line 478.
+(pdftex.def)             Requested size: 200.75401pt x 215.81091pt.
+ [34 <./NAMETABLE.jpg>]
+<HOR_SCROLL.png, id=526, 422.32782pt x 288.3272pt>
+File: HOR_SCROLL.png Graphic file (type png)
+<use HOR_SCROLL.png>
+Package pdftex.def Info: HOR_SCROLL.png  used on input line 486.
+(pdftex.def)             Requested size: 271.01707pt x 190.71887pt.
+<OFFSET_CALC.png, id=527, 406.51875pt x 76.78688pt>
+File: OFFSET_CALC.png Graphic file (type png)
+<use OFFSET_CALC.png>
+Package pdftex.def Info: OFFSET_CALC.png  used on input line 497.
+(pdftex.def)             Requested size: 276.0383pt x 50.18855pt.
+<ATT_TILE_MAP.jpg, id=528, 505.13719pt x 386.19281pt>
+File: ATT_TILE_MAP.jpg Graphic file (type jpg)
+<use ATT_TILE_MAP.jpg>
+Package pdftex.def Info: ATT_TILE_MAP.jpg  used on input line 507.
+(pdftex.def)             Requested size: 301.12688pt x 255.95462pt.
+ [35
+
+ <./HOR_SCROLL.png> <./OFFSET_CALC.png>] [36 <./ATT_TILE_MAP.jpg>] [37] [38]
+<PIXEL_RENDERING_LOGIC.png, id=553, 673.01437pt x 497.60907pt>
+File: PIXEL_RENDERING_LOGIC.png Graphic file (type png)
+<use PIXEL_RENDERING_LOGIC.png>
+Package pdftex.def Info: PIXEL_RENDERING_LOGIC.png  used on input line 576.
+(pdftex.def)             Requested size: 451.68748pt x 331.24756pt.
+
+Overfull \hbox (59.9776pt too wide) in paragraph at lines 574--577
+ []|  [] 
+ []
+
+[39
+
+ <./PIXEL_RENDERING_LOGIC.png>]
+<CD_DomainModel_2.png, id=559, 693.34032pt x 610.53094pt>
+File: CD_DomainModel_2.png Graphic file (type png)
+<use CD_DomainModel_2.png>
+Package pdftex.def Info: CD_DomainModel_2.png  used on input line 587.
+(pdftex.def)             Requested size: 526.98643pt x 466.76585pt.
+
+Overfull \hbox (75.52559pt too wide) in paragraph at lines 585--588
+ []|  [] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[40] [41 <./CD_DomainModel_2.png>]
+Overfull \hbox (6.03456pt too wide) in paragraph at lines 614--616
+\OT1/cmr/m/n/10.95 mente di tutti quegli el-e-menti grafici di-nam-ici che in-t
+er-ven-gono nell'esecuzione
+ []
+
+
+Overfull \hbox (2.67857pt too wide) in paragraph at lines 614--616
+\OT1/cmr/m/n/10.95 di un video-gioco. Ci sono an-che al-tri el-e-menti al con-t
+orno che hanno richiesto,
+ []
+
+[42
+
+]
+<CD_Emulator_Architecture.png, id=573, 465.23813pt x 581.92406pt>
+File: CD_Emulator_Architecture.png Graphic file (type png)
+<use CD_Emulator_Architecture.png>
+Package pdftex.def Info: CD_Emulator_Architecture.png  used on input line 632.
+(pdftex.def)             Requested size: 376.42198pt x 469.7665pt.
+
+Overfull \hbox (16.42198pt too wide) in paragraph at lines 632--632
+ [][] 
+ []
+
+[43
+
+] [44 <./CD_Emulator_Architecture.png>]
+<SD_ControlUnit.png, id=584, 264.23718pt x 465.23813pt>
+File: SD_ControlUnit.png Graphic file (type png)
+<use SD_ControlUnit.png>
+Package pdftex.def Info: SD_ControlUnit.png  used on input line 643.
+(pdftex.def)             Requested size: 200.74976pt x 353.32909pt.
+
+Overfull \hbox (4.45291pt too wide) in paragraph at lines 640--647
+\OT1/cmr/m/n/10.95 ante l'aggiunta di classi soft-ware, ispi-ran-doci, so-prat-
+tutto per quanto riguarda
+ []
+
+[45
+
+] [46 <./SD_ControlUnit.png>]
+<AD_EseguiProgramma.png, id=594, 805.50937pt x 591.71063pt>
+File: AD_EseguiProgramma.png Graphic file (type png)
+<use AD_EseguiProgramma.png>
+Package pdftex.def Info: AD_EseguiProgramma.png  used on input line 652.
+(pdftex.def)             Requested size: 401.5pt x 296.11642pt.
+
+Overfull \hbox (15.48059pt too wide) in paragraph at lines 650--652
+ []|  [] 
+ []
+
+[47
+
+ <./AD_EseguiProgramma.png>]
+<CD_Emulator_0.png, id=600, 1202.24156pt x 554.82281pt>
+File: CD_Emulator_0.png Graphic file (type png)
+<use CD_Emulator_0.png>
+Package pdftex.def Info: CD_Emulator_0.png  used on input line 679.
+(pdftex.def)             Requested size: 602.27502pt x 278.0372pt.
+
+Overfull \hbox (122.36143pt too wide) in paragraph at lines 677--680
+ []|  [] 
+ []
+
+
+Overfull \hbox (3.69252pt too wide) in paragraph at lines 675--683
+\OT1/cmr/m/n/10.95 Dando dei pic-coli com-menti, pos-si-amo dire che sono stati
+ ap-posti gli stereotipi
+ []
+
+[48 <./CD_Emulator_0.png>]
+<SQD_fetch_execCycle().png, id=606, 755.82375pt x 274.77657pt>
+File: SQD_fetch_execCycle().png Graphic file (type png)
+<use SQD_fetch_execCycle().png>
+Package pdftex.def Info: SQD_fetch_execCycle().png  used on input line 688.
+(pdftex.def)             Requested size: 351.31601pt x 127.47627pt.
+ [49 <./SQD_fetch_execCycle().png>]
+<CMPD_NES_Catalogue.png, id=613, 339.51843pt x 246.9225pt>
+File: CMPD_NES_Catalogue.png Graphic file (type png)
+<use CMPD_NES_Catalogue.png>
+Package pdftex.def Info: CMPD_NES_Catalogue.png  used on input line 699.
+(pdftex.def)             Requested size: 240.89917pt x 175.65527pt.
+ [50
+
+ <./CMPD_NES_Catalogue.png>]
+<CMPD_NES.png, id=619, 545.78906pt x 231.86626pt>
+File: CMPD_NES.png Graphic file (type png)
+<use CMPD_NES.png>
+Package pdftex.def Info: CMPD_NES.png  used on input line 705.
+(pdftex.def)             Requested size: 301.12598pt x 125.47125pt.
+ [51
+
+ <./CMPD_NES.png>]
+<CD_Emulator_1.png, id=625, 1100.61188pt x 518.6878pt>
+File: CD_Emulator_1.png Graphic file (type png)
+<use CD_Emulator_1.png>
+Package pdftex.def Info: CD_Emulator_1.png  used on input line 720.
+(pdftex.def)             Requested size: 602.26512pt x 282.06587pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 719--721
+
+ []
+
+<CD_Emulator_2.png, id=626, 1096.095pt x 555.57562pt>
+File: CD_Emulator_2.png Graphic file (type png)
+<use CD_Emulator_2.png>
+Package pdftex.def Info: CD_Emulator_2.png  used on input line 724.
+(pdftex.def)             Requested size: 602.25201pt x 282.05972pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 723--725
+
+ []
+
+
+Overfull \hbox (242.2522pt too wide) in paragraph at lines 718--727
+ []$[]$ 
+ []
+
+
+Overfull \hbox (242.2522pt too wide) in paragraph at lines 718--727
+ []$ 
+ []
+
+
+Overfull \hbox (18.44414pt too wide) in paragraph at lines 713--729
+\OT1/cmr/m/n/10.95 stato per la \OT1/cmr/m/it/10.95 Con-trol-U-nit\OT1/cmr/m/n/
+10.95 , la ri-or-ga-niz-zazione dei col-lega-menti tra classi all'interno
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[52
+
+] [53 <./CD_Emulator_1.png> <./CD_Emulator_2.png>]
+<CD_Emulator_3.png, id=637, 1153.30875pt x 600.74437pt>
+File: CD_Emulator_3.png Graphic file (type png)
+<use CD_Emulator_3.png>
+Package pdftex.def Info: CD_Emulator_3.png  used on input line 736.
+(pdftex.def)             Requested size: 602.27573pt x 316.19301pt.
+
+Overfull \hbox (122.36214pt too wide) in paragraph at lines 734--736
+ []|  [] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[54
+
+] [55 <./CD_Emulator_3.png>] [56
+
+]
+<SD_ControlUnit_1.png, id=654, 371.13657pt x 397.485pt>
+File: SD_ControlUnit_1.png Graphic file (type png)
+<use SD_ControlUnit_1.png>
+Package pdftex.def Info: SD_ControlUnit_1.png  used on input line 750.
+(pdftex.def)             Requested size: 271.01804pt x 291.09566pt.
+<SQD_fetch_execCycle()_1.png, id=655, 697.10437pt x 491.58656pt>
+File: SQD_fetch_execCycle()_1.png Graphic file (type png)
+<use SQD_fetch_execCycle()_1.png>
+Package pdftex.def Info: SQD_fetch_execCycle()_1.png  used on input line 756.
+(pdftex.def)             Requested size: 426.59457pt x 304.15044pt.
+
+Overfull \hbox (34.88469pt too wide) in paragraph at lines 754--756
+ []|  [] 
+ []
+
+<SQD_EseguiProgramma_1.png, id=656, 1105.12875pt x 546.54187pt>
+File: SQD_EseguiProgramma_1.png Graphic file (type png)
+<use SQD_EseguiProgramma_1.png>
+Package pdftex.def Info: SQD_EseguiProgramma_1.png  used on input line 766.
+(pdftex.def)             Requested size: 602.24109pt x 282.0518pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 765--767
+
+ []
+
+<SQD_EseguiProgramma_2.png, id=657, 1123.94907pt x 546.54187pt>
+File: SQD_EseguiProgramma_2.png Graphic file (type png)
+<use SQD_EseguiProgramma_2.png>
+Package pdftex.def Info: SQD_EseguiProgramma_2.png  used on input line 770.
+(pdftex.def)             Requested size: 602.2415pt x 282.0518pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 769--771
+
+ []
+
+
+Overfull \hbox (242.2522pt too wide) in paragraph at lines 764--773
+ []$[]$ 
+ []
+
+
+Overfull \hbox (242.2522pt too wide) in paragraph at lines 764--773
+ []$ 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[57
+
+ <./SD_ControlUnit_1.png>]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[58 <./SQD_fetch_execCycle()_1.png>] [59 <./SQD_EseguiProgramma_1.png> <./SQD_E
+seguiProgramma_2.png>] [60]
+<SQD_read().png, id=677, 595.47469pt x 586.44093pt>
+File: SQD_read().png Graphic file (type png)
+<use SQD_read().png>
+Package pdftex.def Info: SQD_read().png  used on input line 784.
+(pdftex.def)             Requested size: 401.501pt x 401.49484pt.
+
+Overfull \hbox (41.501pt too wide) in paragraph at lines 784--784
+ [][] 
+ []
+
+[61
+
+ <./SQD_read().png>]
+<CMPD_NES_Catalogue_1.png, id=684, 320.69812pt x 263.48438pt>
+File: CMPD_NES_Catalogue_1.png Graphic file (type png)
+<use CMPD_NES_Catalogue_1.png>
+Package pdftex.def Info: CMPD_NES_Catalogue_1.png  used on input line 796.
+(pdftex.def)             Requested size: 200.75389pt x 166.63126pt.
+<CMPD_NES_1.png, id=685, 585.68813pt x 406.51875pt>
+File: CMPD_NES_1.png Graphic file (type png)
+<use CMPD_NES_1.png>
+Package pdftex.def Info: CMPD_NES_1.png  used on input line 799.
+(pdftex.def)             Requested size: 200.7489pt x 144.53535pt.
+
+Overfull \hbox (5.0613pt too wide) in paragraph at lines 791--803
+\OT1/cmr/m/n/10.95 mod-i-fiche al cat-a-l-ogo dei com-po-nenti e al di-a-gramma
+ com-po-nenti&connettori:
+ []
+
+[62
+
+ <./CMPD_NES_Catalogue_1.png> <./CMPD_NES_1.png>]
+<SD_ControlUnit_2.png, id=691, 607.51968pt x 561.59813pt>
+File: SD_ControlUnit_2.png Graphic file (type png)
+<use SD_ControlUnit_2.png>
+Package pdftex.def Info: SD_ControlUnit_2.png  used on input line 812.
+(pdftex.def)             Requested size: 451.69888pt x 416.55301pt.
+
+Overfull \hbox (45.76263pt too wide) in paragraph at lines 810--812
+ []|  [] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[63
+
+] [64 <./SD_ControlUnit_2.png>]
+<SD_PPU_rendering.png, id=702, 172.39406pt x 336.50719pt>
+File: SD_PPU_rendering.png Graphic file (type png)
+<use SD_PPU_rendering.png>
+Package pdftex.def Info: SD_PPU_rendering.png  used on input line 819.
+(pdftex.def)             Requested size: 150.56558pt x 296.11182pt.
+<CD_Emulator_4.png, id=703, 1154.81438pt x 604.50844pt>
+File: CD_Emulator_4.png Graphic file (type png)
+<use CD_Emulator_4.png>
+Package pdftex.def Info: CD_Emulator_4.png  used on input line 832.
+(pdftex.def)             Requested size: 602.26904pt x 315.17636pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 831--833
+
+ []
+
+<CD_Emulator_5.png, id=704, 1157.82562pt x 578.91281pt>
+File: CD_Emulator_5.png Graphic file (type png)
+<use CD_Emulator_5.png>
+Package pdftex.def Info: CD_Emulator_5.png  used on input line 836.
+(pdftex.def)             Requested size: 602.24947pt x 301.12473pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 835--837
+
+ []
+
+
+Overfull \hbox (242.2522pt too wide) in paragraph at lines 830--839
+ []$[]$ 
+ []
+
+
+Overfull \hbox (242.2522pt too wide) in paragraph at lines 830--839
+ []$ 
+ []
+
+[65
+
+ <./SD_PPU_rendering.png>]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[66] [67 <./CD_Emulator_4.png> <./CD_Emulator_5.png>]
+Overfull \hbox (21.42256pt too wide) in paragraph at lines 843--844
+[]\OT1/cmr/m/n/10.95 Ovviamente la pre-senza di questo liv-ello di in-di-rezion
+e ne-ces-sita un'opportuna
+ []
+
+<SQD_IORead.png, id=721, 892.83563pt x 1166.10657pt>
+File: SQD_IORead.png Graphic file (type png)
+<use SQD_IORead.png>
+Package pdftex.def Info: SQD_IORead.png  used on input line 851.
+(pdftex.def)             Requested size: 602.25659pt x 791.98114pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 850--852
+
+ []
+
+
+Overfull \hbox (242.2522pt too wide) in paragraph at lines 849--853
+ []$[]$ 
+ []
+
+
+LaTeX Warning: Float too large for page by 150.36989pt on input line 853.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[68
+
+] [69 <./SQD_IORead.png>]
+<CD_Emulator_6.png, id=732, 974.13937pt x 146.04562pt>
+File: CD_Emulator_6.png Graphic file (type png)
+<use CD_Emulator_6.png>
+Package pdftex.def Info: CD_Emulator_6.png  used on input line 862.
+(pdftex.def)             Requested size: 501.87318pt x 74.27948pt.
+
+Overfull \hbox (87.40102pt too wide) in paragraph at lines 860--862
+ []|  [] 
+ []
+
+[70
+
+ <./CD_Emulator_6.png>]
+<SQD_VisibleRendering.png, id=741, 1154.81438pt x 1224.07312pt>
+File: SQD_VisibleRendering.png Graphic file (type png)
+<use SQD_VisibleRendering.png>
+Package pdftex.def Info: SQD_VisibleRendering.png  used on input line 893.
+(pdftex.def)             Requested size: 602.26904pt x 791.95859pt.
+
+Overfull \hbox (242.2522pt too wide) in paragraph at lines 891--895
+ []$[]$ 
+ []
+
+
+LaTeX Warning: Float too large for page by 136.74733pt on input line 895.
+
+<SQD_VisibleRendering_2.png, id=742, 1116.42094pt x 603.0028pt>
+File: SQD_VisibleRendering_2.png Graphic file (type png)
+<use SQD_VisibleRendering_2.png>
+Package pdftex.def Info: SQD_VisibleRendering_2.png  used on input line 899.
+(pdftex.def)             Requested size: 602.2621pt x 326.21474pt.
+
+Overfull \hbox (122.34851pt too wide) in paragraph at lines 897--899
+ []|  [] 
+ []
+
+[71]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[72] [73 <./SQD_VisibleRendering.png>] [74 <./SQD_VisibleRendering_2.png>]
+[75
+
+]
+<CD_Emulator_7.png, id=767, 1308.38812pt x 161.10187pt>
+File: CD_Emulator_7.png Graphic file (type png)
+<use CD_Emulator_7.png>
+Package pdftex.def Info: CD_Emulator_7.png  used on input line 915.
+(pdftex.def)             Requested size: 501.86432pt x 61.22917pt.
+
+Overfull \hbox (67.47531pt too wide) in paragraph at lines 913--915
+ []|  [] 
+ []
+
+<CD_Emulator_8.png, id=768, 940.26282pt x 573.64313pt>
+File: CD_Emulator_8.png Graphic file (type png)
+<use CD_Emulator_8.png>
+Package pdftex.def Info: CD_Emulator_8.png  used on input line 923.
+(pdftex.def)             Requested size: 602.25397pt x 369.38864pt.
+
+Overfull \hbox (125.18582pt too wide) in paragraph at lines 921--923
+ []|  [] 
+ []
+
+<SQD_InsertProgram.png, id=769, 995.21812pt x 429.10312pt>
+File: SQD_InsertProgram.png Graphic file (type png)
+<use SQD_InsertProgram.png>
+Package pdftex.def Info: SQD_InsertProgram.png  used on input line 931.
+(pdftex.def)             Requested size: 602.26828pt x 258.96979pt.
+
+Overfull \hbox (125.20013pt too wide) in paragraph at lines 929--931
+ []|  [] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[76
+
+ <./CD_Emulator_7.png>] [77 <./CD_Emulator_8.png>] [78 <./SQD_InsertProgram.png
+>] [79
+
+]
+<DD_NES.png, id=790, 871.00406pt x 473.51906pt>
+File: DD_NES.png Graphic file (type png)
+<use DD_NES.png>
+Package pdftex.def Info: DD_NES.png  used on input line 962.
+(pdftex.def)             Requested size: 552.05807pt x 301.13644pt.
+
+Overfull \hbox (109.13315pt too wide) in paragraph at lines 960--962
+ []|  [] 
+ []
+
+[80
+
+] [81 <./DD_NES.png>]
+<DD_NES_1.png, id=800, 869.49844pt x 480.29437pt>
+File: DD_NES_1.png Graphic file (type png)
+<use DD_NES_1.png>
+Package pdftex.def Info: DD_NES_1.png  used on input line 977.
+(pdftex.def)             Requested size: 552.09885pt x 301.12863pt.
+
+Overfull \hbox (109.17392pt too wide) in paragraph at lines 975--977
+ []|  [] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[82
+
+] [83 <./DD_NES_1.png>] [84
+
+]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 991.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 991.
+ (documentazione.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 991.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 991.
+Package rerunfilecheck Info: File `documentazione.out' has not changed.
+(rerunfilecheck)             Checksum: BAEEF2066155A1C4101E4EACDCA107A4;4893.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 991.
+ ) 
+Here is how much of TeX's memory you used:
+ 9704 strings out of 492946
+ 144614 string characters out of 3141701
+ 228426 words of memory out of 3000000
+ 13234 multiletter control sequences out of 15000+200000
+ 12533 words of font info for 47 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 42i,13n,40p,1336b,1004s stack positions out of 5000i,500n,10000p,200000b,50000s
+<D:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><D:/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmbx12.pfb><D:/MiKTeX 2.9/fonts/type1/public/amsfonts
+/cm/cmbxti10.pfb><D:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmr12.pfb><D:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17
+.pfb><D:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><D:/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmsy10.pfb><D:/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmti10.pfb><D:/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on documentazione.pdf (84 pages, 2584036 bytes).
+PDF statistics:
+ 902 PDF objects out of 1000 (max. 8388607)
+ 228 named destinations out of 1000 (max. 500000)
+ 759 words of extra memory for PDF output out of 10000 (max. 10000000)
+
