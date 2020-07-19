@@ -21,7 +21,7 @@ public class PPUState {
 
 	//Aggiorno lo stato della PPU
 	public void refreshPPUState() {
-		//DA IMPLEMENTARE
+
 	}
 	
 	

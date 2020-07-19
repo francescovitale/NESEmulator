@@ -691,14 +691,14 @@ public class OperativeUnit {
 
 		if (ptr_lo == 0x00FF) 													// Simula un bug hardware (Se il +1 causa un cambiamento di pagina in realtà la pagina non viene cambiata)
 		{
-			//ptr = (char)((ptr_hi << 8) | 0x00);	
+	
 			Integer hi = Byte.toUnsignedInt(BusOU.read((char)(int)(ptr & 0xFF00)).byteValue());
 			Integer lo = Byte.toUnsignedInt(BusOU.read((char)(int)(ptr)).byteValue());
 			addr_abs = (char)((hi << 8) | lo);
 		}
 		else 				 													//Comportamento normale 
 		{
-			//char ptr1 = (char)((ptr_hi << 8) | (ptr_lo +1));
+
 			Integer hi = Byte.toUnsignedInt(BusOU.read((char)(int)(ptr+1)).byteValue());
 			Integer lo = Byte.toUnsignedInt(BusOU.read((char)(int)(ptr)).byteValue());
 			addr_abs = (char)((hi << 8) | lo);
@@ -1401,14 +1401,11 @@ public class OperativeUnit {
 		Integer SP = Byte.toUnsignedInt(Stack_pointer);
 		Integer SR = Byte.toUnsignedInt(Status_register);
 		
-		//System.out.println("SP : " + Integer.toBinaryString(SP));
-		//System.out.println("Status : " + Integer.toBinaryString(SR));
+
 		SP++;
 		SR= Byte.toUnsignedInt(BusOU.read((char) (0x0100 + SP)));
 		setFlag("U", true);
 		
-		//System.out.println("SP : " + Integer.toBinaryString(SP));
-		//System.out.println("Status : " + Integer.toBinaryString(SR));
 		
 		Stack_pointer = (byte)(int)SP;
 		Status_register = (byte)(int)SR;
@@ -1503,10 +1500,7 @@ public class OperativeUnit {
 	//Return from subroutine
 	private boolean RTS() {
 		
-		/*stkp++;
-		pc = (uint16_t)read(0x0100 + stkp);
-		stkp++;
-		pc |= (uint16_t)read(0x0100 + stkp) << 8;*/
+
 		
 		Integer SP = Byte.toUnsignedInt(Stack_pointer);
 		Integer PC = (int)(PC_register);

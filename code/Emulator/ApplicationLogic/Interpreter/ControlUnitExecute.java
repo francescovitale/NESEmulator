@@ -27,8 +27,6 @@ public class ControlUnitExecute extends ControlUnitState {
 		CU = ControlUnit.getInstance();
 		CU.setBool_opcode(SF.Execute(CU.getCurrentInstruction().opcode));						//Eseguo l'operazione dell'istruzione corrente
 		
-		/*DEBUG*/
-		//System.out.println(CU.getCurrentInstruction().opcode);
 
 		
 		if(CU.getBool_addr() & CU.getBool_opcode())												//Se entrambi i bool sono veri
@@ -41,8 +39,7 @@ public class ControlUnitExecute extends ControlUnitState {
 		IRQRequest_temp = SF.getIRQRequest();
 		
 		if(NMIRequest_temp == true || IRQRequest_temp == true) {
-			/*DEBUG*/
-			//System.out.println("Servo la richiesta di interruzione");
+
 			changeState(CU, ControlUnitState.getInstance("Interrupt"));
 		}
 		else

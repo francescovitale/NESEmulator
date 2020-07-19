@@ -192,7 +192,7 @@ public class IOManager {
 				if(PictureProcessingUnit.getAddress_latch() == 0) {
 					
 					// nello scroll legister, se siamo abilitati a farlo, gestiamo i valori di fine e coarse x
-					//temp_fine_x = PictureProcessingUnit.getFine_x();
+
 					temp_fine_x = (byte)(data & 0x07);
 					
 					PictureProcessingUnit.setFine_x(temp_fine_x);
@@ -208,7 +208,7 @@ public class IOManager {
 					
 					// nello scroll legister, se siamo abilitati a farlo, gestiamo i valori di fine e coarse y
 					tram_addr = PictureProcessingUnit.getTram_addr(); //ricordiamo che fine_y è presente nel loopy_register tram, nei bit 14,13,12
-					//tram_addr = (char)(tram_addr);
+
 
 					tram_addr = (char)((char)(tram_addr & 0x8FFF) | (char)((char)(data & 0x07) << 12)); //setto i bit 14,13,12 ai 3 bit meno significativi di data (setto fine_y)
 					data = (byte)((data >> 3) & 0x1F);

@@ -83,9 +83,7 @@ public class ControlUnitFetch extends ControlUnitState {
 		CU.setInstructionRegister(opfetched);				//Fetcho l'istruzione e la salvo nell'IR
 		SF.increasePC();									//Incremento il PC
 		
-		/*DEBUG*/
-		//System.out.println(Byte.toUnsignedInt(OU.getInstance().fetch()));									//Stampa DEBUG del codice operativo
-		//ControlUnit.getInstance().setInstructionRegister((byte)0xD);
+
 		
 		changeState(CU, ControlUnitState.getInstance("Decode"));
 		//}	

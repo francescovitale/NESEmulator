@@ -35,12 +35,7 @@ public class FileSystemManager {
 			String WholeData="";
 			ArrayList<String> FetchedStringArrayList = new ArrayList<String>(getStringData());
 			
-			/*ArrayList<Byte> ConvertedData;
-			ConvertedData = new ArrayList<Byte>(StringToByteConverter(FetchedStringArrayList));
-			writeByteData(ConvertedData);
-			ArrayList<Byte> FetchedByteArrayList  = new ArrayList<Byte>(getByteData());
-			FetchedStringArrayList = new ArrayList<String>(ByteToStringConverter(FetchedByteArrayList));*/
-			
+
 			for(int i=0; i<FetchedStringArrayList.size(); i++)
 				WholeData = WholeData + FetchedStringArrayList.get(i);
 			ReturnedProgram.add(new Program(0,"",WholeData));

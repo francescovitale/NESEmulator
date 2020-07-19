@@ -51,8 +51,7 @@ public class EmulatorFacade {
 			return SF.loadData(Programs.get(0).getParsedROMData());
 			
 		}
-		/*System.out.println(Programs.get(0).getROMData());
-		return true;	*/
+		
 	}
 
 	//Aziono il ciclo del processore

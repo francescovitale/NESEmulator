@@ -357,24 +357,13 @@ public class EmulatorBoundary extends JFrame {
 				
 				
 				while(i == 0) {
-					/*synchronized(Controller.getEmulatorFacade().getSF().getState().getInstance()) {
-						while(Controller.getState() == false) {
-							//System.out.println("C) Mi blocco su " + Controller.getEmulatorFacade().getSF().getState().getIstance().toString());
-							Controller.getEmulatorFacade().getSF().getState().getInstance().wait();
-				 		}
-						//System.out.println("C) Mi sblocco su " + Controller.getEmulatorFacade().getSF().getState().getIstance().toString());
-						publish((Controller.getReturnedState()));
-						Controller.getEmulatorFacade().getSF().getState().getInstance().notify();
-					}*/
+
 					
 						Controller.getState();
 						Display.UpdateDisplayScreen(Controller.getReturnedState());
 						publish((Controller.getReturnedState()));
 						
-						/*while(j < 2) {
-							j++;
-							Display.getKey();	
-						}*/
+				
 				}
 				return null;
 			}
